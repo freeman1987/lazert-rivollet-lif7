@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.>
+#include <stdlib.h>
 
 #include "Plateau.h"
 
@@ -40,8 +40,8 @@ int main ( int argc, char** argv )
     dstrect.y = (screen->h - bmp->h) / 2;
 
     // program main loop
-    bool done = false;
-    while (!done)
+    int done = 0;
+    while (done==0)
     {
         // message processing loop
         SDL_Event event;
@@ -52,7 +52,7 @@ int main ( int argc, char** argv )
             {
                 // exit if the window is closed
             case SDL_QUIT:
-                done = true;
+                done = 1;
                 break;
 
                 // check for keypresses
@@ -60,7 +60,7 @@ int main ( int argc, char** argv )
                 {
                     // exit if ESCAPE is pressed
                     if (event.key.keysym.sym == SDLK_ESCAPE)
-                        done = true;
+                        done = 1;
                     break;
                 }
             } // end switch
