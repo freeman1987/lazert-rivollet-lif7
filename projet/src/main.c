@@ -5,7 +5,7 @@
 
 #include <SDL/SDL.h>
 
-int main ( int argc, char** argv )
+int main ()
 {
     // initialize SDL video
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
@@ -18,7 +18,7 @@ int main ( int argc, char** argv )
     atexit(SDL_Quit);
 
     // create a new window
-    SDL_Surface* screen = SDL_SetVideoMode(640, 480, 16,
+    SDL_Surface* screen = SDL_SetVideoMode(1100, 800, 16,
                                            SDL_HWSURFACE|SDL_DOUBLEBUF);
     if ( !screen )
     {
