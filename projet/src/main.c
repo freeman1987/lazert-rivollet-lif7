@@ -4,6 +4,7 @@
 #include "Plateau.h"
 
 #include <SDL/SDL.h>
+#include <SDL_image.h>
 
 int main ()
 {
@@ -28,6 +29,7 @@ int main ()
 
     // load an image
     SDL_Surface* bmp = SDL_LoadBMP("cb.bmp");
+    SDL_Surface* rubis = IMG_Load("../data/Texture1/Rubis.png");
     if (!bmp)
     {
         printf("Unable to load bitmap: %s\n", SDL_GetError());
@@ -73,6 +75,7 @@ int main ()
 
         // draw bitmap
         SDL_BlitSurface(bmp, 0, screen, &dstrect);
+        SDL_BlitSurface(rubis, 0, screen, &dstrect);
 
         // DRAWING ENDS HERE
 
