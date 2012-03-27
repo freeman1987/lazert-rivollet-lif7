@@ -1,9 +1,9 @@
 #ifndef _CASE
 #define _CASE
+#include <stdlib.h>
+#include <stdio.h>
 
-typedef struct
-{
-	/* il y a un pion ici */
+typedef struct{
 	int libre;
 	/* définit si une case est accessible ou non
 	(par exemple pour faire des trous sur le plateau) */
@@ -13,6 +13,6 @@ typedef struct
 	/* coordonnées du pion sur le support */
 	int posX;
 	int posY;
-} Case;
+}Case;
 
 #endif
