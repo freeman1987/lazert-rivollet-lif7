@@ -4,4 +4,3 @@
 *   Thibault LAZERT et Mickael RIVOLLET     *
 *                                           *
 *********************************************
-
