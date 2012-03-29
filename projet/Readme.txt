@@ -4,3 +4,6 @@
 *   Thibault LAZERT et Mickael RIVOLLET     *
 *                                           *
 *********************************************
+
+Pour compiler le programme :
+    make
