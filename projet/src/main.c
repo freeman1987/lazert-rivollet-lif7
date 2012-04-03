@@ -46,14 +46,15 @@ int main ()
 
     // make sure SDL cleans up before exit
     atexit(SDL_Quit);
-    dessineCase(-160,230);
-    dessineCase(-160,-230);
-    dessineCase(-160+UNITE_X,230-UNITE_Y);
-    dessineCase(-160-UNITE_X,230+UNITE_Y);
-    dessineCase(-160-UNITE_X,230-UNITE_Y);
-    dessineCase(-160,230-2*UNITE_Y);
-    dessineCase(-160,230+2*UNITE_Y);
-    dessineCase(-105.5,259.5);
+    dessinepion1(0,0);
+    dessineCase(0,0);
+    dessineCase(1+55.5,1+30.5);
+    dessineCase(1+55.5,1-30.5);
+    dessineCase(1-55.5,1+30.5);
+    dessineCase(1-55.5,1-30.5);
+    dessineCase(1-2*55.5,1);
+    dessineCase(1-2*55.5,1-2*30.5);
+
     dessinepion1(160,230);
     dessinepion1(-160,230+2*UNITE_Y);
     dessinepion1(197.5,267.5);
