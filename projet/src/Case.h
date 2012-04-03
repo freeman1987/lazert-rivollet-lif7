@@ -73,7 +73,7 @@ int getAccessible(const Case* c);
 
     @return numero du joueur
 */
-int getjoueur(const Case* c);
+int getJoueur(const Case* c);
 
 
 #endif
