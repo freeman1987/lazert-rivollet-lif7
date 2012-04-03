@@ -64,7 +64,7 @@ void dessinepion2(int posX,int posY)
 
         SDL_Flip(screen);
 }
-void dessineTerrain(int posX,int posY)
+void dessineCase(int posX,int posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
