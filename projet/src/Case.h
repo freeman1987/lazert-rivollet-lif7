@@ -56,4 +56,14 @@ void setPos(Case* c, int x, int y);
 */
 int getLibre(const Case* c);
 
+/**
+    @brief Savoir si une case est accessible
+
+    @param [IN] case : pointeur sur case
+
+    @return 1 si la case et accessible et 0 sinon
+*/
+int getAccessible(const Case* c);
+
+
 #endif
