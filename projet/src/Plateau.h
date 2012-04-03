@@ -16,4 +16,5 @@ typedef struct
 	Case** support;
 } Plateau;
 
+
 #endif

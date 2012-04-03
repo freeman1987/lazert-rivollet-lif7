@@ -1,6 +1,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "Case.h"
+
+Case* caseInit()
+{
+    Case* c;
+    c = (Case *) malloc(sizeof(Case));
+    if(c==0)
+    {
+        printf("Erreur d'allocation pour une case.");
+        exit(-1);
+    }
+
+    return c;
+}
+
+/**
+    @brief [PRIVEE] Rendre libre ou non une case
+    @param c : pointeur sur la case a modifier
+    @param val : booléen : libre ou non
+    @return void
+*/
+void setLibre(Case* c, int val)
+{
+    c->libre = val;
+}
+
 void changeJoueur(Case* c, int joueur)
 {
     if(joueur==0) /* liberer la case */
@@ -15,7 +41,7 @@ void changeJoueur(Case* c, int joueur)
     }
 }
 
-void setPos(const Case* c, int x, int y)
+void setPos(Case* c, int x, int y)
 {
     if(x<0 || y<0)
     {
@@ -25,20 +51,6 @@ void setPos(const Case* c, int x, int y)
 
     c->posX = x;
     c->posY = y;
-}
-
-
-/**
-    @brief [PRIVEE] Rendre libre ou non une case
-
-    @param c : pointeur sur la case a modifier
-    @param val : booléen : libre ou non
-
-    @return void
-*/
-void setLibre(Case* c, int val)
-{
-    c->libre = val;
 }
 
 
