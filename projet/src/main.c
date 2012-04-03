@@ -6,18 +6,27 @@
 
 #include <SDL/SDL.h>
 #include <SDL_image.h>
+   SDL_Surface* rubis;
+   SDL_Surface* screen;
 
 void dessineRubi(int posX,int posY);
 void dessinePerle(int posX,int posY);
 
 int main ()
 {
-     SDL_Surface* screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+    rubis=IMG_Load(PION_JOUEUR_1);
+    screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
     if ( !screen )
     {
-        printf("Unable to set 640x480 video: %s\n", SDL_GetError());
+        printf("Unable to set 1100X800 video: %s\n", SDL_GetError());
         return 1;
     }
+    if (!rubis)
+    {
+        printf("Unable to load image: %s\n", SDL_GetError());
+        return 1;
+    }
+
      // clear screen
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
     // initialize SDL video
@@ -26,10 +35,11 @@ int main ()
         printf( "Unable to init SDL: %s\n", SDL_GetError() );
         return 1;
     }
-        dessineRubi(1,2);
-        dessinePerle(160,230);
+
     // make sure SDL cleans up before exit
     atexit(SDL_Quit);
+    dessineRubi(160,230);
+    dessineRubi(1,2);
 
     // create a new window
     // program main loop
@@ -79,57 +89,27 @@ int main ()
 
 void dessineRubi(int posX,int posY)
 {
-    SDL_Surface* screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
-    if ( !screen )
-    {
-        printf("Unable to set 640x480 video: %s\n", SDL_GetError());
-        return 1;
-    }
-
      // load an image
-    SDL_Surface* bmp = SDL_LoadBMP("cb.bmp");
-    SDL_Surface* rubis = IMG_Load(PION_JOUEUR_1);
-    if (!bmp)
-    {
-        printf("Unable to load bitmap: %s\n", SDL_GetError());
-        return 1;
-    }
-    if (!rubis)
-    {
-        printf("Unable to load bitmap: %s\n", SDL_GetError());
-        return 1;
-    }
 
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((screen->w - bmp->w) / 2)+posX;
-    dstrect.y = ((screen->h - bmp->h) / 2)+posY;
+    dstrect.x = ((screen->w - rubis->w) / 2)+posX;
+    dstrect.y = ((screen->h - rubis->h) / 2)+posY;
     // draw bitmap
-        SDL_BlitSurface(bmp, 0, screen, &dstrect);
         SDL_BlitSurface(rubis, 0, screen, &dstrect);
         // finally, update the screen :)
 
-        SDL_FreeSurface(bmp);
+
         SDL_Flip(screen);
 }
 void dessinePerle(int posX,int posY)
 {
-    SDL_Surface* screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
-    if ( !screen )
-    {
-        printf("Unable to set 640x480 video: %s\n", SDL_GetError());
-        return 1;
-    }
+
 
      // load an image
-    SDL_Surface* bmp = SDL_LoadBMP("cb.bmp");
-    SDL_Surface* rubis = IMG_Load(PION_JOUEUR_2);
-    if (!bmp)
-    {
-        printf("Unable to load bitmap: %s\n", SDL_GetError());
-        return 1;
-    }
-    if (!rubis)
+    SDL_Surface* Perle = IMG_Load(PION_JOUEUR_2);
+
+    if (!Perle)
     {
         printf("Unable to load bitmap: %s\n", SDL_GetError());
         return 1;
@@ -137,13 +117,11 @@ void dessinePerle(int posX,int posY)
 
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((screen->w - bmp->w) / 2)+posX;
-    dstrect.y = ((screen->h - bmp->h) / 2)+posY;
+    dstrect.x = ((screen->w - Perle->w) / 2)+posX;
+    dstrect.y = ((screen->h - Perle->h) / 2)+posY;
     // draw bitmap
-        SDL_BlitSurface(bmp, 0, screen, &dstrect);
-        SDL_BlitSurface(rubis, 0, screen, &dstrect);
+        SDL_BlitSurface(Perle, 0, screen, &dstrect);
         // finally, update the screen :)
 
-        SDL_FreeSurface(bmp);
         SDL_Flip(screen);
 }
