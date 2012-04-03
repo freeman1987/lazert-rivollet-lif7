@@ -77,3 +77,41 @@ void dessineCase(int posX,int posY)
         SDL_Flip(screen);
 }
 
+
+void lirePlateau(Plateau* p, const char filename[])
+{
+    FILE* f;
+	int lecture;
+	int i, capacite, x, y;
+
+    f = fopen(filename, "r");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s", filename);
+        exit(-1);
+    }
+
+    lecture = fscanf( f , "%d", &capacite);
+    if(lecture!=1)
+    {
+        printf("Erreur de lecture de la taille du plateau.");
+        exit(-1);
+    }
+
+    plateauInit(p, capacite);
+
+    for(i=0;i<capacite;i++)
+    {
+        lecture = fscanf(f, "\n%d,%d", &x, &y);
+        if(lecture != 2)
+        {
+            printf("Erreur de lecture de la case.\n");
+        }
+        else
+        {
+            p->support[i] = caseInit();
+            setPos(p->support[i], x, y);
+        }
+    }
+    fclose(f);
+}
