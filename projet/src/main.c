@@ -6,23 +6,18 @@
 
 #include <SDL/SDL.h>
 #include <SDL_image.h>
-    SDL_Surface* rubis;
-    SDL_Surface* Perle;
-    SDL_Surface* screen;
-    SDL_Surface* case_vide;
-void dessineRubi(int posX,int posY);
-void dessinePerle(int posX,int posY);
-void dessineTerrain(int posX,int posY);
+
+
 int main ()
 {
-    Perle=IMG_Load(PION_JOUEUR_2);
-    if ( !Perle )
+    pion2=IMG_Load(PION_JOUEUR_2);
+    if ( !pion2 )
     {
         printf("Unable to set 1100X800 video: %s\n", SDL_GetError());
         return 1;
     }
-    rubis=IMG_Load(PION_JOUEUR_1);
-    if ( !rubis )
+    pion1=IMG_Load(PION_JOUEUR_1);
+    if ( !pion1 )
     {
         printf("Unable to load 1100X800 image: %s\n", SDL_GetError());
         return 1;
@@ -53,11 +48,16 @@ int main ()
     atexit(SDL_Quit);
     dessineTerrain(-160,230);
     dessineTerrain(-160,-230);
-    dessineTerrain(-105.5,200.5);
+    dessineTerrain(-160+UNITE_X,230-UNITE_Y);
+    dessineTerrain(-160-UNITE_X,230+UNITE_Y);
+    dessineTerrain(-160-UNITE_X,230-UNITE_Y);
+    dessineTerrain(-160,230-2*UNITE_Y);
+    dessineTerrain(-160,230+2*UNITE_Y);
     dessineTerrain(-105.5,259.5);
-    dessineRubi(160,230);
-    dessineRubi(197.5,267.5);
-    dessinePerle(-160,230);
+    dessinepion1(160,230);
+    dessinepion1(-160,230+2*UNITE_Y);
+    dessinepion1(197.5,267.5);
+    dessinepion2(-160,230);
 
 
     // create a new window
@@ -96,43 +96,5 @@ int main ()
     // all is well ;)
     printf("Exited cleanly\n");
     return 0;
-}
-
-void dessineRubi(int posX,int posY)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = ((screen->w - rubis->w) / 2)+posX;
-    dstrect.y = ((screen->h - rubis->h) / 2)+posY;
-    // draw bitmap
-        SDL_BlitSurface(rubis, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-
-        SDL_Flip(screen);
-}
-void dessinePerle(int posX,int posY)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = ((screen->w - Perle->w) / 2)+posX;
-    dstrect.y = ((screen->h - Perle->h) / 2)+posY;
-    // draw bitmap
-        SDL_BlitSurface(Perle, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-        SDL_Flip(screen);
-}
-void dessineTerrain(int posX,int posY)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = ((screen->w - case_vide->w) / 2)+posX;
-    dstrect.y = ((screen->h - case_vide->h) / 2)+posY;
-    // draw bitmap
-        SDL_BlitSurface(case_vide, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-        SDL_Flip(screen);
 }
 
