@@ -69,3 +69,13 @@ int getJoueur(const Case* c)
 {
     return c->joueur;
 }
+
+int getX(const Case* c)
+{
+    return c->posX;
+}
+
+int getY(const Case* c)
+{
+    return c->posY;
+}
