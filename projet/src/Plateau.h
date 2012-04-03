@@ -33,9 +33,43 @@ void plateauInit(Plateau* p, int capacite);
 */
 int getPlacesLibres(const Plateau* p);
 
+/** \brief Affiche toutes les pièces du plateau
+ *
+ * \param [in] p : pointeur sur plateau
+
+ * \return void
+ *
+ */
 void affichePiece(Plateau* p);
 
+/** \brief Dissine le pion du joueur 1 à une position donnée
+ *
+ * \param [in] posX : position selon l'axe X
+ * \param [in] posY : position selon l'axe Y
+
+ * \return void
+ *
+ */
 void dessinepion1(int posX,int posY);
+
+/** \brief Dissine le pion du joueur 2 à une position donnée
+ *
+ * \param [in] posX : position selon l'axe X
+ * \param [in] posY : position selon l'axe Y
+
+ * \return void
+ *
+ */
 void dessinepion2(int posX,int posY);
+
+/** \brief dessine une case du terrain à une position donnée
+ *
+ * \param [in] posX : position selon l'axe X
+ * \param [in] posY : position selon l'axe Y
+
+ * \return void
+ *
+ */
 void dessineTerrain(int posX,int posY);
+
 #endif
