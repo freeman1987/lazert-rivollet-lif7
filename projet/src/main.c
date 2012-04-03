@@ -50,20 +50,12 @@ int main ()
 
     // make sure SDL cleans up before exit
     atexit(SDL_Quit);
-    dessinepion1(0,0);
-    dessineCase(0,0);
-    dessineCase(1+55.5,1+30.5);
-    dessineCase(1+55.5,1-30.5);
-    dessineCase(1-55.5,1+30.5);
-    dessineCase(1-55.5,1-30.5);
-    dessineCase(1-2*55.5,1);
-    dessineCase(1-2*55.5,1-2*30.5);
 
     dessinepion1(160,230);
     dessinepion1(-160,230+2*UNITE_Y);
     dessinepion1(197.5,267.5);
     dessinepion2(-160,230);
-
+    affichePlateau(&jeu);
 
     // create a new window
     // program main loop
