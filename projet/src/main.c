@@ -10,6 +10,10 @@
 
 int main ()
 {
+    Plateau jeu;
+
+    lirePlateau(&jeu,"../data/Plateau1.txt");
+
     pion2=IMG_Load(PION_JOUEUR_2);
     if ( !pion2 )
     {
