@@ -66,4 +66,14 @@ int getLibre(const Case* c);
 int getAccessible(const Case* c);
 
 
+/**
+    @brief Retourne le joueur qui a un pion sur la case
+
+    @param c : pointeur sur case
+
+    @return numero du joueur
+*/
+int getjoueur(const Case* c);
+
+
 #endif
