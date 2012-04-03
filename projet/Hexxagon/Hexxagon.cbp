@@ -23,7 +23,13 @@
 		<Linker>
 			<Add option="`sdl-config --libs` -lSDL_image" />
 		</Linker>
+		<Unit filename="../src/Case.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../src/Case.h" />
+		<Unit filename="../src/Plateau.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../src/Plateau.h" />
 		<Unit filename="../src/main.c">
 			<Option compilerVar="CC" />
