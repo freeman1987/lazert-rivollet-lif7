@@ -17,6 +17,12 @@ typedef struct
 	int posY;
 }Case;
 
+/**
+    @brief alloue de la memoire dans le tas et retourne l'adresse
+
+    @return pointeur sur case
+*/
+Case* caseInit();
 
 /**
     @brief Definit quel joueur a une piece sur la case
@@ -38,7 +44,7 @@ void changeJoueur(Case* c, int joueur);
 
     @return void
 */
-void setPos(const Case* c, int x, int y);
+void setPos(Case* c, int x, int y);
 
 
 /**
