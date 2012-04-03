@@ -7,7 +7,7 @@
 void plateauInit(Plateau* p, int capa)
 {
     p->capacite = capa;
-    p->libre = 0;
+    p->places_libre = 0;
 
     p->support = (Case **) malloc(sizeof(Case)*capa);
     if(p->support==0)
