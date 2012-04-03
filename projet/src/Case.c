@@ -59,3 +59,8 @@ int getLibre(const Case* c)
     return c->libre;
 }
 
+
+int getAccessible(const Case* c)
+{
+    return c->accessible;
+}
