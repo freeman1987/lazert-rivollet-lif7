@@ -20,6 +20,11 @@ typedef struct
 
 /**
     @brief Initialise le plateau
+
+    @param p : pointeur sur le plateau
+    @param capacite : nombre max de cases sur le plateau
+
+    @return void
 */
 void plateauInit(Plateau* p, int capacite);
 
