@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "parametres.h"
 #include "Plateau.h"
 
 #include <SDL/SDL.h>
