@@ -77,4 +77,14 @@ void dessinepion2(int posX,int posY);
  */
 void dessineTerrain(int posX,int posY);
 
+/**
+    @brief Lire un fichier pour charger un plateau
+
+    @param p : pointeur sur la plateau a remplir
+    @param filename : nom du fichier à charger
+
+    @return void
+*/
+void lirePlateau(Plateau* p, const char filename[]);
+
 #endif
