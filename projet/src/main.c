@@ -69,17 +69,9 @@ int main ()
             } // end switch
         } // end of message processing
 
-        // DRAWING STARTS HERE
-
-
-
-
-        // DRAWING ENDS HERE
-
-
     } // end main loop
 
-    // free loaded bitmap
+
 
 
     // all is well ;)
@@ -89,8 +81,6 @@ int main ()
 
 void dessineRubi(int posX,int posY)
 {
-     // load an image
-
     // centre the bitmap on screen
     SDL_Rect dstrect;
     dstrect.x = ((screen->w - rubis->w) / 2)+posX;
@@ -104,9 +94,6 @@ void dessineRubi(int posX,int posY)
 }
 void dessinePerle(int posX,int posY)
 {
-
-
-     // load an image
     SDL_Surface* Perle = IMG_Load(PION_JOUEUR_2);
 
     if (!Perle)
