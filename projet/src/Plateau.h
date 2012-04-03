@@ -75,7 +75,7 @@ void dessinepion2(int posX,int posY);
  * \return void
  *
  */
-void dessineTerrain(int posX,int posY);
+void dessineCase(float posX,float posY);
 
 /**
     @brief Lire un fichier pour charger un plateau

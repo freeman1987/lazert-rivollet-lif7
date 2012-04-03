@@ -34,5 +34,4 @@
     SDL_Surface* screen;
     SDL_Surface* case_vide;
 
-
 #endif
