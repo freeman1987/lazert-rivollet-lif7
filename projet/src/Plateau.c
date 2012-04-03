@@ -25,6 +25,14 @@ int getPlacesLibres(const Plateau* p)
     return p->places_libres;
 }
 
+void affichePlateau(Plateau* p)
+{
+    int i;
+    for(i=0;i<p->capacite;i++)
+    {
+        dessineCase(54.5*getX(p->support[i]),29.5*getY(p->support[i]));
+    }
+}
 void affichePiece(Plateau* p)
 {
     int i;
@@ -68,8 +76,8 @@ void dessineCase(float posX,float posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((screen->w - case_vide->w) / 2)+posX;
-    dstrect.y = ((screen->h - case_vide->h) / 2)+posY;
+    dstrect.x = posX;
+    dstrect.y = posY;
     // draw bitmap
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
         // finally, update the screen :)
