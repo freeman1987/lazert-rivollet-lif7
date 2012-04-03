@@ -77,4 +77,24 @@ int getAccessible(const Case* c);
 int getJoueur(const Case* c);
 
 
+/**
+    @brief Retourne la coordonnee X
+
+    @param c : pointeur sur case
+
+    @return coordonnee entiere
+*/
+int getX(const Case* c);
+
+
+/**
+    @brief Retourne la coordonnee Y
+
+    @param c : pointeur sur case
+
+    @return coordonnee entiere
+*/
+int getY(const Case* c);
+
+
 #endif
