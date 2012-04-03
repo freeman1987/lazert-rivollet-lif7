@@ -17,4 +17,19 @@ typedef struct
 } Plateau;
 
 
+/**
+    @brief Initialise le plateau
+*/
+void plateauInit(Plateau* p, int capacite);
+
+
+/**
+    @brief Retourne le nombre de places libres sur le plateau
+
+    @param [IN] p : pointeur sur plateau
+
+    @return nombre de places
+*/
+int getPlacesLibres(const Plateau* p);
+
 #endif
