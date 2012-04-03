@@ -64,3 +64,8 @@ int getAccessible(const Case* c)
 {
     return c->accessible;
 }
+
+int getjoueur(const Case* c)
+{
+    return c->joueur;
+}
