@@ -1,6 +1,7 @@
 #ifndef _PLATEAU
 #define _PLATEAU
 
+#include "parametres.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -32,4 +33,9 @@ void plateauInit(Plateau* p, int capacite);
 */
 int getPlacesLibres(const Plateau* p);
 
+void affichePiece(Plateau* p);
+
+void dessinepion1(int posX,int posY);
+void dessinepion2(int posX,int posY);
+void dessineTerrain(int posX,int posY);
 #endif

@@ -21,7 +21,7 @@
 			<Add option="`sdl-config --cflags`" />
 		</Compiler>
 		<Linker>
-			<Add option="`sdl-config --libs` -lSDL_image" />
+			<Add option="`sdl-config --libs`-lSDL_image" />
 		</Linker>
 		<Unit filename="../src/Case.c">
 			<Option compilerVar="CC" />

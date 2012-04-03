@@ -1,5 +1,6 @@
 #ifndef _CASE
 #define _CASE
+#include "parametres.h"
 #include <stdlib.h>
 #include <stdio.h>
 
