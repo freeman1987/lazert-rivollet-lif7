@@ -83,6 +83,10 @@ int sourisDansCase(int sx, int sy, const Case* c)
     cx = c->posX * UNITE_X + DECAL_X;
     cy = c->posY * UNITE_Y + DECAL_Y;
     dist = sqrt(pow(cx - sx,2) + pow(cy - sy,2));
+    if(dist<=min(UNITE_X,UNITE_Y))
+        return 1;
+    else
+        return 0;
 }
 
 
