@@ -31,7 +31,7 @@ void affichePlateau(Plateau* p)
     int i;
     for(i=0;i<p->capacite;i++)
     {
-        dessineCase(UNITE_X*(getX(p->support[i])+DECAL_X),UNITE_Y*(getY(p->support[i])+DECAL_Y));
+        dessineCase(UNITE_X*(getX(p->support[i])+DECAL_X),UNITE_Y*(getY(p->support[i])+DECAL_Y),0);
     }
 }
 void affichePiece(Plateau* p)
@@ -66,14 +66,17 @@ void dessinepion2(int posX,int posY)
     // draw bitmap
         SDL_BlitSurface(pion2, 0, screen, &dstrect);
 }
-void dessineCase(float posX,float posY)
+void dessineCase(float posX,float posY,int C)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
     dstrect.x = (int)posX;
     dstrect.y = (int)posY;
     // draw bitmap
+    if(C==0)
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
+    else
+        SDL_BlitSurface(case_jouable, 0, screen, &dstrect);
 }
 
 int sourisDansCase(int sx, int sy, const Case* c)
@@ -150,4 +153,6 @@ void lirePlateau(Plateau* p, const char filename[])
 void selectionneCase(Case* c,int sx, int sy,const Plateau p)
 {
     if(getLibre(c)==1)
+        printf("conerie");
+
 }
