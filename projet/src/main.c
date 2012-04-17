@@ -70,15 +70,20 @@ int main ()
 
 
 
+    int sourisx;
+    int sourisy;
 
     /* boucle principale du programme */
     int i = 0;
     int done = 0;
     while (done==0)
     {
-        i += 1;
-         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-          affichePlateau(&jeu);
+
+        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+
+        /* afficher le terrain de jeu */
+        affichePlateau(&jeu);
+
         /* détection des événements */
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -97,15 +102,33 @@ int main ()
                         /* touche ECHAP */
                         if (event.key.keysym.sym == SDLK_ESCAPE)
                             done = 1;
+
+                        if(event.key.keysym.sym == SDLK_RIGHT)
+                            i += 5;
+
+                        if(event.key.keysym.sym == SDLK_LEFT)
+                            i -= 5;
                         break;
+                    }
+                /* clic de souris */
+                case SDL_MOUSEBUTTONDOWN:
+                    {
+
                     }
             } /* fin du test des événements */
         }
+        /* position de la souris sur l'écran */
+        sourisx = event.motion.x;
+        sourisy = event.motion.y;
 
-        dessinepion1(160+i,230);
-        dessinepion1(-160+i,230+2*UNITE_Y);
-        dessinepion1(197.5+i,267.5);
-        dessinepion2(-160+i,230);
+        if(sourisx<30 && sourisy<30)
+        {
+
+            dessinepion1(160+i,230);
+            dessinepion1(-160+i,230+2*UNITE_Y);
+            dessinepion1(197.5+i,267.5);
+            dessinepion2(-160+i,230);
+        }
 
         SDL_Flip(screen);
 
