@@ -126,5 +126,5 @@ void lirePlateau(Plateau* p, const char filename[]);
  *
  */
 
-void selectionneCase(case* c,int sx, int sy);
+void selectionneCase(case* c,int sx, int sy,const Plateau p);
 #endif
