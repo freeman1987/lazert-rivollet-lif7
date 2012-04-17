@@ -117,4 +117,14 @@ Case* caseSurvollee(int sx, int sy, const Plateau* p);
 */
 void lirePlateau(Plateau* p, const char filename[]);
 
+/** \brief Modifie l'apparence de la case selectionné et des cases adjacentes
+ *
+ * \param c : pointeur sur case
+ * \param sx : position de la souris selon l'axe x
+ * \param sy : position de la souris selon l'axe y
+ * \return void
+ *
+ */
+
+void selectionneCase(case* c,int sx, int sy);
 #endif
