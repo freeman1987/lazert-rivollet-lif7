@@ -12,30 +12,46 @@ int main ()
 {
     Plateau jeu;
 
+    /* on charge le plateau de jeu */
     lirePlateau(&jeu,"../data/Plateau1.txt");
 
-    pion2=IMG_Load(PION_JOUEUR_2);
-    if ( !pion2 )
+    /* on charge les images pour les pions des 2 joueurs */
+    pion1 = IMG_Load(PION_JOUEUR_1);
+    pion2 = IMG_Load(PION_JOUEUR_2);
+
+    /* erreurs de chargement ? */
+    if (!pion1)
     {
-        printf("Unable to set 1100X800 video: %s\n", SDL_GetError());
+        printf("Erreur de chargement du pion du joueur 1 : %s\n", SDL_GetError());
         return 1;
     }
-    pion1=IMG_Load(PION_JOUEUR_1);
-    if ( !pion1 )
+    if (!pion2)
     {
-        printf("Unable to load 1100X800 image: %s\n", SDL_GetError());
+        printf("Erreur de chargement du pion du joueur 2 : %s\n", SDL_GetError());
         return 1;
     }
-    case_vide=IMG_Load(CASE_VIDE);
-    if ( !case_vide )
+
+    /* on charge l'image d'un case (normale et jouable) */
+    case_vide = IMG_Load(CASE_VIDE);
+    case_jouable = IMG_Load(CASE_JOUABLE);
+
+    /* erreurs de chargement ? */
+    if (!case_vide)
     {
-        printf("Unable to set 1100X800 video: %s\n", SDL_GetError());
+        printf("Erreur de chargement de la case vide: %s\n", SDL_GetError());
         return 1;
     }
+    if (!case_jouable)
+    {
+        printf("Erreur de chargement de la case jouable: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    /* on charge l'écran d'affichage */
     screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
-    if ( !screen )
+    if (!screen)
     {
-        printf("Unable to set 1100X800 video: %s\n", SDL_GetError());
+        printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
         return 1;
     }
 
