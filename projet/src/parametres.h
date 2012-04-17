@@ -12,6 +12,8 @@
 	@param CASE_JOUABLE chemin vers l'image de la case d'une autre couleur
 	@param UNITE_X unités pour les coordonnées horizontales
 	@param UNITE_Y unités pour les coordonnées verticales
+	@param DECAL_X décalage du plateau par rapport au haut de l'écran
+	@param DECAL_Y décalage du plateau par rapport au côté gauche de l'écran
 *//*
     Les coordonnées correspondent aux images "case"
     Leur valeur permet d'aligner correctement les hexagones.
@@ -23,6 +25,8 @@
 	#define CASE_JOUABLE "../data/Texture1/Case2.png"
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
+	#define DECAL_X 4
+	#define DECAL_Y 3
 
 /**
     Variables globales pour contenir les images SDL.
