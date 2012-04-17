@@ -80,15 +80,34 @@ int sourisDansCase(int sx, int sy, const Case* c)
 {
     int cx, cy;
     float dist;
-    cx = c->posX * UNITE_X + DECAL_X;
-    cy = c->posY * UNITE_Y + DECAL_Y;
+    cx = (getX(c) + DECAL_X) * UNITE_X + (75/2); /* 75 : dimension du png */
+    cy = (getY(c) + DECAL_Y) * UNITE_Y + (75/2);
     dist = sqrt(pow(cx - sx,2) + pow(cy - sy,2));
-    if(dist<=min(UNITE_X,UNITE_Y))
+
+    /*
+    // affichage pour débeug
+    printf("souris : %u,%u\n",sx,sy);
+    printf("case : %u,%u\n",cx,cy);
+    printf("distance : %f\n",dist);
+    */
+
+    if(dist<=UNITE_Y)
         return 1;
     else
         return 0;
 }
 
+Case* caseSurvollee(int sx, int sy, const Plateau* p)
+{
+    int i;
+    for(i=0;i<p->capacite;i++)
+    {
+        if(sourisDansCase(sx, sy, p->support[i])==1)
+            return p->support[i];
+    }
+    /* aucune case survollée */
+    return 0;
+}
 
 void lirePlateau(Plateau* p, const char filename[])
 {

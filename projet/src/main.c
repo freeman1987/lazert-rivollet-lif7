@@ -86,6 +86,11 @@ int main ()
 
         /* détection des événements */
         SDL_Event event;
+
+        /* position de la souris sur l'écran */
+        sourisx = event.motion.x;
+        sourisy = event.motion.y;
+
         while (SDL_PollEvent(&event))
         {
             /* test des événements */
@@ -113,22 +118,28 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
-
+                        Case* ctemp = caseSurvollee(sourisx,sourisy,&jeu);
+                        if(ctemp!=0)
+                            printf("Case survollée : %d\n",(int) ctemp);
                     }
             } /* fin du test des événements */
         }
-        /* position de la souris sur l'écran */
-        sourisx = event.motion.x;
-        sourisy = event.motion.y;
+
 
         if(sourisx<30 && sourisy<30)
         {
 
             dessinepion1(160+i,230);
+
+        }
+
+        /*if(sourisDansCase(sourisx,sourisy,jeu.support[0])==1)
+        {
             dessinepion1(-160+i,230+2*UNITE_Y);
             dessinepion1(197.5+i,267.5);
             dessinepion2(-160+i,230);
-        }
+        }*/
+
 
         SDL_Flip(screen);
 

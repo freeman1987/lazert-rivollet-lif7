@@ -47,6 +47,15 @@ int getPlacesLibres(const Plateau* p);
  */
 void affichePiece(Plateau* p);
 
+/** \brief Afficher tout le plateau
+ *
+ * \param p plateau à afficher
+ * \return void
+ *
+ */
+
+void affichePlateau(Plateau* p);
+
 /** \brief Dissine le pion du joueur 1 à une position donnée
  *
  * \param [in] posX : position selon l'axe X
@@ -86,6 +95,17 @@ void dessineCase(float posX,float posY);
  *
  */
 int sourisDansCase(int sx, int sy, const Case* c);
+
+/** \brief Détermine quelle case est survollée
+ *
+ * \param sx Position x de la souris
+ * \param sy Position y de la souris
+ * \param p Plateau
+ * \return pointeur sur la case survollée, ou 0 si aucune survollée
+ *
+ */
+
+Case* caseSurvollee(int sx, int sy, const Plateau* p);
 
 /**
     @brief Lire un fichier pour charger un plateau
