@@ -61,8 +61,8 @@ void dessinepion2(int posX,int posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((screen->w - pion2->w) / 2)+posX;
-    dstrect.y = ((screen->h - pion2->h) / 2)+posY;
+    dstrect.x = ((case_vide->w - pion2->w) / 2)+posX;
+    dstrect.y = ((case_vide->h - pion2->h) / 2)+posY;
     // draw bitmap
         SDL_BlitSurface(pion2, 0, screen, &dstrect);
 }
@@ -83,8 +83,8 @@ int sourisDansCase(int sx, int sy, const Case* c)
 {
     int cx, cy;
     float dist;
-    cx = (getX(c) + DECAL_X) * UNITE_X + (75/2); /* 75 : dimension du png */
-    cy = (getY(c) + DECAL_Y) * UNITE_Y + (75/2);
+    cx = (getX(c) + DECAL_X) * UNITE_X + (case_vide->w/2);
+    cy = (getY(c) + DECAL_Y) * UNITE_Y + (case_vide->w/2);
     dist = sqrt(pow(cx - sx,2) + pow(cy - sy,2));
 
     /*
