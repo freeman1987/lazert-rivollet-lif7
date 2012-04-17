@@ -55,16 +55,17 @@ int main ()
         return 1;
     }
 
-     // clear screen
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-    // initialize SDL video
+
+    /* on vide l'écran */
+    SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+    /* on initialise SDL video */
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        printf( "Unable to init SDL: %s\n", SDL_GetError() );
+        printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
         return 1;
     }
 
-    // make sure SDL cleans up before exit
+    /* make sure SDL cleans up before exit */
     atexit(SDL_Quit);
 
     dessinepion1(160,230);
@@ -73,41 +74,37 @@ int main ()
     dessinepion2(-160,230);
     affichePlateau(&jeu);
 
-    // create a new window
-    // program main loop
+    /* boucle principale du programme */
     int done = 0;
     while (done==0)
     {
-        // message processing loop
+        /* détection des événements */
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            // check for messages
+            /* test des événements */
             switch (event.type)
             {
-                // exit if the window is closed
-            case SDL_QUIT:
-                done = 1;
-                break;
-
-                // check for keypresses
-            case SDL_KEYDOWN:
-                {
-                    // exit if ESCAPE is pressed
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
-                        done = 1;
+                /* fermer */
+                case SDL_QUIT:
+                    done = 1;
                     break;
-                }
-            } // end switch
-        } // end of message processing
 
-    } // end main loop
+                /* touche enfoncée */
+                case SDL_KEYDOWN:
+                    {
+                        /* touche ECHAP */
+                        if (event.key.keysym.sym == SDLK_ESCAPE)
+                            done = 1;
+                        break;
+                    }
+            } /* fin du test des événements */
+        }
+
+    } /* fin de la boucle principale */
 
 
-
-
-    // all is well ;)
-    printf("Exited cleanly\n");
+    printf("Sortie du programme --- \n");
     return 0;
 }
 
