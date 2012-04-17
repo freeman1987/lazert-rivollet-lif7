@@ -150,3 +150,10 @@ void lirePlateau(Plateau* p, const char filename[])
     fclose(f);
 }
 
+void (const Plateau* p,Case* c)
+{
+    int pos1;
+    int pos2;
+    pos1[12]={0,2, 0,-2, 1,1 -1,-1, -1,1, 1,-1};
+    pos2[24]={0,4, 0,-4, 2,0, -2,0, 2,2, 3,1 -2,-2, -3,-1, -3,1, -2,2, 3,-1, 2,-2}
+}

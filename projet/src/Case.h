@@ -84,5 +84,5 @@ int getX(const Case* c);
 */
 int getY(const Case* c);
 
-
+int coordonneeCorrespondante(Case* c,int sx,int sy);
 #endif
