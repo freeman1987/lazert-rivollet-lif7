@@ -73,6 +73,8 @@ int main ()
     int sourisx;
     int sourisy;
 
+    Case* caseCliquee = 0;
+
     /* boucle principale du programme */
     int i = 0;
     int done = 0;
@@ -118,9 +120,9 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
-                        Case* ctemp = caseSurvollee(sourisx,sourisy,&jeu);
+                        caseCliquee = caseSurvollee(sourisx,sourisy,&jeu);
                         if(ctemp!=0)
-                            printf("Case survollée : %d\n",(int) ctemp);
+                            printf("Case cliquée : %d\n",(int) caseCliquee);
                     }
             } /* fin du test des événements */
         }
