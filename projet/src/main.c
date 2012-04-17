@@ -121,12 +121,14 @@ int main ()
                 case SDL_MOUSEBUTTONDOWN:
                     {
                         caseCliquee = caseSurvollee(sourisx,sourisy,&jeu);
-                        if(ctemp!=0)
+                        if(caseCliquee!=0)
                             printf("Case cliquée : %d\n",(int) caseCliquee);
                     }
             } /* fin du test des événements */
         }
 
+        if(caseCliquee!=0)
+            dessineCase(UNITE_X*(getX(caseCliquee)+DECAL_X),UNITE_Y*(getY(caseCliquee)+DECAL_Y),1);
 
         if(sourisx<30 && sourisy<30)
         {
