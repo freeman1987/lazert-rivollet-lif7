@@ -30,7 +30,7 @@ void affichePlateau(Plateau* p)
     int i;
     for(i=0;i<p->capacite;i++)
     {
-        dessineCase(54.5*(getX(p->support[i])+4),29.5*(getY(p->support[i])+3));
+        dessineCase(UNITE_X*(getX(p->support[i])+DECAL_X),UNITE_Y*(getY(p->support[i])+DECAL_Y));
     }
 }
 void affichePiece(Plateau* p)
