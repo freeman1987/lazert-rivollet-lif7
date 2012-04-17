@@ -146,3 +146,8 @@ void lirePlateau(Plateau* p, const char filename[])
     }
     fclose(f);
 }
+
+void selectionneCase(Case* c,int sx, int sy,const Plateau p)
+{
+    if(getLibre(c)==1)
+}

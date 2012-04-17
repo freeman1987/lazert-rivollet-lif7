@@ -8,9 +8,6 @@ typedef struct
 {
     /* savoir si la case est libre ou occupée par un joueur */
 	int libre;
-	/* définit si une case est accessible ou non
-	(par exemple pour faire des trous sur le plateau) */
-	int accessible;
 	/* numéro du joueur qui possède le pion */
 	int joueur;
 	/* coordonnées du pion sur le support */
@@ -53,18 +50,9 @@ void setPos(Case* c, int x, int y);
 
     @param [IN] case : pointeur sur case
 
-    @return 1 si la case et libre et 0 sinon
+    @return 1 si la case est libre et 0 sinon
 */
 int getLibre(const Case* c);
-
-/**
-    @brief Savoir si une case est accessible
-
-    @param [IN] case : pointeur sur case
-
-    @return 1 si la case et accessible et 0 sinon
-*/
-int getAccessible(const Case* c);
 
 
 /**
