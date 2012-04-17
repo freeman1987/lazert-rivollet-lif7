@@ -9,7 +9,7 @@
 	@param PION_JOUEUR_1 chemin vers l'image du pion 1
 	@param PION_JOUEUR_2 chemin vers l'image du pion 2
 	@param CASE_VIDE chemin vers l'image de la case
-	@param CASE_JOUEABLE chemin vers l'image de la case d'une autre couleur
+	@param CASE_JOUABLE chemin vers l'image de la case d'une autre couleur
 	@param UNITE_X unités pour les coordonnées horizontales
 	@param UNITE_Y unités pour les coordonnées verticales
 *//*
