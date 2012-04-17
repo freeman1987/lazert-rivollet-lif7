@@ -73,3 +73,11 @@ int getY(const Case* c)
 {
     return c->posY;
 }
+
+int coordonneeCorrespondante(Case* c,int sx,int sy)
+{
+    if((c->posX==sx)&&(c->posY==sy))
+        return 1;
+    else
+        return 0;
+}
