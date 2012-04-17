@@ -55,10 +55,6 @@ void dessinepion1(int posX,int posY)
     dstrect.y = ((screen->h - pion1->h) / 2)+posY;
     // draw bitmap
         SDL_BlitSurface(pion1, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-
-        SDL_Flip(screen);
 }
 void dessinepion2(int posX,int posY)
 {
@@ -68,9 +64,6 @@ void dessinepion2(int posX,int posY)
     dstrect.y = ((screen->h - pion2->h) / 2)+posY;
     // draw bitmap
         SDL_BlitSurface(pion2, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-        SDL_Flip(screen);
 }
 void dessineCase(float posX,float posY)
 {
@@ -80,9 +73,6 @@ void dessineCase(float posX,float posY)
     dstrect.y = posY;
     // draw bitmap
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
-        // finally, update the screen :)
-
-        SDL_Flip(screen);
 }
 
 

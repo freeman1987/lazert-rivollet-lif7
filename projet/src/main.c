@@ -68,16 +68,17 @@ int main ()
     /* make sure SDL cleans up before exit */
     atexit(SDL_Quit);
 
-    dessinepion1(160,230);
-    dessinepion1(-160,230+2*UNITE_Y);
-    dessinepion1(197.5,267.5);
-    dessinepion2(-160,230);
-    affichePlateau(&jeu);
+
+
 
     /* boucle principale du programme */
+    int i = 0;
     int done = 0;
     while (done==0)
     {
+        i += 1;
+         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+          affichePlateau(&jeu);
         /* détection des événements */
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -101,8 +102,14 @@ int main ()
             } /* fin du test des événements */
         }
 
-    } /* fin de la boucle principale */
+        dessinepion1(160+i,230);
+        dessinepion1(-160+i,230+2*UNITE_Y);
+        dessinepion1(197.5+i,267.5);
+        dessinepion2(-160+i,230);
 
+        SDL_Flip(screen);
+
+    } /* fin de la boucle principale */
 
     printf("Sortie du programme --- \n");
     return 0;
