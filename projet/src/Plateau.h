@@ -84,7 +84,7 @@ void dessinepion2(int posX,int posY);
  * \return void
  *
  */
-void dessineCase(float posX,float posY);
+void dessineCase(float posX,float posY,int C);
 
 /** \brief Détermine si la souris est dans un cercle d'une case
  *
@@ -126,5 +126,5 @@ void lirePlateau(Plateau* p, const char filename[]);
  *
  */
 
-void selectionneCase(case* c,int sx, int sy,const Plateau p);
+void selectionneCase(Case* c,int sx, int sy,const Plateau p);
 #endif
