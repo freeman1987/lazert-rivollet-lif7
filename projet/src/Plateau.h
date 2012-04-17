@@ -77,6 +77,16 @@ void dessinepion2(int posX,int posY);
  */
 void dessineCase(float posX,float posY);
 
+/** \brief Détermine si la souris est dans un cercle d'une case
+ *
+ * \param sx position x de la souris
+ * \param sy position y de la souris
+ * \param c Case à tester
+ * \return booléen
+ *
+ */
+int sourisDansCase(int sx, int sy, const Case* c);
+
 /**
     @brief Lire un fichier pour charger un plateau
 

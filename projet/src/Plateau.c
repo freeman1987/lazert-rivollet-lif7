@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "Case.h"
 #include "Plateau.h"
@@ -73,6 +74,15 @@ void dessineCase(float posX,float posY)
     dstrect.y = (int)posY;
     // draw bitmap
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
+}
+
+int sourisDansCase(int sx, int sy, const Case* c)
+{
+    int cx, cy;
+    float dist;
+    cx = c->posX * UNITE_X + DECAL_X;
+    cy = c->posY * UNITE_Y + DECAL_Y;
+    dist = sqrt(pow(cx - sx,2) + pow(cy - sy,2));
 }
 
 
