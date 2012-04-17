@@ -30,7 +30,7 @@ void affichePlateau(Plateau* p)
     int i;
     for(i=0;i<p->capacite;i++)
     {
-        dessineCase(54.5*(getX(p->support[i])+4),29.5*(getY(p->support[i])+4));
+        dessineCase(54.5*(getX(p->support[i])+4),29.5*(getY(p->support[i])+3));
     }
 }
 void affichePiece(Plateau* p)
@@ -69,8 +69,8 @@ void dessineCase(float posX,float posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = posX;
-    dstrect.y = posY;
+    dstrect.x = (int)posX;
+    dstrect.y = (int)posY;
     // draw bitmap
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
 }
