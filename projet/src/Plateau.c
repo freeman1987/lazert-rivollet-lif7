@@ -33,7 +33,7 @@ int getPlacesLibres(const Plateau* p)
 
 void decrementePlacesLibres(Plateau* p)
 {
-    p->capacite -= 1;
+    p->places_libres -= 1;
 }
 
 void affichePlateau(Plateau* p)
