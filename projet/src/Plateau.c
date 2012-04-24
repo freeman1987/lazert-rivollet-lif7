@@ -177,6 +177,7 @@ void casesAutour(const Plateau* p,Case* c)
         for(j=0;j<12;j+=2)
         {
              printf("\tsous boucle %d\n",j);
+             printf("\tdecalage : %d+%d=%d,%d+%d=%d\n",cx,pos1[j],(cx+pos1[j]),cy,pos1[j+1],(cy+pos1[j+1]));
              /* allumer cette case qui se touve juste à côté de c */
              if(coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)
              {
