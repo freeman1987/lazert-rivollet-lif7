@@ -17,7 +17,7 @@ const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,
 void plateauInit(Plateau* p, int capa)
 {
     p->capacite = capa;
-    p->places_libres = 0;
+    p->places_libres = capa;
 
     p->support = (Case **) malloc(sizeof(Case)*capa);
     if(p->support==0)
@@ -31,6 +31,11 @@ void plateauInit(Plateau* p, int capa)
 int getPlacesLibres(const Plateau* p)
 {
     return p->places_libres;
+}
+
+void decrementePlacesLibres(Plateau* p)
+{
+    p->capacite -= 1;
 }
 
 void affichePlateau(Plateau* p)
