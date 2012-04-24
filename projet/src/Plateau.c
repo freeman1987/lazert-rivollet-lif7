@@ -6,18 +6,26 @@
 #include "Plateau.h"
 #include <SDL/SDL.h>
 #include <SDL_image.h>
-const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
-const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
+
  /*
+    VALEURS POUR TROUVER DES CASES ADJACENTES A UNE CASE
     les valeurs du tableau pos1 et du tableaû pos2 sont à lire 2 par 2
-    pos1 : les valeurs correspondent à des décalages par rapport à C
+    pos1 : les valeurs correspondent à des décalages d'une case par rapport à C
     pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
     */
+const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
+const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
+
 
 void plateauInit(Plateau* p, int capa)
 {
+    /* nombre de places au total sur la plateau */
     p->capacite = capa;
-    p->places_libres = capa-(p->nb_piece_mise);
+    p->nb_piece_mise = 0;
+    p->places_libres = capa;
+
+    p->score_j1 = 0;
+    p->score_j2 = 0;
 
     p->support = (Case **) malloc(sizeof(Case)*capa);
     if(p->support==0)
@@ -26,6 +34,7 @@ void plateauInit(Plateau* p, int capa)
         exit(-1);
     }
 }
+
 int getPlacesLibres(Plateau* p)
 {
     return p->places_libres;
@@ -86,6 +95,7 @@ void affichePlateau(Plateau* p)
         dessineCase(UNITE_X*(getX(p->support[i])+DECAL_X),UNITE_Y*(getY(p->support[i])+DECAL_Y),0);
     }
 }
+
 void affichePiece(Plateau* p)
 {
     int i;
@@ -109,7 +119,8 @@ void dessinepion1(int posX,int posY)
     // draw bitmap
         SDL_BlitSurface(pion1, 0, screen, &dstrect);
 }
-void dessinepion2(int posX,int posY)
+
+void dessinepion2(int posX, int posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
@@ -118,6 +129,7 @@ void dessinepion2(int posX,int posY)
     // draw bitmap
         SDL_BlitSurface(pion2, 0, screen, &dstrect);
 }
+
 void dessineCase(float posX,float posY,int C)
 {
     // centre the bitmap on screen
@@ -172,9 +184,9 @@ void lirePlateau(Plateau* p, const char filename[])
 {
     FILE* f;
 	int lecture;
-	int i, capacite, x, y, j,scor_j1,scor_j2;
-	scor_j1=0;
-	scor_j2=0;
+	int i, capacite, x, y, j, scor_j1, scor_j2;
+	scor_j1 = 0;
+	scor_j2 = 0;
 
     f = fopen(filename, "r");
     if (f==NULL)
@@ -190,8 +202,12 @@ void lirePlateau(Plateau* p, const char filename[])
         exit(-1);
     }
 
+    /* on initialise la plateau en allouant le bon nombre de cases */
     plateauInit(p, capacite);
 
+    /* on lit ensuite toutes les cases :
+    chaque ligne du fichier texte comprend 3 valeurs séparées par des virgules :
+    coordonnée x, coordonnée y, joueur (0 pour aucun, 1 ou 2) */
     for(i=0;i<capacite;i++)
     {
         lecture = fscanf(f, "\n%d,%d,%d", &x, &y, &j);
@@ -201,17 +217,27 @@ void lirePlateau(Plateau* p, const char filename[])
         }
         else
         {
+            /* on crée une case */
             p->support[i] = caseInit();
             setPos(p->support[i], x, y);
             changeJoueur(p, p->support[i], j);
+            /* si il y a un joueur dans la case, on diminue le nombre de cases libres */
+            if(j!=0)
+            {
+                 p->nb_piece_mise += 1;
+                 p->places_libres -= 1;
+            }
+
+            if(j==1)
+                scor_j1++;
+            else if(j==2)
+                scor_j2++;
         }
-        if(j==1)
-            scor_j1++;
-        else if(j==2)
-            scor_j2++;
     }
-    p->score_j1=scor_j1;
-    p->score_j2=scor_j2;
+
+    p->score_j1 = scor_j1;
+    p->score_j2 = scor_j2;
+
     fclose(f);
 }
 
@@ -249,6 +275,7 @@ void casesAutour(const Plateau* p,Case* c)
         }
     }
 }
+
 int testCaseProche(int x,int y)
 {
     int i;
@@ -269,7 +296,6 @@ void changeCasesAutour(Plateau* p,Case* c,int joueur)
 {
     int i,j; /* pour les boucles */
     int cx, cy; /* coordonnées de c */
-    int x, y; /* coordonnées de ctemp */
     Case* ctemp;
 
     cx = getX(c);
@@ -279,16 +305,23 @@ void changeCasesAutour(Plateau* p,Case* c,int joueur)
     for(i=0;i<(p->capacite);i++)
     {
         ctemp = p->support[i];
-        x = UNITE_X*(getX(ctemp)+DECAL_X);
-        y = UNITE_Y*(getY(ctemp)+DECAL_Y);
         for(j=0;j<12;j+=2)
         {
              /* allumer cette case qui se touve juste à côté de c */
              if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==0)&&(getJoueur(ctemp)!=joueur))
              {
-
                 changeJoueur(p, ctemp,joueur);
              }
         }
     }
+}
+
+int getScore(const Plateau* p, int j)
+{
+    if(j==1)
+        return p->score_j1;
+    else if(j==2)
+        return p->score_j2;
+    else
+        return 0;
 }
