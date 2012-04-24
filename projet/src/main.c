@@ -141,13 +141,11 @@ int main ()
                             {
                                 /* on sélectionne un pion pour le faire "agir" */
                                 caseCliquee = caseTemp;
-                                printf("Case sélectionnée par le joueur %d : %d\n",qui_joue, (int) caseCliquee);
                             }
 
                             /* le joueur a deja selectionné un case et clique sur un autre */
                             else if(caseCliquee!=0)
                             {
-                                printf("Le joueur à cliqué sur la case %d\n", (int) caseTemp);
                                 if(getLibre(caseTemp)==1)
                                 {
                                      xtemp = getX(caseTemp) - getX(caseCliquee);
@@ -170,8 +168,6 @@ int main ()
                                           changeCasesAutour(&jeu,caseTemp,qui_joue);
                                           qui_joue=(qui_joue%2)+1;
                                      }
-
-                                     printf("\tCette case est libre, diff de coord : %d,%d\n",xtemp,ytemp);
                                 }
                             }
                         }
