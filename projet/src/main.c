@@ -34,6 +34,8 @@ int main ()
     /* on charge l'image d'un case (normale et jouable) */
     case_vide = IMG_Load(CASE_VIDE);
     case_jouable = IMG_Load(CASE_JOUABLE);
+    case_jouable_3 = IMG_Load(CASE_JOUABLE_3);
+    case_jouable_4 = IMG_Load(CASE_JOUABLE_4);
 
     /* erreurs de chargement ? */
     if (!case_vide)
