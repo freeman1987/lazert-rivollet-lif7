@@ -181,7 +181,7 @@ void casesAutour(const Plateau* p,Case* c)
         for(j=0;j<12;j+=2)
         {
              /* allumer cette case qui se touve juste à côté de c */
-             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)&&(getLibre(ctemp)==0))
+             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==1))
              {
                 dessineCase(x,y,2);
              }
@@ -190,7 +190,7 @@ void casesAutour(const Plateau* p,Case* c)
         {
              printf("\tsous boucle %d\n",j);
              /* allumer cette case qui se touve à 2 cases de c */
-             if(coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1)
+             if((coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1) && (getLibre(ctemp)==1))
              {
                 dessineCase(x,y,3);
              }
