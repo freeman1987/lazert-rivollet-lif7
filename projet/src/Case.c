@@ -17,12 +17,6 @@ Case* caseInit()
     return c;
 }
 
-/**
-    @brief [PRIVEE] Rendre libre ou non une case
-    @param c : pointeur sur la case a modifier
-    @param val : booléen : libre ou non
-    @return void
-*/
 void setLibre(Case* c, int val)
 {
     c->libre = val;
