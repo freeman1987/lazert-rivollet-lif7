@@ -9,6 +9,8 @@
 
 typedef struct
 {
+    /* nombre de pion déja placé */
+    int nb_piece_mise;
 	/* nombre de places libres sur le support */
 	int places_libres;
 	/* nombre de places sur le plateau */
@@ -19,7 +21,16 @@ typedef struct
 	int score_j1;
 	int score_j2;
 } Plateau;
+/**
+    @brief Definit quel joueur a une piece sur la case
 
+    @param [IN,OUT] c : pointeur sur la case à modifier
+    @param [IN] joueur : numero 1 ou 2 du joueur. Mettre 0 rendre la case libre
+    @param [IN] p : pointeur sur le plateau
+
+    @return void
+*/
+void changeJoueur(Plateau* p, Case* c, int joueur);
 
 /**
     @brief Initialise le plateau
@@ -47,7 +58,7 @@ void decrementePlacesLibres(Plateau* p);
 
     @return nombre de places
 */
-int getPlacesLibres(const Plateau* p);
+int getPlacesLibres(Plateau* p);
 
 /** \brief Affiche toutes les pièces du plateau
  *
