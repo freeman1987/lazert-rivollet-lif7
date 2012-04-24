@@ -138,6 +138,16 @@ int main ()
             } /* fin du test des événements */
         }
 
+        // afficher quel joueur doit jouer
+        SDL_Rect place_qui_joue;
+        place_qui_joue.x = 50;
+        place_qui_joue.y = 50;
+        if(qui_joue==1)
+            SDL_BlitSurface(logo_joueur_1, 0, screen, &place_qui_joue);
+        else if(qui_joue==2)
+            SDL_BlitSurface(logo_joueur_2, 0, screen, &place_qui_joue);
+
+
         float x;
         float y;
         /* si on a un pointeur de case cliquée non nul */
