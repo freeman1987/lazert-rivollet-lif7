@@ -127,8 +127,18 @@ int main ()
             } /* fin du test des événements */
         }
 
+        float x;
+        float y;
+        /* si on a un pointeur de case cliquée non nul */
         if(caseCliquee!=0)
-            dessineCase(UNITE_X*(getX(caseCliquee)+DECAL_X),UNITE_Y*(getY(caseCliquee)+DECAL_Y),1);
+        {
+            /* on affiche la case en surbrillance */
+            x = UNITE_X*(getX(caseCliquee)+DECAL_X);
+            y = UNITE_Y*(getY(caseCliquee)+DECAL_Y);
+            dessineCase(x,y,1);
+
+            casesAutour(&jeu,caseCliquee);
+        }
 
         if(sourisx<30 && sourisy<30)
         {
