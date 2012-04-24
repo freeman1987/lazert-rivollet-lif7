@@ -120,7 +120,7 @@ void lirePlateau(Plateau* p, const char filename[])
 {
     FILE* f;
 	int lecture;
-	int i, capacite, x, y;
+	int i, capacite, x, y, j;
 
     f = fopen(filename, "r");
     if (f==NULL)
@@ -140,7 +140,7 @@ void lirePlateau(Plateau* p, const char filename[])
 
     for(i=0;i<capacite;i++)
     {
-        lecture = fscanf(f, "\n%d,%d", &x, &y);
+        lecture = fscanf(f, "\n%d,%d,%d", &x, &y, &j);
         if(lecture != 2)
         {
             printf("Erreur de lecture de la case.\n");
@@ -149,6 +149,7 @@ void lirePlateau(Plateau* p, const char filename[])
         {
             p->support[i] = caseInit();
             setPos(p->support[i], x, y);
+            changeJoueur(p->support[i], j);
         }
     }
     fclose(f);
