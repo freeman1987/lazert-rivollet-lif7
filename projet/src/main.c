@@ -7,9 +7,13 @@
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 
+const int toto[] = {0,1,2,3};
 
 int main ()
 {
+    int t;
+    for(t = 0;t<4;t++)
+        printf("Toto %d : %d\n",t,toto[t]);
     Plateau jeu;
 
     /* on charge le plateau de jeu */
@@ -130,26 +134,29 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
-                        /* on récupère la case cliquée */
+                        /* on récupère la case cliquée si on clique dans une case */
                         caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
-
-                        /* si on clique sur un pion du joueur qui doit jouer */
-                        if((caseTemp!=0) && ((getJoueur(caseTemp))==qui_joue))
+                        if(caseTemp!=0)
                         {
-                            /* on sélectionne un pion pour le faire "agir" */
-                            caseCliquee = caseTemp;
-                            printf("Case sélectionnée par le joueur %d : %d\n",qui_joue, (int) caseCliquee);
-                        }
 
-                        /* le joueur a deja selectionné un case */
-                        else if(caseCliquee!=0)
-                        {
-                            printf("Le joueur à cliqué sur la case %d\n", (int) caseTemp);
-                            if(getLibre(caseTemp)==1)
+                            /* si on clique sur un pion du joueur qui doit jouer */
+                            if((getJoueur(caseTemp))==qui_joue)
                             {
-                                 xtemp = getX(caseTemp) - getX(caseCliquee);
-                                 ytemp = getY(caseTemp) - getY(caseCliquee);
-                                 printf("\tCette case est libre, diff de coord : %d,%d\n",xtemp,ytemp);
+                                /* on sélectionne un pion pour le faire "agir" */
+                                caseCliquee = caseTemp;
+                                printf("Case sélectionnée par le joueur %d : %d\n",qui_joue, (int) caseCliquee);
+                            }
+
+                            /* le joueur a deja selectionné un case et clique sur un autre */
+                            else if(caseCliquee!=0)
+                            {
+                                printf("Le joueur à cliqué sur la case %d\n", (int) caseTemp);
+                                if(getLibre(caseTemp)==1)
+                                {
+                                     xtemp = getX(caseTemp) - getX(caseCliquee);
+                                     ytemp = getY(caseTemp) - getY(caseCliquee);
+                                     printf("\tCette case est libre, diff de coord : %d,%d\n",xtemp,ytemp);
+                                }
                             }
                         }
                     }
