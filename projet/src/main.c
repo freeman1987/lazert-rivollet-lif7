@@ -79,6 +79,7 @@ int main ()
     int qui_joue = 1; /* le joueur 1 commence */
 
     Case* caseCliquee = 0;
+    Case* caseTemp;
 
     /* boucle principale du programme */
     int i = 0;
@@ -125,9 +126,12 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
-                        caseCliquee = caseSurvollee(sourisx,sourisy,&jeu);
-                        if(caseCliquee!=0)
+                        caseTemp=caseSurvollee(sourisx,sourisy,&jeu);
+                        if((caseTemp!=0)&&((getJoueur(caseTemp))==qui_joue))
+                        {
+                            caseCliquee=caseTemp;
                             printf("Case cliquée : %d\n",(int) caseCliquee);
+                        }
                     }
             } /* fin du test des événements */
         }
