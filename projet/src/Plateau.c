@@ -157,8 +157,8 @@ void casesAutour(const Plateau* p,Case* c)
     pos1 : les valeurs correspondent à des décalages par rapport à C
     pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
     */
-    int pos1[] = {0,2, 0,-2, 1,1 -1,-1, -1,1, 1,-1};
-    int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 3,1 -2,-2, -3,-1, -3,1, -2,2, 3,-1, 2,-2};
+    int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
+    int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
     int i,j; /* pour les boucles */
     int cx, cy; /* coordonnées de c */
     int x, y; /* coordonnées de ctemp */
@@ -176,23 +176,21 @@ void casesAutour(const Plateau* p,Case* c)
         y = UNITE_Y*(getY(ctemp)+DECAL_Y);
         for(j=0;j<12;j+=2)
         {
-             printf("\tsous boucle %d\n",j);
-             printf("\tdecalage : %d+%d=%d,%d+%d=%d\n",cx,pos1[j],(cx+pos1[j]),cy,pos1[j+1],(cy+pos1[j+1]));
              /* allumer cette case qui se touve juste à côté de c */
              if(coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)
              {
                 dessineCase(x,y,1);
              }
         }
-       /* for(j=0;j<24;j+=2)
+        for(j=0;j<24;j+=2)
         {
              printf("\tsous boucle %d\n",j);
-             /* allumer cette case qui se touve à 2 cases de c *
+             /* allumer cette case qui se touve à 2 cases de c */
              if(coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1)
              {
                 dessineCase(x,y,1);
              }
-        }*/
+        }
 
 
 
