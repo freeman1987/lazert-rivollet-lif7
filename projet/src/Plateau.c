@@ -75,8 +75,12 @@ void dessineCase(float posX,float posY,int C)
     // draw bitmap
     if(C==0)
         SDL_BlitSurface(case_vide, 0, screen, &dstrect);
-    else
+    else if(C==1)
         SDL_BlitSurface(case_jouable, 0, screen, &dstrect);
+    else if(C==2)
+        SDL_BlitSurface(case_jouable_3, 0, screen, &dstrect);
+    else
+        SDL_BlitSurface(case_jouable_4, 0, screen, &dstrect);
 }
 
 int sourisDansCase(int sx, int sy, const Case* c)
@@ -177,9 +181,9 @@ void casesAutour(const Plateau* p,Case* c)
         for(j=0;j<12;j+=2)
         {
              /* allumer cette case qui se touve juste à côté de c */
-             if(coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)
+             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)&&(getLibre(ctemp)==0))
              {
-                dessineCase(x,y,1);
+                dessineCase(x,y,2);
              }
         }
         for(j=0;j<24;j+=2)
@@ -188,7 +192,7 @@ void casesAutour(const Plateau* p,Case* c)
              /* allumer cette case qui se touve à 2 cases de c */
              if(coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1)
              {
-                dessineCase(x,y,1);
+                dessineCase(x,y,3);
              }
         }
 

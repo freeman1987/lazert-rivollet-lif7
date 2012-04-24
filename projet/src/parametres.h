@@ -23,6 +23,8 @@
 	#define PION_JOUEUR_2 "../data/Texture1/Perle.png"
 	#define CASE_VIDE "../data/Texture1/Case.png"
 	#define CASE_JOUABLE "../data/Texture1/Case2.png"
+	#define CASE_JOUABLE_3 "../data/Texture1/Case3.png"
+	#define CASE_JOUABLE_4 "../data/Texture1/Case4.png"
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
@@ -38,6 +40,8 @@
     SDL_Surface* screen;
     SDL_Surface* case_vide;
     SDL_Surface* case_jouable;
+    SDL_Surface* case_jouable_3;
+    SDL_Surface* case_jouable_4;
 
 
 #endif
