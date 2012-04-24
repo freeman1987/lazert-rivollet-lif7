@@ -164,28 +164,34 @@ void casesAutour(const Plateau* p,Case* c)
     int x, y; /* coordonnées de ctemp */
     Case* ctemp;
 
+    cx = getX(c);
+    cy = getY(c);
+
     /* on parcourt le tableau */
     for(i=0;i<(p->capacite);i++)
     {
+        printf("Boucle %d\n",i);
         ctemp = p->support[i];
-        x = UNITE_X*(getX(caseCliquee)+DECAL_X);
-        y = UNITE_Y*(getY(caseCliquee)+DECAL_Y);
+        x = UNITE_X*(getX(ctemp)+DECAL_X);
+        y = UNITE_Y*(getY(ctemp)+DECAL_Y);
         for(j=0;j<12;j+=2)
         {
+             printf("\tsous boucle %d\n",j);
              /* allumer cette case qui se touve juste à côté de c */
-             if(coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1]))
+             if(coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1)
              {
                 dessineCase(x,y,1);
              }
         }
-        for(j=0;j<24;j+=2)
+       /* for(j=0;j<24;j+=2)
         {
-             /* allumer cette case qui se touve à 2 cases de c */
-             if(coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1]))
+             printf("\tsous boucle %d\n",j);
+             /* allumer cette case qui se touve à 2 cases de c *
+             if(coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1)
              {
                 dessineCase(x,y,1);
              }
-        }
+        }*/
 
 
 
