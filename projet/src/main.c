@@ -39,8 +39,8 @@ int main ()
     case_jouable_4 = IMG_Load(CASE_JOUABLE_4);
     logo_joueur_1 = IMG_Load(LOGO_JOUEUR_1);
     logo_joueur_2 = IMG_Load(LOGO_JOUEUR_2);
-    for(i=0;i<10;i++)
-        chiffres[i] = IMG_Load(CHEMIN_CHIFFRES.i.EXTENSION_CHIFFRES);
+
+    //chiffres[0] = IMG_Load("../data/Texture1/0.png");
 
     /* erreurs de chargement ? */
     if (!case_vide)
@@ -89,7 +89,6 @@ int main ()
     int xtemp, ytemp; /* coordonnées temporaires */
 
     /* boucle principale du programme */
-    int i = 0;
     int done = 0;
     int test;
     while (done==0)
