@@ -34,7 +34,7 @@ void plateauInit(Plateau* p, int capacite);
  *
  */
 
-void decrementePlaceLibre(Plateau* p);
+void decrementePlacesLibres(Plateau* p);
 /**
     @brief Retourne le nombre de places libres sur le plateau
 

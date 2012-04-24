@@ -26,12 +26,6 @@ void plateauInit(Plateau* p, int capa)
         exit(-1);
     }
 }
-void decrementePlaceLibre(Plateau* p)
-{
-    p->capacite-=1;
-}
-
-
 int getPlacesLibres(const Plateau* p)
 {
     return p->places_libres;

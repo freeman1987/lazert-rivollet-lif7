@@ -153,7 +153,8 @@ int main ()
                                      test = testCaseProche(xtemp,ytemp);
                                      if(test==1)
                                      {
-
+                                        decrementePlacesLibres(&jeu);
+                                        printf("%d",jeu.places_libres);
                                         changeJoueur(caseTemp,qui_joue);
                                         caseCliquee=0;
                                      }
