@@ -196,17 +196,17 @@ void casesAutour(const Plateau* p,Case* c)
         }
     }
 }
-int testCaseProche(int a,int b)
+int testCaseProche(int x,int y)
 {
     int i;
     for(i=0;i<12;i+=2)
     {
-        if(a==pos1[i]&&b==pos1[i+1])
+        if(x==pos1[i]&&y==pos1[i+1])
             return 1;
     }
     for(i=0;i<24;i+=2)
     {
-        if(a==pos2[i]&&b==pos2[i+1])
+        if(x==pos2[i]&&y==pos2[i+1])
         return 2;
     }
     return 0;
