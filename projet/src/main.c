@@ -81,7 +81,9 @@ int main ()
     int qui_joue = 1; /* le joueur 1 commence */
 
     Case* caseCliquee = 0;
-    Case* caseTemp;
+    Case* caseTemp; /* case temporaire */
+
+    int xtemp, ytemp; /* coordonnées temporaires */
 
     /* boucle principale du programme */
     int i = 0;
@@ -128,11 +130,27 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
-                        caseTemp=caseSurvollee(sourisx,sourisy,&jeu);
-                        if((caseTemp!=0)&&((getJoueur(caseTemp))==qui_joue))
+                        /* on récupère la case cliquée */
+                        caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
+
+                        /* si on clique sur un pion du joueur qui doit jouer */
+                        if((caseTemp!=0) && ((getJoueur(caseTemp))==qui_joue))
                         {
-                            caseCliquee=caseTemp;
-                            printf("Case cliquée : %d\n",(int) caseCliquee);
+                            /* on sélectionne un pion pour le faire "agir" */
+                            caseCliquee = caseTemp;
+                            printf("Case sélectionnée par le joueur %d : %d\n",qui_joue, (int) caseCliquee);
+                        }
+
+                        /* le joueur a deja selectionné un case */
+                        else if(caseCliquee!=0)
+                        {
+                            printf("Le joueur à cliqué sur la case %d\n", (int) caseTemp);
+                            if(getLibre(caseTemp)==1)
+                            {
+                                 xtemp = getX(caseTemp) - getX(caseCliquee);
+                                 ytemp = getY(caseTemp) - getY(caseCliquee);
+                                 printf("\tCette case est libre, diff de coord : %d,%d\n",xtemp,ytemp);
+                            }
                         }
                     }
             } /* fin du test des événements */
