@@ -117,4 +117,13 @@ Case* caseSurvollee(int sx, int sy, const Plateau* p);
 */
 void lirePlateau(Plateau* p, const char filename[]);
 
+/** \brief Afficher les cases autour d'un autres
+ *
+ * \param p : pointeur sur le plateau
+ * \param c : case
+ * \return void
+ *
+ */
+void casesAutour(const Plateau* p,Case* c);
+
 #endif
