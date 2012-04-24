@@ -110,7 +110,6 @@ int sourisDansCase(int sx, int sy, const Case* c);
  * \return pointeur sur la case survollée, ou 0 si aucune survollée
  *
  */
-
 Case* caseSurvollee(int sx, int sy, const Plateau* p);
 
 /**
@@ -131,6 +130,7 @@ void lirePlateau(Plateau* p, const char filename[]);
  *
  */
 void casesAutour(const Plateau* p,Case* c);
+
 /** \brief Retourne une valeur selon la distance entre un clic et le clic suivant:
            si le joueur clic à une distance de 1 il duplique sa pièce
            si le joueur clic à une distance de 2 il déplace sa pièce
@@ -142,6 +142,7 @@ void casesAutour(const Plateau* p,Case* c);
  *
  */
 int testCaseProche(int x,int y);
+
 /** \brief Transforme les pièces situées autour de la case où le joueur joue
  *
  * \param p : pointeur sur le plateau

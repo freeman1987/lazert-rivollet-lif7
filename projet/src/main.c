@@ -154,13 +154,12 @@ int main ()
                                      if(test==1)
                                      {
                                         decrementePlacesLibres(&jeu);
-                                        printf("%d",jeu.places_libres);
                                         changeJoueur(caseTemp,qui_joue);
                                         caseCliquee=0;
                                      }
                                      else if(test==2)
                                      {
-                                         changeJoueur(caseTemp,qui_joue);
+                                        changeJoueur(caseTemp,qui_joue);
                                         changeJoueur(caseCliquee,0);
                                         caseCliquee=0;
                                      }
@@ -171,6 +170,8 @@ int main ()
                                      }
                                 }
                             }
+
+                            printf("Capacité du jeu : %d\n",getPlacesLibres(&jeu));
                         }
                     }
             } /* fin du test des événements */
