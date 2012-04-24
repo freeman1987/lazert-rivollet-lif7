@@ -71,9 +71,12 @@ int main ()
     atexit(SDL_Quit);
 
 
-
+    /* variables pour contenir les coordonnées de la souris */
     int sourisx;
     int sourisy;
+
+    /* variable pourr savoir quel joueur doit jouer */
+    int qui_joue = 1; /* le joueur 1 commence */
 
     Case* caseCliquee = 0;
 
@@ -82,7 +85,6 @@ int main ()
     int done = 0;
     while (done==0)
     {
-
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
 
         /* afficher le terrain de jeu */
