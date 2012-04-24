@@ -12,6 +12,7 @@ Case* caseInit()
         printf("Erreur d'allocation pour une case.");
         exit(-1);
     }
+    c->libre = 1;
 
     return c;
 }
