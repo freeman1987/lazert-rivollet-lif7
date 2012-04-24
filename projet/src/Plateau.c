@@ -215,7 +215,7 @@ int testCaseProche(int x,int y)
     return 0;
 }
 
-void changeCasesAutour(const Plateau* p,Case* c,int joueur)
+void changeCasesAutour(Plateau* p,Case* c,int joueur)
 {
     int i,j; /* pour les boucles */
     int cx, cy; /* coordonnées de c */
@@ -234,8 +234,9 @@ void changeCasesAutour(const Plateau* p,Case* c,int joueur)
         for(j=0;j<12;j+=2)
         {
              /* allumer cette case qui se touve juste à côté de c */
-             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==0))
+             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==0)&&(getJoueur(ctemp)!=joueur))
              {
+
                 changeJoueur(ctemp,joueur);
              }
         }
