@@ -173,8 +173,6 @@ int main ()
                                      }
                                 }
                             }
-
-                            printf("Capacité du jeu : %d\n",getPlacesLibres(&jeu));
                         }
                     }
             } /* fin du test des événements */

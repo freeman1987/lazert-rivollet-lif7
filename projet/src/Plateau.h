@@ -30,6 +30,7 @@ typedef struct
     @return void
 */
 void plateauInit(Plateau* p, int capacite);
+
 /** \brief Décrémente le nombre de place libre quand un joueur duplique sa pièce
  *
  * \param p : pointeur sur plateau
@@ -38,6 +39,7 @@ void plateauInit(Plateau* p, int capacite);
  */
 
 void decrementePlacesLibres(Plateau* p);
+
 /**
     @brief Retourne le nombre de places libres sur le plateau
 
