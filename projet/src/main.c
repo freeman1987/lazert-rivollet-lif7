@@ -10,6 +10,7 @@
 int main ()
 {
     Plateau jeu;
+    jeu.nb_piece_mise=6;
 
     /* on charge le plateau de jeu */
     lirePlateau(&jeu,"../data/Plateau1.txt");
@@ -157,13 +158,13 @@ int main ()
                                      if(test==1)
                                      {
                                         decrementePlacesLibres(&jeu);
-                                        changeJoueur(caseTemp,qui_joue);
+                                        changeJoueur(&jeu,caseTemp,qui_joue);
                                         caseCliquee=0;
                                      }
                                      else if(test==2)
                                      {
-                                        changeJoueur(caseTemp,qui_joue);
-                                        changeJoueur(caseCliquee,0);
+                                        changeJoueur(&jeu, caseTemp,qui_joue);
+                                        changeJoueur(&jeu, caseCliquee,0);
                                         caseCliquee=0;
                                      }
                                      if(test!=0)
@@ -172,8 +173,12 @@ int main ()
                                           qui_joue=(qui_joue%2)+1;
                                      }
                                 }
+                                printf("score J1 %d\n score J2 %d \n", jeu.score_j1,jeu.score_j2);
                             }
                         }
+                         if((getPlacesLibres(&jeu)==0)||(jeu.score_j1==0)||(jeu.score_j2==0))
+                                done=1;
+
                     }
             } /* fin du test des événements */
         }
@@ -200,15 +205,6 @@ int main ()
 
             casesAutour(&jeu,caseCliquee);
         }
-
-        /*if(sourisDansCase(sourisx,sourisy,jeu.support[0])==1)
-        {
-            dessinepion1(-160+i,230+2*UNITE_Y);
-            dessinepion1(197.5+i,267.5);
-            dessinepion2(-160+i,230);
-        }*/
-
-
         SDL_Flip(screen);
 
     } /* fin de la boucle principale */

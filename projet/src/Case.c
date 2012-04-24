@@ -28,20 +28,6 @@ void setLibre(Case* c, int val)
     c->libre = val;
 }
 
-void changeJoueur(Case* c, int joueur)
-{
-    if(joueur==0) /* liberer la case */
-    {
-        setLibre(c,1);
-        c->joueur = 0;
-    }
-    else if(joueur==1 || joueur==2) /* mettre le joueur */
-    {
-        setLibre(c,0);
-        c->joueur = joueur;
-    }
-}
-
 void setPos(Case* c, int x, int y)
 {
     if(x<0 || y<0)

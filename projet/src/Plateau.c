@@ -17,7 +17,7 @@ const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,
 void plateauInit(Plateau* p, int capa)
 {
     p->capacite = capa;
-    p->places_libres = capa;
+    p->places_libres = capa-(p->nb_piece_mise);
 
     p->support = (Case **) malloc(sizeof(Case)*capa);
     if(p->support==0)
@@ -26,14 +26,56 @@ void plateauInit(Plateau* p, int capa)
         exit(-1);
     }
 }
-int getPlacesLibres(const Plateau* p)
+int getPlacesLibres(Plateau* p)
 {
     return p->places_libres;
 }
 
+void changeJoueur(Plateau* p, Case* c, int joueur)
+{
+    if(joueur==0) /* liberer la case */
+    {
+        setLibre(c,1);
+        if(c->joueur==1)
+            p->score_j1--;
+        else if(c->joueur==2)
+            p->score_j2--;
+        c->joueur = 0;
+    }
+    else if((joueur==1 || joueur==2)&&(c->joueur!=joueur)) /* mettre le joueur */
+    {
+        setLibre(c,0);
+        if(joueur==1)
+        {
+            if(c->joueur==0)
+            {
+                p->score_j1++;
+            }
+            else if(c->joueur==2)
+            {
+                p->score_j1++;
+                p->score_j2--;
+            }
+        }
+        else
+        {
+            if(c->joueur==0)
+            {
+                p->score_j2++;
+            }
+            else if(c->joueur==1)
+            {
+                p->score_j2++;
+                p->score_j1--;
+            }
+        }
+        c->joueur = joueur;
+    }
+}
+
 void decrementePlacesLibres(Plateau* p)
 {
-    p->places_libres -= 1;
+    p->places_libres--;
 }
 
 void affichePlateau(Plateau* p)
@@ -130,7 +172,9 @@ void lirePlateau(Plateau* p, const char filename[])
 {
     FILE* f;
 	int lecture;
-	int i, capacite, x, y, j;
+	int i, capacite, x, y, j,scor_j1,scor_j2;
+	scor_j1=0;
+	scor_j2=0;
 
     f = fopen(filename, "r");
     if (f==NULL)
@@ -159,9 +203,15 @@ void lirePlateau(Plateau* p, const char filename[])
         {
             p->support[i] = caseInit();
             setPos(p->support[i], x, y);
-            changeJoueur(p->support[i], j);
+            changeJoueur(p, p->support[i], j);
         }
+        if(j==1)
+            scor_j1++;
+        else if(j==2)
+            scor_j2++;
     }
+    p->score_j1=scor_j1;
+    p->score_j2=scor_j2;
     fclose(f);
 }
 
@@ -237,7 +287,7 @@ void changeCasesAutour(Plateau* p,Case* c,int joueur)
              if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==0)&&(getJoueur(ctemp)!=joueur))
              {
 
-                changeJoueur(ctemp,joueur);
+                changeJoueur(p, ctemp,joueur);
              }
         }
     }
