@@ -27,6 +27,8 @@
 	#define CASE_JOUABLE_4 "../data/Texture1/Case4.png"
 	#define LOGO_JOUEUR_1 "../data/Texture1/joueur1.png"
 	#define LOGO_JOUEUR_2 "../data/Texture1/joueur2.png"
+	#define CHEMIN_CHIFFRES "../data/Texture1/"
+	#define EXTENSION_CHIFFRES ".png"
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
@@ -49,6 +51,7 @@
     SDL_Surface* case_jouable_4;
     SDL_Surface* logo_joueur_1;
     SDL_Surface* logo_joueur_2;
+    SDL_Surface** chiffres;
 
 
 #endif
