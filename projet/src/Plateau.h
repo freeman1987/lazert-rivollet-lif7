@@ -125,5 +125,21 @@ void lirePlateau(Plateau* p, const char filename[]);
  *
  */
 void casesAutour(const Plateau* p,Case* c);
+/** \brief
+ *
+ * \param
+ * \param
+ * \return
+ *
+ */
+int testCaseProche(int a,int b);
+/** \brief
+ *
+ * \param
+ * \param
+ * \return
+ *
+ */
+void changeCasesAutour(const Plateau* p,Case* c,int joueur);
 
 #endif
