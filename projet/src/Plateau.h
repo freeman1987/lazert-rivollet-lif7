@@ -15,6 +15,9 @@ typedef struct
 	int capacite;
 	/* tableau de pointeurs de cases pour le jeu */
 	Case** support;
+	/* score des 2 joueurs */
+	int score_j1;
+	int score_j2;
 } Plateau;
 
 
@@ -151,6 +154,17 @@ int testCaseProche(int x,int y);
  * \return Void
  *
  */
-void changeCasesAutour(const Plateau* p,Case* c,int joueur);
+void changeCasesAutour(Plateau* p,Case* c,int joueur);
+
+/** \brief Changer le score d'un joueur
+ *
+ * \param p : pointeur sur un plateau
+ * \param joueur : numero du joueur
+ * \param dec : decalage
+ * \return void
+ *
+ */
+ void changeScoreJoueur(Plateau* p, int joueur, int dec);
+
 
 #endif
