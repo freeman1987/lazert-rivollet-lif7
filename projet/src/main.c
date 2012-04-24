@@ -36,6 +36,8 @@ int main ()
     case_jouable = IMG_Load(CASE_JOUABLE);
     case_jouable_3 = IMG_Load(CASE_JOUABLE_3);
     case_jouable_4 = IMG_Load(CASE_JOUABLE_4);
+    logo_joueur_1 = IMG_Load(LOGO_JOUEUR_1);
+    logo_joueur_2 = IMG_Load(LOGO_JOUEUR_2);
 
     /* erreurs de chargement ? */
     if (!case_vide)
