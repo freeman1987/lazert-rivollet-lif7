@@ -87,6 +87,7 @@ int main ()
 
         /* afficher le terrain de jeu */
         affichePlateau(&jeu);
+        affichePiece(&jeu);
 
         /* détection des événements */
         SDL_Event event;
@@ -140,13 +141,6 @@ int main ()
             dessineCase(x,y,1);
 
             casesAutour(&jeu,caseCliquee);
-        }
-
-        if(sourisx<30 && sourisy<30)
-        {
-
-            dessinepion1(160+i,230);
-
         }
 
         /*if(sourisDansCase(sourisx,sourisy,jeu.support[0])==1)

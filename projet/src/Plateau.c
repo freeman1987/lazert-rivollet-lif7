@@ -42,9 +42,9 @@ void affichePiece(Plateau* p)
     {
         ca = p->support[i];
         if(getJoueur(ca)==1)
-        dessinepion1(ca[i].posX,ca[i].posY);
-        else
-        dessinepion2(ca[i].posX,ca[i].posY);
+            dessinepion1(UNITE_X*(getX(ca)+DECAL_X),UNITE_Y*(getY(ca)+DECAL_Y));
+        else if(getJoueur(ca)==2)
+            dessinepion2(UNITE_X*(getX(ca)+DECAL_X),UNITE_Y*(getY(ca)+DECAL_Y));
     }
 }
 
@@ -52,8 +52,8 @@ void dessinepion1(int posX,int posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((screen->w - pion1->w) / 2)+posX;
-    dstrect.y = ((screen->h - pion1->h) / 2)+posY;
+    dstrect.x = posX;
+    dstrect.y = posY;
     // draw bitmap
         SDL_BlitSurface(pion1, 0, screen, &dstrect);
 }
@@ -61,8 +61,8 @@ void dessinepion2(int posX,int posY)
 {
     // centre the bitmap on screen
     SDL_Rect dstrect;
-    dstrect.x = ((case_vide->w - pion2->w) / 2)+posX;
-    dstrect.y = ((case_vide->h - pion2->h) / 2)+posY;
+    dstrect.x = posX;
+    dstrect.y = posY;
     // draw bitmap
         SDL_BlitSurface(pion2, 0, screen, &dstrect);
 }
@@ -141,7 +141,7 @@ void lirePlateau(Plateau* p, const char filename[])
     for(i=0;i<capacite;i++)
     {
         lecture = fscanf(f, "\n%d,%d,%d", &x, &y, &j);
-        if(lecture != 2)
+        if(lecture != 3)
         {
             printf("Erreur de lecture de la case.\n");
         }
