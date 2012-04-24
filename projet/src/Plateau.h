@@ -125,19 +125,23 @@ void lirePlateau(Plateau* p, const char filename[]);
  *
  */
 void casesAutour(const Plateau* p,Case* c);
-/** \brief
+/** \brief Retourne une valeur selon la distance entre un clic et le clic suivant:
+           si le joueur clic à une distance de 1 il duplique sa pièce
+           si le joueur clic à une distance de 2 il déplace sa pièce
+           sinon c'est un clic normal.
  *
- * \param
- * \param
- * \return
+ * \param x : position x de la case
+ * \param y : position y de la case
+ * \return Un entier:1 si elle est à distance = 1, 2 si elle est à distance = 2, 0 sinon
  *
  */
-int testCaseProche(int a,int b);
-/** \brief
+int testCaseProche(int x,int y);
+/** \brief Transforme les pièces situées autour de la case où le joueur joue
  *
- * \param
- * \param
- * \return
+ * \param p : pointeur sur le plateau
+ * \param c : case
+ * \param joueur : Le joueur en cour.
+ * \return Void
  *
  */
 void changeCasesAutour(const Plateau* p,Case* c,int joueur);
