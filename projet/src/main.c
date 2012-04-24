@@ -7,13 +7,8 @@
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 
-const int toto[] = {0,1,2,3};
-
 int main ()
 {
-    int t;
-    for(t = 0;t<4;t++)
-        printf("Toto %d : %d\n",t,toto[t]);
     Plateau jeu;
 
     /* on charge le plateau de jeu */
@@ -92,6 +87,7 @@ int main ()
     /* boucle principale du programme */
     int i = 0;
     int done = 0;
+    int test;
     while (done==0)
     {
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
@@ -134,6 +130,7 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                     {
+
                         /* on récupère la case cliquée si on clique dans une case */
                         caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
                         if(caseTemp!=0)
@@ -155,6 +152,25 @@ int main ()
                                 {
                                      xtemp = getX(caseTemp) - getX(caseCliquee);
                                      ytemp = getY(caseTemp) - getY(caseCliquee);
+                                     test = testCaseProche(xtemp,ytemp);
+                                     if(test==1)
+                                     {
+
+                                        changeJoueur(caseTemp,qui_joue);
+                                        caseCliquee=0;
+                                     }
+                                     else if(test==2)
+                                     {
+                                         changeJoueur(caseTemp,qui_joue);
+                                        changeJoueur(caseCliquee,0);
+                                        caseCliquee=0;
+                                     }
+                                     if(test!=0)
+                                     {
+                                          changeCasesAutour(&jeu,caseTemp,qui_joue);
+                                          qui_joue=(qui_joue%2)+1;
+                                     }
+
                                      printf("\tCette case est libre, diff de coord : %d,%d\n",xtemp,ytemp);
                                 }
                             }

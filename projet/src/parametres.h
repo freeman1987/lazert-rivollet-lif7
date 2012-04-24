@@ -32,6 +32,8 @@
 	#define DECAL_X 4
 	#define DECAL_Y 3
 
+
+
 /**
     Variables globales pour contenir les images SDL.
     Ces variables sont globales pour être utilisées dans les modules.

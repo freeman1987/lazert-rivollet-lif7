@@ -6,6 +6,13 @@
 #include "Plateau.h"
 #include <SDL/SDL.h>
 #include <SDL_image.h>
+const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
+const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
+ /*
+    les valeurs du tableau pos1 et du tableaû pos2 sont à lire 2 par 2
+    pos1 : les valeurs correspondent à des décalages par rapport à C
+    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
+    */
 
 void plateauInit(Plateau* p, int capa)
 {
@@ -157,13 +164,6 @@ void lirePlateau(Plateau* p, const char filename[])
 
 void casesAutour(const Plateau* p,Case* c)
 {
-    /*
-    les valeurs du tableau pos1 et du tableaû pos2 sont à lire 2 par 2
-    pos1 : les valeurs correspondent à des décalages par rapport à C
-    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
-    */
-    int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
-    int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
     int i,j; /* pour les boucles */
     int cx, cy; /* coordonnées de c */
     int x, y; /* coordonnées de ctemp */
@@ -175,7 +175,6 @@ void casesAutour(const Plateau* p,Case* c)
     /* on parcourt le tableau */
     for(i=0;i<(p->capacite);i++)
     {
-        printf("Boucle %d\n",i);
         ctemp = p->support[i];
         x = UNITE_X*(getX(ctemp)+DECAL_X);
         y = UNITE_Y*(getY(ctemp)+DECAL_Y);
@@ -189,15 +188,53 @@ void casesAutour(const Plateau* p,Case* c)
         }
         for(j=0;j<24;j+=2)
         {
-             printf("\tsous boucle %d\n",j);
              /* allumer cette case qui se touve à 2 cases de c */
              if((coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1) && (getLibre(ctemp)==1))
              {
                 dessineCase(x,y,3);
              }
         }
+    }
+}
+int testCaseProche(int a,int b)
+{
+    int i;
+    for(i=0;i<12;i+=2)
+    {
+        if(a==pos1[i]&&b==pos1[i+1])
+            return 1;
+    }
+    for(i=0;i<24;i+=2)
+    {
+        if(a==pos2[i]&&b==pos2[i+1])
+        return 2;
+    }
+    return 0;
+}
 
+void changeCasesAutour(const Plateau* p,Case* c,int joueur)
+{
+    int i,j; /* pour les boucles */
+    int cx, cy; /* coordonnées de c */
+    int x, y; /* coordonnées de ctemp */
+    Case* ctemp;
 
+    cx = getX(c);
+    cy = getY(c);
 
+    /* on parcourt le tableau */
+    for(i=0;i<(p->capacite);i++)
+    {
+        ctemp = p->support[i];
+        x = UNITE_X*(getX(ctemp)+DECAL_X);
+        y = UNITE_Y*(getY(ctemp)+DECAL_Y);
+        for(j=0;j<12;j+=2)
+        {
+             /* allumer cette case qui se touve juste à côté de c */
+             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==0))
+             {
+                changeJoueur(ctemp,joueur);
+             }
+        }
     }
 }
