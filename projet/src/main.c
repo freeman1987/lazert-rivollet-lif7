@@ -40,8 +40,6 @@ int main ()
         return 1;
     }
 
-    int i;
-
     /* on charge l'image d'un case (normale et jouable) */
     case_vide = IMG_Load(CASE_VIDE);
     case_jouable = IMG_Load(CASE_JOUABLE);
@@ -182,10 +180,17 @@ int main ()
                                         changeJoueur(&jeu, caseCliquee,0);
                                         caseCliquee=0;
                                      }
+
                                      if(test!=0)
                                      {
                                           changeCasesAutour(&jeu,caseTemp,qui_joue);
                                           qui_joue=(qui_joue%2)+1;
+
+                                          if(peutJouer(&jeu,qui_joue)==0)
+                                          {
+                                              printf("Joueur bloqué %d !!!\n",qui_joue);
+                                              remplirPlateau(&jeu,(qui_joue%2)+1);
+                                          }
                                      }
                                 }
                             }
@@ -237,8 +242,11 @@ void affiche_score(int s1, int s2)
     /* pour monter ou descendre les scores */
     int decalage_y;
     decalage_y = 50;
+
     /* position d'affichage */
     SDL_Rect pos;
+
+    /* score du joueur 1 */
     pos.x = 50;
     pos.y = 150 + decalage_y;
 
@@ -256,6 +264,7 @@ void affiche_score(int s1, int s2)
 
     dessinepion1(140,165 + decalage_y);
 
+    /* score du joueur 2 */
 
     pos.x = 100;
     pos.y = 240 + decalage_y;

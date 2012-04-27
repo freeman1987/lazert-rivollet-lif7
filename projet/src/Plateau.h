@@ -166,6 +166,17 @@ void casesAutour(const Plateau* p,Case* c);
 
 
 /**
+    @brief Nombre de possibilités de déplacement pour un pion
+
+    @param [IN] p : pointeur sur Plateau
+    @param [IN] c : pointeur sur case
+
+    @return void
+*/
+int nbPossibilites(const Plateau* p,Case* c);
+
+
+/**
     @brief Retourne une valeur selon la distance entre un clic et le clic suivant:
            si le joueur clic à une distance de 1 il duplique sa pièce
            si le joueur clic à une distance de 2 il déplace sa pièce
@@ -210,5 +221,27 @@ void changeScoreJoueur(Plateau* p, int joueur, int dec);
     @param [IN] j : numéro du joueur
 */
 int getScore(const Plateau* p, int j);
+
+
+/**
+    @brief Déterminer si un joueur peut déplacer un de ses pions.
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] j : numéro du joueur
+
+    @return void
+*/
+int peutJouer(const Plateau* p, int j);
+
+
+/**
+    @brief Remplir toutes les cases libres avec les pions du joueur
+
+    @param [IN,OUT] p : Pointeur sur Plateau
+    @param [IN] j : numéro du joueur
+
+    @return void
+*/
+void remplirPlateau(Plateau* p, int j);
 
 #endif

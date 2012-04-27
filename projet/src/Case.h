@@ -23,8 +23,6 @@ typedef struct
 Case* caseInit();
 
 
-
-
 /**
     @brief Donner une position x,y a une case
 
@@ -49,12 +47,14 @@ int getLibre(const Case* c);
 
 /**
     @brief Rendre libre ou non une case
+
     @param [IN,OUT] c : pointeur sur la case a modifier
     @param [IN] val : booléen : libre ou non
 
     @return void
 */
 void setLibre(Case* c, int val);
+
 
 /**
     @brief Retourne le joueur qui a un pion sur la case
@@ -64,6 +64,17 @@ void setLibre(Case* c, int val);
     @return numero du joueur
 */
 int getJoueur(const Case* c);
+
+
+/**
+    @brief Modifier le joueur qui a un pion sur la case
+
+    @param [IN,OUT] c : pointeur sur case
+    @param [IN] j : numéro du joueur
+
+    @return void
+*/
+void setJoueur(Case* c, int j);
 
 
 /**
@@ -84,6 +95,7 @@ int getX(const Case* c);
     @return coordonnee entiere
 */
 int getY(const Case* c);
+
 
 int coordonneeCorrespondante(Case* c,int sx,int sy);
 #endif

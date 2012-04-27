@@ -276,6 +276,36 @@ void casesAutour(const Plateau* p,Case* c)
     }
 }
 
+int nbPossibilites(const Plateau* p,Case* c)
+{
+    int i,j; /* pour les boucles */
+    int cx, cy; /* coordonnées de c */
+    Case* ctemp;
+    int retour;
+    retour = 0;
+
+    cx = getX(c);
+    cy = getY(c);
+
+    /* on parcourt le tableau pour compteur les cases libres autour de c */
+    for(i=0;i<(p->capacite);i++)
+    {
+        ctemp = p->support[i];
+        for(j=0;j<12;j+=2)
+        {
+             if((coordonneeCorrespondante(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (getLibre(ctemp)==1))
+                retour++;
+        }
+        for(j=0;j<24;j+=2)
+        {
+             if((coordonneeCorrespondante(ctemp,cx+pos2[j],cy+pos2[j+1])==1) && (getLibre(ctemp)==1))
+                retour++;
+        }
+    }
+
+    return retour;
+}
+
 int testCaseProche(int x,int y)
 {
     int i;
@@ -324,4 +354,41 @@ int getScore(const Plateau* p, int j)
         return p->score_j2;
     else
         return 0;
+}
+
+int peutJouer(const Plateau* p, int j)
+{
+    int i;
+    Case* ctemp;
+
+    /* on parcourt toutes les cases du plateau qui appartiennent au joueur */
+    for(i=0;i<p->capacite;i++)
+    {
+        ctemp = p->support[i];
+        if(getJoueur(ctemp)==j)
+        {
+            /* si au moins une a une possibilité de déplacement */
+            if(nbPossibilites(p,ctemp)>=1)
+                return 1;
+        }
+    }
+
+    return 0;
+}
+
+void remplirPlateau(Plateau* p, int j)
+{
+    int i;
+    Case* ctemp;
+
+    /* on parcourt toutes les cases du plateau */
+    for(i=0;i<p->capacite;i++)
+    {
+        ctemp = p->support[i];
+        if(getLibre(ctemp)==1)
+        {
+            /* si la case est libre */
+            setJoueur(ctemp,j);
+        }
+    }
 }
