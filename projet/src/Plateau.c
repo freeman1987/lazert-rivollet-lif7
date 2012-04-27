@@ -7,14 +7,14 @@
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 
- /*
+    /*
     VALEURS POUR TROUVER DES CASES ADJACENTES A UNE CASE
     les valeurs du tableau pos1 et du tableaû pos2 sont à lire 2 par 2
     pos1 : les valeurs correspondent à des décalages d'une case par rapport à C
     pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
     */
-const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
-const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
+    const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
+    const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
 
 
 void plateauInit(Plateau* p, int capa)
@@ -42,43 +42,25 @@ int getPlacesLibres(Plateau* p)
 
 void changeJoueur(Plateau* p, Case* c, int joueur)
 {
+    /* on regarde quel joueur avait un pion sur la case pour changer son score */
+    if(getJoueur(c)==1)
+        p->score_j1--;
+    else if(getJoueur(c)==2)
+        p->score_j2--;
+
     if(joueur==0) /* liberer la case */
     {
         setLibre(c,1);
-        if(c->joueur==1)
-            p->score_j1--;
-        else if(c->joueur==2)
-            p->score_j2--;
-        c->joueur = 0;
     }
-    else if((joueur==1 || joueur==2)&&(c->joueur!=joueur)) /* mettre le joueur */
+    else if(joueur==1) /* mettre le joueur 1 */
     {
-        setLibre(c,0);
-        if(joueur==1)
-        {
-            if(c->joueur==0)
-            {
-                p->score_j1++;
-            }
-            else if(c->joueur==2)
-            {
-                p->score_j1++;
-                p->score_j2--;
-            }
-        }
-        else
-        {
-            if(c->joueur==0)
-            {
-                p->score_j2++;
-            }
-            else if(c->joueur==1)
-            {
-                p->score_j2++;
-                p->score_j1--;
-            }
-        }
-        c->joueur = joueur;
+        p->score_j1++;
+        setJoueur(c,1);
+    }
+    else if(joueur==2)
+    {
+        p->score_j2++;
+        setJoueur(c,2);
     }
 }
 
@@ -379,8 +361,10 @@ int peutJouer(const Plateau* p, int j)
 void remplirPlateau(Plateau* p, int j)
 {
     int i;
+    int cpt;
     Case* ctemp;
 
+    cpt = 0;
     /* on parcourt toutes les cases du plateau */
     for(i=0;i<p->capacite;i++)
     {
@@ -389,6 +373,12 @@ void remplirPlateau(Plateau* p, int j)
         {
             /* si la case est libre */
             setJoueur(ctemp,j);
+            cpt++;
         }
     }
+
+    if(j==1)
+        p->score_j1 += cpt;
+    else if(j==2)
+        p->score_j2 += cpt;
 }

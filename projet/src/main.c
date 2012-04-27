@@ -17,6 +17,16 @@
 */
 void affiche_score(int s1, int s2);
 
+
+/**
+    @brief Affiche bravo qu gagnant
+
+    @param [in] joueur : joueur gagnant
+
+    @return void
+*/
+void afficher_fin_jeu(int joueur);
+
 int main ()
 {
     Plateau jeu;
@@ -62,6 +72,11 @@ int main ()
 
     texte_scores = IMG_Load(TEXTE_SCORES);
 
+    /* charger les messages de fin de jeu */
+    bravo[0] = IMG_Load(BRAVO_0);
+    bravo[1] = IMG_Load(BRAVO_1);
+    bravo[2] = IMG_Load(BRAVO_2);
+
     /* erreurs de chargement ? */
     if (!case_vide)
     {
@@ -103,15 +118,24 @@ int main ()
     /* variable pourr savoir quel joueur doit jouer */
     int qui_joue = 1; /* le joueur 1 commence */
 
-    Case* caseCliquee = 0;
-    Case* caseTemp; /* case temporaire */
+    Case* caseCliquee = 0; /* case sélectionnée */
 
-    int xtemp, ytemp; /* coordonnées temporaires */
+    Case* caseTemp; /* pointeur pour une case temporaire (dans les boucles) */
+    int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
+    int test; /* bouléen pour stocker le résultats d'un test */
+
+
+    /* qu'afficher ?
+        0 -> quitter
+        1 -> menu d'accueil
+        2 -> plateau de jeu
+        3 -> fin du jeu
+    */
+    int afficher = 2;
 
     /* boucle principale du programme */
     int done = 0;
-    int test;
-    while (done==0)
+    while (done==0 && afficher!=0)
     {
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
 
@@ -122,7 +146,7 @@ int main ()
         /* détection des événements */
         SDL_Event event;
 
-        /* position de la souris sur l'écran */
+        /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
         sourisy = event.motion.y;
 
@@ -134,75 +158,92 @@ int main ()
                 /* fermer */
                 case SDL_QUIT:
                     done = 1;
-                    break;
+                break;
 
                 /* touche enfoncée */
                 case SDL_KEYDOWN:
-                    {
-                        /* touche ECHAP */
-                        if (event.key.keysym.sym == SDLK_ESCAPE)
-                            done = 1;
-                        break;
-                    }
+                {
+                    /* touche ECHAP => quitter */
+                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                        done = 1;
+                    break;
+                }
+
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
+                {
+                    if(afficher==2) /* détecter le clic pour le jeu */
                     {
-
-                        /* on récupère la case cliquée si on clique dans une case */
+                        /* on récupère la case cliquée si l'on clique dans une case */
                         caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
-                        if(caseTemp!=0)
-                        {
 
+                        if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
+                        {
                             /* si on clique sur un pion du joueur qui doit jouer */
                             if((getJoueur(caseTemp))==qui_joue)
                             {
-                                /* on sélectionne un pion pour le faire "agir" */
+                                /* on sélectionne un pion pour proposer ensuite les possibilités */
                                 caseCliquee = caseTemp;
                             }
 
-                            /* le joueur a deja selectionné un case et clique sur un autre */
+                            /* le joueur a déjà selectionné un case et clique sur un autre : il passe à l'action */
                             else if(caseCliquee!=0)
                             {
-                                if(getLibre(caseTemp)==1)
+                                if(getLibre(caseTemp)==1) /* la case est libre */
                                 {
-                                     xtemp = getX(caseTemp) - getX(caseCliquee);
-                                     ytemp = getY(caseTemp) - getY(caseCliquee);
-                                     test = testCaseProche(xtemp,ytemp);
-                                     if(test==1)
-                                     {
+                                    /* on vérifie qu'elle soit dans une zone où il peut jouer */
+                                    xtemp = getX(caseTemp) - getX(caseCliquee);
+                                    ytemp = getY(caseTemp) - getY(caseCliquee);
+                                    test = testCaseProche(xtemp,ytemp);
+                                    if(test==1) /* il duplique son pion */
+                                    {
                                         decrementePlacesLibres(&jeu);
                                         changeJoueur(&jeu,caseTemp,qui_joue);
-                                        caseCliquee=0;
-                                     }
-                                     else if(test==2)
-                                     {
+                                        caseCliquee = 0;
+                                    }
+                                    else if(test==2) /* il déplace son pion */
+                                    {
                                         changeJoueur(&jeu, caseTemp,qui_joue);
                                         changeJoueur(&jeu, caseCliquee,0);
-                                        caseCliquee=0;
-                                     }
+                                        caseCliquee = 0;
+                                    }
 
-                                     if(test!=0)
-                                     {
-                                          changeCasesAutour(&jeu,caseTemp,qui_joue);
-                                          qui_joue=(qui_joue%2)+1;
+                                    if(test!=0) /* si il a pu jouer */
+                                    {
+                                        /* il récupère les pions qu'il touche */
+                                        changeCasesAutour(&jeu,caseTemp,qui_joue);
 
-                                          if(peutJouer(&jeu,qui_joue)==0)
-                                          {
-                                              printf("Joueur bloqué %d !!!\n",qui_joue);
-                                              remplirPlateau(&jeu,(qui_joue%2)+1);
-                                          }
-                                     }
+                                        /* ce sera à l'autre joueur de jouer */
+                                        qui_joue = (qui_joue%2)+1;
+
+                                        /* on vérifie qu'il puisse jouer */
+                                        if(peutJouer(&jeu,qui_joue)==0)
+                                        {
+                                            /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
+                                            remplirPlateau(&jeu,(qui_joue%2)+1);
+                                            afficher = 3; /* afficher le message de fin */
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        } /* fin de cliqué dans une case */
 
-                        /* si la partie est finie */
+                        /* si la partie est finie : afficher le message de fin */
                         if((getPlacesLibres(&jeu)==0)||(jeu.score_j1==0)||(jeu.score_j2==0))
-                            done = 1;
+                            afficher = 3;
 
+                    } /* fin de détection du clic pour le jeu */
+
+                    else if(afficher==3) /* détection du clic à la fin */
+                    {
+                        afficher = 1; /* on retourne au menu */
                     }
+
+                } /* fin de détection clic */
+
             } /* fin du test des événements */
-        }
+
+        } /* fin de détection des événements */
 
         // afficher quel joueur doit jouer
         SDL_Rect place_qui_joue;
@@ -224,10 +265,21 @@ int main ()
             y = UNITE_Y*(getY(caseCliquee)+DECAL_Y);
             dessineCase(x,y,1);
 
+            /* on affiche les possibilités de jeu autour de la case sélectionnée */
             casesAutour(&jeu,caseCliquee);
         }
 
+        /* on affiche le socre de chaque joueur */
         affiche_score(getScore(&jeu,1),getScore(&jeu,2));
+
+        /* si la fin du jeu est détectée, on affiche le message */
+        if(afficher==3)
+        {
+            if(getScore(&jeu,1)>getScore(&jeu,2))
+                afficher_fin_jeu(1);
+            else
+                afficher_fin_jeu(2);
+        }
 
         SDL_Flip(screen);
 
@@ -255,12 +307,15 @@ void affiche_score(int s1, int s2)
     pos.x = 100;
     pos.y = 190 + decalage_y;
 
-    while(s1!=0)
-    {
-        SDL_BlitSurface(chiffres[s1%10], 0, screen, &pos);
-        pos.x -= chiffres[s1%10]->w;
-        s1 /= 10;
-    }
+    if(s1==0)
+        SDL_BlitSurface(chiffres[0], 0, screen, &pos);
+    else
+        while(s1!=0)
+        {
+            SDL_BlitSurface(chiffres[s1%10], 0, screen, &pos);
+            pos.x -= chiffres[s1%10]->w;
+            s1 /= 10;
+        }
 
     dessinepion1(140,165 + decalage_y);
 
@@ -269,14 +324,25 @@ void affiche_score(int s1, int s2)
     pos.x = 100;
     pos.y = 240 + decalage_y;
 
-    while(s2!=0)
-    {
-        SDL_BlitSurface(chiffres[s2%10], 0, screen, &pos);
-        pos.x -= chiffres[s2%10]->w;
-        s2 /= 10;
-    }
+    if(s2==0)
+        SDL_BlitSurface(chiffres[0], 0, screen, &pos);
+    else
+        while(s2!=0)
+        {
+            SDL_BlitSurface(chiffres[s2%10], 0, screen, &pos);
+            pos.x -= chiffres[s2%10]->w;
+            s2 /= 10;
+        }
 
     dessinepion2(140,215 + decalage_y);
+}
 
+void afficher_fin_jeu(int joueur)
+{
+    SDL_Rect pos;
+    pos.x = (screen->w - bravo[joueur]->w)/2;
+    pos.y = (screen->h - bravo[joueur]->h)/2;
+
+    SDL_BlitSurface(bravo[joueur], 0, screen, &pos);
 }
 
