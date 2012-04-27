@@ -20,13 +20,14 @@ Case* caseInit()
 void setLibre(Case* c, int val)
 {
     c->libre = val;
+    c->joueur = 0;
 }
 
 void setPos(Case* c, int x, int y)
 {
     if(x<0 || y<0)
     {
-        printf("Erreur pour fixer les coordonnes de la case.");
+        printf("Erreur pour fixer les coordonnes de la case :\n\tles valeurs ne sont pas positives.\n");
         exit(-1);
     }
 
@@ -49,6 +50,8 @@ void setJoueur(Case* c, int j)
 {
     c->joueur = j;
     if(j==0)
+        c->libre = 1;
+    else
         c->libre = 0;
 }
 

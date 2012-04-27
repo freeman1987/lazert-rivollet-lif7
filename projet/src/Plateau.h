@@ -25,6 +25,7 @@ typedef struct
 
 /**
     @brief Definit quel joueur a une piece sur la case
+    On modifie aussi les scores des joueurs.
 
     @param [IN] p : pointeur sur le plateau
     @param [IN,OUT] c : pointeur sur la case à modifier
