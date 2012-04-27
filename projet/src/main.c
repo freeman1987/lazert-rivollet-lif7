@@ -188,7 +188,6 @@ int main ()
                                           qui_joue=(qui_joue%2)+1;
                                      }
                                 }
-                                printf("score J1 %d\n score J2 %d \n", jeu.score_j1,jeu.score_j2);
                             }
                         }
 
