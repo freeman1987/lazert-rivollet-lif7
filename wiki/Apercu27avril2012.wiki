@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+Voici un petit aperçu du plateau de jeu
+le vendredi 27 avril 2012
+
+
+= Image =
+
+<a href="http://www.imagup.com/data/1150228894.html"><img src="http://data.imagup.com/11/1150228894.png" /></a>
