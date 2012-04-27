@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#Aperçu du plateau de jeu
 
 Voici un petit aperçu du plateau de jeu
 le vendredi 27 avril 2012
