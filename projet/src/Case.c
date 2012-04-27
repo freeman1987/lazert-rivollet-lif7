@@ -45,6 +45,13 @@ int getJoueur(const Case* c)
     return c->joueur;
 }
 
+void setJoueur(Case* c, int j)
+{
+    c->joueur = j;
+    if(j==0)
+        c->libre = 0;
+}
+
 int getX(const Case* c)
 {
     return c->posX;
