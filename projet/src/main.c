@@ -17,36 +17,24 @@
 int main ()
 {
     Plateau jeu;
+    plateauInit(&jeu,0);
 
-    /* on charge les images pour les pions des 2 joueurs */
-    pion1 = IMG_Load(PION_JOUEUR_1);
-    pion2 = IMG_Load(PION_JOUEUR_2);
+    /* MENU PRINCIPAL */
 
-    SDL_Surface* menu;
-    menu = IMG_Load(MENU);
+        SDL_Surface* menu;
+        menu = IMG_Load(MENU); afficheVerifChargement(menu);
 
-    /* erreurs de chargement ? */
-    if (!pion1)
-    {
-        printf("Erreur de chargement du pion du joueur 1 : %s\n", SDL_GetError());
-        return 1;
-    }
-    if (!pion2)
-    {
-        printf("Erreur de chargement du pion du joueur 2 : %s\n", SDL_GetError());
-        return 1;
-    }
-    if (!menu)
-    {
-        printf("Erreur de chargement du menu : %s\n", SDL_GetError());
-        return 1;
-    }
+    /* IMAGES POUR LE PLATEAU DE JEU */
 
-    /* on charge l'image d'un case (normale et jouable) */
-    case_vide = IMG_Load(CASE_VIDE);
-    case_jouable = IMG_Load(CASE_JOUABLE);
-    case_jouable_3 = IMG_Load(CASE_JOUABLE_3);
-    case_jouable_4 = IMG_Load(CASE_JOUABLE_4);
+        /* on charge les images pour les pions des 2 joueurs */
+        pion1 = IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pion1);
+        pion2 = IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pion2);
+
+        /* on charge l'image d'un case (normale et jouable) */
+        case_vide = IMG_Load(CASE_VIDE); afficheVerifChargement(case_vide);
+        case_jouable = IMG_Load(CASE_JOUABLE); afficheVerifChargement(case_jouable);
+        case_jouable_3 = IMG_Load(CASE_JOUABLE_3); afficheVerifChargement(case_jouable_3);
+        case_jouable_4 = IMG_Load(CASE_JOUABLE_4); afficheVerifChargement(case_jouable_4);
 
     /* IMAGES POUR LES SCORES */
 
@@ -66,61 +54,50 @@ int main ()
         SDL_Surface* texte_scores;
         texte_scores = IMG_Load(TEXTE_SCORES);
 
-    /* erreurs de chargement ? */
-    if (!case_vide)
-    {
-        printf("Erreur de chargement de la case vide: %s\n", SDL_GetError());
-        return 1;
-    }
-    if (!case_jouable)
-    {
-        printf("Erreur de chargement de la case jouable: %s\n", SDL_GetError());
-        return 1;
-    }
+    /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
-    /* on charge l'écran d'affichage */
-    screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
-    if (!screen)
-    {
-        printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
-        return 1;
-    }
-
-
-    /* on vide l'écran */
-    SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-    /* on initialise SDL video */
-    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
-        return 1;
-    }
-
-    /* make sure SDL cleans up before exit */
-    atexit(SDL_Quit);
+        /* on charge l'écran d'affichage */
+        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
+            return 1;
+        }
+        /* on vide l'écran */
+        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+        /* on initialise SDL video */
+        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        {
+            printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
+            return 1;
+        }
+        /* make sure SDL cleans up before exit */
+        atexit(SDL_Quit);
 
 
-    /* variables pour contenir les coordonnées de la souris */
-    int sourisx;
-    int sourisy;
+    /* VARIABLES POUR LE JEU */
 
-    /* variable pourr savoir quel joueur doit jouer */
-    int qui_joue = 1; /* le joueur 1 commence */
+        /* variables pour contenir les coordonnées de la souris */
+        int sourisx;
+        int sourisy;
 
-    Case* caseCliquee = 0; /* case sélectionnée */
+        /* variable pourr savoir quel joueur doit jouer */
+        int qui_joue = 1; /* le joueur 1 commence */
 
-    Case* caseTemp; /* pointeur pour une case temporaire (dans les boucles) */
-    int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
-    int test; /* bouléen pour stocker le résultats d'un test */
+        Case* caseCliquee = 0; /* case sélectionnée */
+
+        Case* caseTemp; /* pointeur pour une case temporaire (dans les boucles) */
+        int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
+        int test; /* bouléen pour stocker le résultats d'un test */
 
 
-    /* qu'afficher ?
-        0 -> quitter
-        1 -> menu d'accueil
-        2 -> plateau de jeu
-        3 -> fin du jeu
-    */
-    int afficher = 1;
+        /* qu'afficher ?
+            0 -> quitter
+            1 -> menu d'accueil
+            2 -> plateau de jeu
+            3 -> fin du jeu
+        */
+        int afficher = 1;
 
     /* boucle principale du programme */
     int done = 0;
@@ -137,7 +114,12 @@ int main ()
 
         while (SDL_PollEvent(&event))
         {
-            /* test des événements */
+
+/*
+ ************************
+ * EVENEMENTS
+ ************************
+ */
             switch (event.type)
             {
                 /* fermer */
@@ -149,6 +131,7 @@ int main ()
                 case SDL_KEYDOWN:
                 {
     /* touche ECHAP => quitter ou retour menu */
+
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                     {
                         if(afficher==1 || afficher==3)
@@ -163,8 +146,11 @@ int main ()
                     }
 
     /* EVENEMENTS (CLAVIER) POUR LE MENU */
+
                     if(afficher==1)
                     {
+                        /* choix du plateau de jeu */
+
                         if(event.key.keysym.sym == SDLK_F1)
                         {
                             lirePlateau(&jeu,PLATEAU1);
@@ -185,6 +171,7 @@ int main ()
                 {
 
     /* EVENEMENTS (CLICS) POUR LE MENU */
+
                     if(afficher==1)
                     {
                         /* on charge le plateau de jeu */
@@ -193,6 +180,7 @@ int main ()
                     }
 
     /* EVENEMENTS (CLICS) POUR LE JEU */
+
                     else if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         /* on récupère la case cliquée si l'on clique dans une case */
@@ -256,6 +244,7 @@ int main ()
                     } /* fin de détection du clic pour le jeu */
 
     /* EVENEMENTS (CLICS) POUR LA FIN DU JEU */
+
                     else if(afficher==3) /* détection du clic à la fin */
                     {
                         afficher = 1; /* on retourne au menu */
@@ -269,6 +258,12 @@ int main ()
             } /* fin du test des événements */
 
         } /* fin de détection des événements */
+
+/*
+ ************************
+ * AFFICHAGE
+ ************************
+ */
 
     /* AFFICHAGE DU MENU DU JEU */
         if(afficher==1)
