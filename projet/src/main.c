@@ -39,7 +39,7 @@ int main ()
     /* IMAGES POUR LES SCORES */
 
         /* la tableau pour les images des chiffres */
-        SDL_Surface* chiffres[10];
+        SDL_Surface* chiffres[10]; int i; // pour la boucle de free
         chiffres[0] = IMG_Load("../data/Texture1/0.png");
         chiffres[1] = IMG_Load("../data/Texture1/1.png");
         chiffres[2] = IMG_Load("../data/Texture1/2.png");
@@ -307,6 +307,22 @@ int main ()
         SDL_Flip(screen);
 
     } /* fin de la boucle principale */
+
+/*
+ **************************
+ * LIBERER LES SDL_Surfaces
+ **************************
+ */
+    SDL_FreeSurface(menu);
+    SDL_FreeSurface(pion1);
+    SDL_FreeSurface(pion2);
+    SDL_FreeSurface(case_vide);
+    SDL_FreeSurface(case_jouable);
+    SDL_FreeSurface(case_jouable_3);
+    SDL_FreeSurface(case_jouable_4);
+    SDL_FreeSurface(texte_scores);
+    for(i=0;i<10;i++)
+        SDL_FreeSurface(chiffres[i]);
 
     plateauTestament(&jeu);
     printf("Sortie du programme --- \n");

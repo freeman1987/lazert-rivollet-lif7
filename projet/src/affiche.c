@@ -94,6 +94,7 @@ void afficheFinJeu(int s1, int s2)
     pos.y = (screen->h - bravo->h)/2;
 
     SDL_BlitSurface(bravo, 0, screen, &pos);
+    SDL_FreeSurface(bravo);
 }
 
 void afficheImage(int x, int y, SDL_Surface* image)
