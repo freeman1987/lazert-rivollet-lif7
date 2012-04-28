@@ -126,7 +126,7 @@ int main ()
     int done = 0;
     while (done==0 && afficher!=0)
     {
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 10, 15, 40));
+        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
         /* détection des événements */
         SDL_Event event;
@@ -148,9 +148,34 @@ int main ()
                 /* touche enfoncée */
                 case SDL_KEYDOWN:
                 {
-                    /* touche ECHAP => quitter */
+    /* touche ECHAP => quitter ou retour menu */
                     if (event.key.keysym.sym == SDLK_ESCAPE)
-                        done = 1;
+                    {
+                        if(afficher==1 || afficher==3)
+                        {
+                            afficher = 0; // fin du jeu
+                        }
+                        else if(afficher==2)
+                        {
+                            plateauTestament(&jeu);
+                            afficher = 1;
+                        }
+                    }
+
+    /* EVENEMENTS (CLAVIER) POUR LE MENU */
+                    if(afficher==1)
+                    {
+                        if(event.key.keysym.sym == SDLK_F1)
+                        {
+                            lirePlateau(&jeu,PLATEAU1);
+                            afficher = 2;
+                        }
+                        else if(event.key.keysym.sym == SDLK_F2)
+                        {
+                            lirePlateau(&jeu,PLATEAU2);
+                            afficher = 2;
+                        }
+                    }
 
                     break;
                 }
@@ -164,7 +189,6 @@ int main ()
                     {
                         /* on charge le plateau de jeu */
                         lirePlateau(&jeu,PLATEAU2);
-
                         afficher = 2;
                     }
 
@@ -237,6 +261,8 @@ int main ()
                         afficher = 1; /* on retourne au menu */
                         plateauTestament(&jeu);
                     }
+
+                    break;
 
                 } /* fin de détection clic */
 
