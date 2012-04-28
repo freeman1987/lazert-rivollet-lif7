@@ -163,6 +163,12 @@ int main ()
                             afficher = 2;
                             qui_joue = 1;
                         }
+                        else if(event.key.keysym.sym == SDLK_F3)
+                        {
+                            lirePlateau(&jeu,PLATEAU3);
+                            afficher = 2;
+                            qui_joue = 1;
+                        }
                     }
 
                     break;
