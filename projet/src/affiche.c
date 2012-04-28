@@ -28,6 +28,7 @@ void afficheQuiJoue(int j)
         logo_joueur = IMG_Load(LOGO_JOUEUR_2);
 
     SDL_BlitSurface(logo_joueur, 0, screen, &place_qui_joue);
+    SDL_FreeSurface(logo_joueur);
 }
 
 void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, SDL_Surface* pion1, SDL_Surface* pion2)
@@ -128,5 +129,14 @@ void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion1, S
             else if(caseGetJoueur(c)==2)
                 afficheImageRect(position, pion2);
         }
+    }
+}
+
+void afficheVerifChargement(SDL_Surface* img)
+{
+    if(img==0)
+    {
+        printf("Erreur de chargement de l'image : %s",SDL_GetError());
+        exit(-1);
     }
 }

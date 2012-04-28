@@ -97,4 +97,14 @@ void afficheCase(int x, int y, SDL_Surface* image);
 void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion1, SDL_Surface* pion2);
 
 
+/**
+    @brief Vérifier qu'un image est bien chargée
+
+    @param [IN] img : SDL_Surface*
+
+    @return void
+*/
+void afficheVerifChargement(SDL_Surface* img);
+
+
 #endif
