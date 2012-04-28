@@ -71,12 +71,12 @@ void plateauDecrementePlacesLibres(Plateau* p)
     p->places_libres--;
 }
 
-int plateauSourisDansCase(int sx, int sy, const Case* c)
+int plateauSourisDansCase(int sx, int sy, const Case* c, int dim)
 {
     int cx, cy;
     float dist;
-    cx = (caseGetX(c) + DECAL_X) * UNITE_X + (case_vide->w/2);
-    cy = (caseGetY(c) + DECAL_Y) * UNITE_Y + (case_vide->w/2);
+    cx = (int) ((caseGetX(c) + DECAL_X) * UNITE_X + (dim/2));
+    cy = (int) ((caseGetY(c) + DECAL_Y) * UNITE_Y + (dim/2));
     dist = sqrt(pow(cx - sx,2) + pow(cy - sy,2));
 
     /*
@@ -92,12 +92,12 @@ int plateauSourisDansCase(int sx, int sy, const Case* c)
         return 0;
 }
 
-Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p)
+Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim)
 {
     int i;
     for(i=0;i<p->capacite;i++)
     {
-        if(plateauSourisDansCase(sx, sy, p->support[i])==1)
+        if(plateauSourisDansCase(sx, sy, p->support[i],dim)==1)
             return p->support[i];
     }
     /* aucune case survollée */

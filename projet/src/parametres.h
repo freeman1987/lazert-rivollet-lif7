@@ -1,19 +1,36 @@
 #ifndef _PARAMETRES
 #define _PARAMETRES
 
-#include <SDL/SDL.h>
-#include <SDL_image.h>
 /**
 	Paramètres pour les images à charger.
 
-	@param PION_JOUEUR_1 chemin vers l'image du pion 1
-	@param PION_JOUEUR_2 chemin vers l'image du pion 2
-	@param CASE_VIDE chemin vers l'image de la case
-	@param CASE_JOUABLE chemin vers l'image de la case d'une autre couleur
-	@param UNITE_X unités pour les coordonnées horizontales
-	@param UNITE_Y unités pour les coordonnées verticales
-	@param DECAL_X décalage du plateau par rapport au haut de l'écran
-	@param DECAL_Y décalage du plateau par rapport au côté gauche de l'écran
+	@param PION_JOUEUR_1 : chemin vers l'image du pion 1
+	@param PION_JOUEUR_2 : chemin vers l'image du pion 2
+
+	@param CASE_VIDE  : chemin vers l'image de la case
+	@param CASE_JOUABLE : chemin vers l'image de la case d'une autre couleur
+	@param CASE_JOUABLE_3 : chemin vers l'image de la case d'une autre couleur
+	@param CASE_JOUABLE_4 : chemin vers l'image de la case d'une autre couleur
+
+	@param LOGO_JOUEUR_1 : chemin vers l'image pour indiquer que J1 a la main
+	@param LOGO_JOUEUR_2 : chemin vers l'image pour indiquer que J2 a la main
+
+	@param TEXTE_SCORES : chemin vers l'image affichée juste au dessus des scores
+
+	@param BRAVO_0 : chemin vers l'image affichée en fin de jeu (pas de gagnant)
+	@param BRAVO_1 : chemin vers l'image affichée en fin de jeu (joueur 1 gagnant)
+	@param BRAVO_2 : chemin vers l'image affichée en fin de jeu (joueur 2 gagnant)
+
+	@param MENU : chemin vers l'image du menu principal
+
+	@param PLATEAU1 : chemin vers le fichier du plateau 1
+	@param PLATEAU2 : chemin vers le fichier du plateau 2
+	@param PLATEAU3 : chemin vers le fichier du plateau 3
+
+	@param UNITE_X : unités pour les coordonnées horizontales
+	@param UNITE_Y : unités pour les coordonnées verticales
+	@param DECAL_X : décalage du plateau par rapport au haut de l'écran
+	@param DECAL_Y : décalage du plateau par rapport au côté gauche de l'écran
 *//*
     Les coordonnées correspondent aux images "case"
     Leur valeur permet d'aligner correctement les hexagones.
@@ -46,22 +63,5 @@
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
 	#define DECAL_Y 3
-
-
-
-/**
-    Variables globales pour contenir les images SDL.
-    Ces variables sont globales pour être utilisées dans les modules.
-*/
-
-	SDL_Surface* pion1;
-    SDL_Surface* pion2;
-    SDL_Surface* screen;
-    SDL_Surface* case_vide;
-    SDL_Surface* case_jouable;
-    SDL_Surface* case_jouable_3;
-    SDL_Surface* case_jouable_4;
-    SDL_Surface* case_jouable_4;
-
 
 #endif

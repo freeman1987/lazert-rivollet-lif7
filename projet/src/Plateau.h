@@ -92,10 +92,11 @@ Case* plateauGetCaseI(const Plateau* p, int i);
     @param [IN] sx : position x de la souris
     @param [IN] sy : position y de la souris
     @param [IN] c : Case à tester
+    @param [IN] dim : taille d'une case (hauteur ou largeur)
 
     @return int (booléen)
 */
-int plateauSourisDansCase(int sx, int sy, const Case* c);
+int plateauSourisDansCase(int sx, int sy, const Case* c, int dim);
 
 
 /**
@@ -104,10 +105,11 @@ int plateauSourisDansCase(int sx, int sy, const Case* c);
     @param [IN] sx : Position x de la souris
     @param [IN] sy : Position y de la souris
     @param [IN] p : Pointeur sur Plateau
+    @param [IN] dim : taille d'une case (hauteur ou largeur)
 
     @return pointeur sur la case survollée, ou 0 si aucune survollée
 */
-Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p);
+Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim);
 
 
 /**

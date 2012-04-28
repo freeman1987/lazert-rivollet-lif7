@@ -5,9 +5,6 @@
 #include "Plateau.h"
 #include "affiche.h"
 
-#include <SDL/SDL.h>
-//#include <SDL/SDL_image.h>
-
 
 /**
     @brief Fonction du jeu
@@ -27,10 +24,16 @@ int main ()
     /* IMAGES POUR LE PLATEAU DE JEU */
 
         /* on charge les images pour les pions des 2 joueurs */
+        SDL_Surface* pion1;
+        SDL_Surface* pion2;
         pion1 = IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pion1);
         pion2 = IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pion2);
 
         /* on charge l'image d'un case (normale et jouable) */
+        SDL_Surface* case_vide;
+        SDL_Surface* case_jouable;
+        SDL_Surface* case_jouable_3;
+        SDL_Surface* case_jouable_4;
         case_vide = IMG_Load(CASE_VIDE); afficheVerifChargement(case_vide);
         case_jouable = IMG_Load(CASE_JOUABLE); afficheVerifChargement(case_jouable);
         case_jouable_3 = IMG_Load(CASE_JOUABLE_3); afficheVerifChargement(case_jouable_3);
@@ -57,6 +60,7 @@ int main ()
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
         /* on charge l'écran d'affichage */
+        SDL_Surface* screen;
         screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if (!screen)
         {
@@ -194,7 +198,7 @@ int main ()
                     else if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         /* on récupère la case cliquée si l'on clique dans une case */
-                        caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu);
+                        caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu,case_vide->w);
 
                         if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
                         {
@@ -279,7 +283,7 @@ int main ()
 
         if(afficher==1)
         {
-           afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu);
+           afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu,screen);
         }
 
     /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
@@ -287,28 +291,28 @@ int main ()
         else if(afficher==2 || afficher==3)
         {
             /* afficher le terrain de jeu */
-            afficheJeu(&jeu,case_vide, pion1, pion2);
+            afficheJeu(&jeu,case_vide, pion1, pion2, screen);
 
             /* afficher quel joueur doit jouer */
-            afficheQuiJoue(qui_joue);
+            afficheQuiJoue(qui_joue,screen);
 
             /* si on a un pointeur de case cliquée non nul */
             if(caseCliquee!=0)
             {
                 /* on affiche la case en surbrillance */
-                afficheCaseJeu(caseCliquee, case_jouable);
+                afficheCaseJeu(caseCliquee, case_jouable, screen);
 
                 /* on affiche les possibilités de jeu autour de la case sélectionnée */
-                afficheCasesAutour(&jeu, caseCliquee,case_jouable_3, case_jouable_4);
+                afficheCasesAutour(&jeu, caseCliquee,case_jouable_3, case_jouable_4, screen);
             }
 
             /* on affiche le score de chaque joueur */
-            afficheScores(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
+            afficheScores(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),chiffres,texte_scores,pion1,pion2,screen);
 
             /* si la fin du jeu est détectée, on affiche le message */
             if(afficher==3)
             {
-                afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2));
+                afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),screen);
             }
         }
 
@@ -332,6 +336,7 @@ int main ()
     SDL_FreeSurface(texte_scores);
     for(i=0;i<10;i++)
         SDL_FreeSurface(chiffres[i]);
+    SDL_FreeSurface(screen);
 
     plateauTestament(&jeu);
     return 0;
