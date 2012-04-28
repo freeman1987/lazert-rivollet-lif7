@@ -175,7 +175,7 @@ int main ()
                     if(afficher==1)
                     {
                         /* on charge le plateau de jeu */
-                        lirePlateau(&jeu,PLATEAU2);
+                        lirePlateau(&jeu,PLATEAU1);
                         afficher = 2;
                     }
 
@@ -266,12 +266,14 @@ int main ()
  */
 
     /* AFFICHAGE DU MENU DU JEU */
+
         if(afficher==1)
         {
            afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu);
         }
 
     /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
+
         else if(afficher==2 || afficher==3)
         {
             /* afficher le terrain de jeu */
@@ -284,13 +286,10 @@ int main ()
             if(caseCliquee!=0)
             {
                 /* on affiche la case en surbrillance */
-                dessineCase(
-                            UNITE_X*(caseGetX(caseCliquee)+DECAL_X),
-                            UNITE_Y*(caseGetY(caseCliquee)+DECAL_Y),
-                            1);
+                afficheCaseJeu(caseCliquee, case_jouable);
 
                 /* on affiche les possibilités de jeu autour de la case sélectionnée */
-                casesAutour(&jeu,caseCliquee);
+                afficheCasesAutour(&jeu, caseCliquee,case_jouable_3, case_jouable_4);
             }
 
             /* on affiche le score de chaque joueur */
@@ -303,7 +302,7 @@ int main ()
             }
         }
 
-        /* mettre à jour l'écran */
+    /* mettre à jour l'écran */
         SDL_Flip(screen);
 
     } /* fin de la boucle principale */

@@ -141,3 +141,38 @@ void afficheVerifChargement(SDL_Surface* img)
         exit(-1);
     }
 }
+
+void afficheCaseJeu(const Case* c, SDL_Surface* image)
+{
+    SDL_Rect position;
+    position = xy2rect(caseGetX(c),caseGetY(c));
+    afficheImageRect(position, image);
+}
+
+void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliquer, SDL_Surface* img_deplacer)
+{
+
+    Case* ctmp;
+    int xtmp, ytmp;
+
+    int x,y;
+    x = caseGetX(c);
+    y = caseGetY(c);
+
+    int dist;
+
+    int i;
+
+    for(i=0;i<plateauGetCapacite(p);i++)
+    {
+        ctmp = plateauGetCaseI(p,i);
+        xtmp = caseGetX(ctmp);
+        ytmp = caseGetY(ctmp);
+        dist = testCaseProche(xtmp-x,ytmp-y);
+
+        if(dist==1 && caseGetLibre(ctmp)==1)
+            afficheCaseJeu(ctmp,img_dupliquer);
+        else if(dist==2 && caseGetLibre(ctmp)==1)
+            afficheCaseJeu(ctmp,img_deplacer);
+    }
+}

@@ -46,7 +46,7 @@ int plateauGetCapacite(const Plateau* p)
 
 Case* plateauGetCaseI(const Plateau* p, int i)
 {
-    if(0<=i && i<p->capacite)
+    if(0<=i && i<(p->capacite))
         return p->support[i];
     else
         return 0;
@@ -79,49 +79,6 @@ void plateauChangeJoueur(Plateau* p, Case* c, int joueur)
 void plateauDecrementePlacesLibres(Plateau* p)
 {
     p->places_libres--;
-}
-
-void affichePlateau(Plateau* p)
-{
-    int i;
-    for(i=0;i<p->capacite;i++)
-    {
-        dessineCase(UNITE_X*(caseGetX(p->support[i])+DECAL_X),UNITE_Y*(caseGetY(p->support[i])+DECAL_Y),0);
-    }
-}
-
-void affichePiece(Plateau* p)
-{
-    int i;
-    Case* ca;
-    for(i=0;i<p->capacite;i++)
-    {
-        ca = p->support[i];
-        if(caseGetJoueur(ca)==1)
-            dessinepion1(UNITE_X*(caseGetX(ca)+DECAL_X),UNITE_Y*(caseGetY(ca)+DECAL_Y));
-        else if(caseGetJoueur(ca)==2)
-            dessinepion2(UNITE_X*(caseGetX(ca)+DECAL_X),UNITE_Y*(caseGetY(ca)+DECAL_Y));
-    }
-}
-
-void dessinepion1(int posX,int posY)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = posX;
-    dstrect.y = posY;
-    // draw bitmap
-        SDL_BlitSurface(pion1, 0, screen, &dstrect);
-}
-
-void dessinepion2(int posX, int posY)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = posX;
-    dstrect.y = posY;
-    // draw bitmap
-        SDL_BlitSurface(pion2, 0, screen, &dstrect);
 }
 
 void dessineCase(float posX,float posY,int C)
@@ -234,66 +191,31 @@ void lirePlateau(Plateau* p, const char filename[])
     fclose(f);
 }
 
-void casesAutour(const Plateau* p,Case* c)
-{
-    int i,j; /* pour les boucles */
-    int cx, cy; /* coordonnées de c */
-    int x, y; /* coordonnées de ctemp */
-    Case* ctemp;
-
-    cx = caseGetX(c);
-    cy = caseGetY(c);
-
-    /* on parcourt le tableau */
-    for(i=0;i<(p->capacite);i++)
-    {
-        ctemp = p->support[i];
-        x = UNITE_X*(caseGetX(ctemp)+DECAL_X);
-        y = UNITE_Y*(caseGetY(ctemp)+DECAL_Y);
-        for(j=0;j<12;j+=2)
-        {
-             /* allumer cette case qui se touve juste à côté de c */
-             if((caseTestCoordonnees(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (caseGetLibre(ctemp)==1))
-             {
-                dessineCase(x,y,2);
-             }
-        }
-        for(j=0;j<24;j+=2)
-        {
-             /* allumer cette case qui se touve à 2 cases de c */
-             if((caseTestCoordonnees(ctemp,cx+pos2[j],cy+pos2[j+1])==1) && (caseGetLibre(ctemp)==1))
-             {
-                dessineCase(x,y,3);
-             }
-        }
-    }
-}
-
 int nbPossibilites(const Plateau* p,Case* c)
 {
-    int i,j; /* pour les boucles */
-    int cx, cy; /* coordonnées de c */
-    Case* ctemp;
+    Case* ctmp;
+    int xtmp, ytmp;
+
+    int x,y;
+    x = caseGetX(c);
+    y = caseGetY(c);
+
+    int dist;
+
     int retour;
     retour = 0;
 
-    cx = caseGetX(c);
-    cy = caseGetY(c);
+    int i;
 
-    /* on parcourt le tableau pour compteur les cases libres autour de c */
-    for(i=0;i<(p->capacite);i++)
+    for(i=0;i<plateauGetCapacite(p);i++)
     {
-        ctemp = p->support[i];
-        for(j=0;j<12;j+=2)
-        {
-             if((caseTestCoordonnees(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (caseGetLibre(ctemp)==1))
-                retour++;
-        }
-        for(j=0;j<24;j+=2)
-        {
-             if((caseTestCoordonnees(ctemp,cx+pos2[j],cy+pos2[j+1])==1) && (caseGetLibre(ctemp)==1))
-                retour++;
-        }
+        ctmp = plateauGetCaseI(p,i);
+        xtmp = caseGetX(ctmp);
+        ytmp = caseGetY(ctmp);
+        dist = testCaseProche(xtmp-x,ytmp-y);
+
+        if(dist>0)
+            retour++;
     }
 
     return retour;
@@ -304,38 +226,39 @@ int testCaseProche(int x,int y)
     int i;
     for(i=0;i<12;i+=2)
     {
-        if(x==pos1[i]&&y==pos1[i+1])
+        if(x==pos1[i] && y==pos1[i+1])
             return 1;
     }
     for(i=0;i<24;i+=2)
     {
-        if(x==pos2[i]&&y==pos2[i+1])
+        if(x==pos2[i] && y==pos2[i+1])
         return 2;
     }
     return 0;
 }
 
-void changeCasesAutour(Plateau* p,Case* c,int joueur)
+void changeCasesAutour(Plateau* p, Case* c, int joueur)
 {
-    int i,j; /* pour les boucles */
-    int cx, cy; /* coordonnées de c */
-    Case* ctemp;
+    Case* ctmp;
+    int xtmp, ytmp;
 
-    cx = caseGetX(c);
-    cy = caseGetY(c);
+    int x,y;
+    x = caseGetX(c);
+    y = caseGetY(c);
 
-    /* on parcourt le tableau */
-    for(i=0;i<(p->capacite);i++)
+    int dist;
+
+    int i;
+
+    for(i=0;i<plateauGetCapacite(p);i++)
     {
-        ctemp = p->support[i];
-        for(j=0;j<12;j+=2)
-        {
-             /* allumer cette case qui se touve juste à côté de c */
-             if((caseTestCoordonnees(ctemp,cx+pos1[j],cy+pos1[j+1])==1) && (caseGetLibre(ctemp)==0)&&(caseGetJoueur(ctemp)!=joueur))
-             {
-                plateauChangeJoueur(p, ctemp,joueur);
-             }
-        }
+        ctmp = plateauGetCaseI(p,i);
+        xtmp = caseGetX(ctmp);
+        ytmp = caseGetY(ctmp);
+        dist = testCaseProche(xtmp-x,ytmp-y);
+
+        if(dist==1 && caseGetLibre(ctmp)==0)
+            plateauChangeJoueur(p, ctmp,joueur);
     }
 }
 
