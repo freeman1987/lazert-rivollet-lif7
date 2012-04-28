@@ -78,5 +78,5 @@ void caseTestament(Case* c)
     /* libérer la mémoire */
     if(c!=0)
         free(c);
-    printf("case à l'adresse %u libérée\n",(int) c);
+    /*printf("case à l'adresse %u libérée\n",(int) c);*/
 }

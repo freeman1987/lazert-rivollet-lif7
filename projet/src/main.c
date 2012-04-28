@@ -155,11 +155,13 @@ int main ()
                         {
                             lirePlateau(&jeu,PLATEAU1);
                             afficher = 2;
+                            qui_joue = 1;
                         }
                         else if(event.key.keysym.sym == SDLK_F2)
                         {
                             lirePlateau(&jeu,PLATEAU2);
                             afficher = 2;
+                            qui_joue = 1;
                         }
                     }
 
@@ -177,6 +179,7 @@ int main ()
                         /* on charge le plateau de jeu */
                         lirePlateau(&jeu,PLATEAU1);
                         afficher = 2;
+                        qui_joue = 1;
                     }
 
     /* EVENEMENTS (CLICS) POUR LE JEU */
@@ -324,6 +327,5 @@ int main ()
         SDL_FreeSurface(chiffres[i]);
 
     plateauTestament(&jeu);
-    printf("Sortie du programme --- \n");
     return 0;
 }

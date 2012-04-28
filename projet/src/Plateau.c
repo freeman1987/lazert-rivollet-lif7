@@ -7,16 +7,6 @@
 #include <SDL/SDL.h>
 #include <SDL_image.h>
 
-    /*
-    VALEURS POUR TROUVER DES CASES ADJACENTES A UNE CASE
-    les valeurs du tableau pos1 et du tableaû pos2 sont à lire 2 par 2
-    pos1 : les valeurs correspondent à des décalages d'une case par rapport à C
-    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
-    */
-    const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
-    const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
-
-
 void plateauInit(Plateau* p, int capa)
 {
     /* nombre de places au total sur la plateau */
@@ -224,6 +214,14 @@ int nbPossibilites(const Plateau* p,Case* c)
 int testCaseProche(int x,int y)
 {
     int i;
+    /*
+    Remarque importante : les valeurs du tableau pos1 et du tableau pos2 sont à lire 2 par 2
+    pos1 : les valeurs correspondent à des décalages d'une case par rapport à C
+    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
+    */
+    const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
+    const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
+
     for(i=0;i<12;i+=2)
     {
         if(x==pos1[i] && y==pos1[i+1])
@@ -324,12 +322,12 @@ void plateauTestament(Plateau* p)
     /* libérer toutes les cases */
     for(i=0;i<(p->capacite);i++)
     {
-        printf("Lecture du plateau : case %u\n\t", i);
+        /*printf("Lecture du plateau : case %u\n\t", i);*/
         caseTestament(p->support[i]);
         p->support[i] = 0;
     }
 
-    printf("Libérer le tableau de cases à l'adresse %u \n", (int) p->support);
+    /*printf("Libérer le tableau de cases à l'adresse %u \n", (int) p->support);*/
     if(p->support!=0)
         free(p->support);
     p->support = 0;
