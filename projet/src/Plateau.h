@@ -66,6 +66,27 @@ int plateauGetPlacesLibres(Plateau* p);
 
 
 /**
+    @brief Retourner le nombre de cases
+
+    @param [IN] p : Pointeur sur Plateau
+
+    @return int
+*/
+int plateauGetCapacite(const Plateau* p);
+
+
+/**
+    @brief Retourner la case i du plateau (utile pour les boucles)
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] i : 0 <= entier < capacité
+
+    @return Pointeur sur Case (ou nul si i est incorrect)
+*/
+Case* plateauGetCaseI(const Plateau* p, int i);
+
+
+/**
     @brief Affiche toutes les pièces (des joueurs) du plateau
 
     @param [IN] p : pointeur sur plateau

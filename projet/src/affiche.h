@@ -19,7 +19,7 @@
 
     @return void
 */
-void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut);
+void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, SDL_Surface* pion1, SDL_Surface* pion2);
 
 
 /**
@@ -40,6 +40,28 @@ void afficheQuiJoue(int j);
     @return void
 */
 void afficheFinJeu(int s1, int s2);
+
+
+/**
+    @brief Afficher le pion d'un joueur
+
+    @param [IN] x : coordonnée X
+    @param [IN] y : coordonnée y
+    @param [IN] image : image du pion
+
+    @return void
+*/
+void affichePion(int x, int y, SDL_Surface* image);
+
+
+/**
+    @brief Afficher le plateau (les cases)
+
+    @param [IN] p : Pointeur sur Plateau
+
+    @return void
+*/
+void afficheJeu(const Plateau* p);
 
 
 #endif

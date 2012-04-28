@@ -39,6 +39,19 @@ int plateauGetPlacesLibres(Plateau* p)
     return p->places_libres;
 }
 
+int plateauGetCapacite(const Plateau* p)
+{
+    return p->capacite;
+}
+
+Case* plateauGetCaseI(const Plateau* p, int i)
+{
+    if(0<=i && i<p->capacite)
+        return p->support[i];
+    else
+        return 0;
+}
+
 void plateauChangeJoueur(Plateau* p, Case* c, int joueur)
 {
     /* on regarde quel joueur avait un pion sur la case pour changer son score */
