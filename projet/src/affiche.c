@@ -46,7 +46,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
 
     /* score du joueur 1 */
     pos.x = 100;
-    pos.y += haut->h + 5;
+    pos.y += haut->h + 15;
 
     if(s1==0)
         SDL_BlitSurface(chiffres[0], 0, screen, &pos);
