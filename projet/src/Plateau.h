@@ -87,48 +87,6 @@ Case* plateauGetCaseI(const Plateau* p, int i);
 
 
 /**
-    @brief Affiche toutes les pièces (des joueurs) du plateau
-
-    @param [IN] p : pointeur sur plateau
-
-    @return void
-*/
-void affichePiece(Plateau* p);
-
-
-/**
-    @brief Afficher tout le plateau
-
-    @param [IN] p : plateau à afficher
-
-    @return void
-*/
-void affichePlateau(Plateau* p);
-
-
-/**
-    @brief Dessine le pion du joueur 1 à une position donnée
-
-    @param [IN] posX : position selon l'axe X
-    @param [IN] posY : position selon l'axe Y
-
-    @return void
-*/
-void dessinepion1(int posX,int posY);
-
-
-/**
-    @brief Dessine le pion du joueur 2 à une position donnée
-
-    @param [IN] posX : position selon l'axe X
-    @param [IN] posY : position selon l'axe Y
-
-    @return void
-*/
-void dessinepion2(int posX,int posY);
-
-
-/**
     @brief dessine une case du terrain à une position donnée
 
     @param [IN] posX : position selon l'axe X
@@ -175,17 +133,6 @@ void lirePlateau(Plateau* p, const char filename[]);
 
 
 /**
-    @brief Afficher les cases autour d'un case donnée
-
-    @param [IN] p : pointeur sur le plateau
-    @param [IN] c : case
-
-    @return void
-*/
-void casesAutour(const Plateau* p,Case* c);
-
-
-/**
     @brief Nombre de possibilités de déplacement pour un pion
 
     @param [IN] p : pointeur sur Plateau
@@ -205,7 +152,7 @@ int nbPossibilites(const Plateau* p,Case* c);
     @param [IN] x : position x de la case
     @param [IN] y : position y de la case
 
-    @return Un entier :1 si elle est à distance = 1, 2 si elle est à distance = 2, 0 sinon
+    @return int : 1 si elle est à distance = 1, 2 si elle est à distance = 2, 0 sinon
  *
  */
 int testCaseProche(int x,int y);

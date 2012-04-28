@@ -10,7 +10,7 @@ Case* caseInit()
     if(c==0)
     {
         printf("Erreur d'allocation pour une case.");
-        exit(-1);
+        exit(1);
     }
     c->libre = 1;
 
@@ -28,7 +28,7 @@ void caseSetPos(Case* c, int x, int y)
     if(x<0 || y<0)
     {
         printf("Erreur pour fixer les coordonnes de la case :\n\tles valeurs ne sont pas positives.\n");
-        exit(-1);
+        exit(1);
     }
 
     c->posX = x;

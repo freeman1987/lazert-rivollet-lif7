@@ -107,4 +107,28 @@ void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion1, S
 void afficheVerifChargement(SDL_Surface* img);
 
 
+/**
+    @brief Afficher une case du plateau
+
+    @param [IN] c : Pointeur sur Case
+    @param [IN] image : image de case à afficher
+
+    @return void
+
+*/
+void afficheCaseJeu(const Case* c, SDL_Surface* image);
+
+
+/**
+    @param Afficher les cases joueables autour de c
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] c : Pointeur sur Case
+    @param [IN] img_dupliquer : SDL_Surface de l'image à afficher juste à côté
+    @param [IN] img_deplacer : SDL_Surface de l'image à afficher plus loin
+
+    @return void
+*/
+void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliquer, SDL_Surface* img_deplacer);
+
 #endif
