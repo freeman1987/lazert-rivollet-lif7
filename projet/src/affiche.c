@@ -168,7 +168,7 @@ void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliq
         ctmp = plateauGetCaseI(p,i);
         xtmp = caseGetX(ctmp);
         ytmp = caseGetY(ctmp);
-        dist = testCaseProche(xtmp-x,ytmp-y);
+        dist = plateauTestCaseProche(xtmp-x,ytmp-y);
 
         if(dist==1 && caseGetLibre(ctmp)==1)
             afficheCaseJeu(ctmp,img_dupliquer);

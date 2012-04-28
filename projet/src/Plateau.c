@@ -19,7 +19,7 @@ void plateauInit(Plateau* p, int capa)
     p->support = (Case **) malloc(sizeof(Case)*capa);
     if(p->support==0)
     {
-        printf("Erreur d'allocation pour le tableau de Cases.");
+        printf("Erreur d'allocation pour le tableau de %d Cases.",capa);
         exit(-1);
     }
 }
@@ -71,24 +71,7 @@ void plateauDecrementePlacesLibres(Plateau* p)
     p->places_libres--;
 }
 
-void dessineCase(float posX,float posY,int C)
-{
-    // centre the bitmap on screen
-    SDL_Rect dstrect;
-    dstrect.x = (int)posX;
-    dstrect.y = (int)posY;
-    // draw bitmap
-    if(C==0)
-        SDL_BlitSurface(case_vide, 0, screen, &dstrect);
-    else if(C==1)
-        SDL_BlitSurface(case_jouable, 0, screen, &dstrect);
-    else if(C==2)
-        SDL_BlitSurface(case_jouable_3, 0, screen, &dstrect);
-    else
-        SDL_BlitSurface(case_jouable_4, 0, screen, &dstrect);
-}
-
-int sourisDansCase(int sx, int sy, const Case* c)
+int plateauSourisDansCase(int sx, int sy, const Case* c)
 {
     int cx, cy;
     float dist;
@@ -109,19 +92,19 @@ int sourisDansCase(int sx, int sy, const Case* c)
         return 0;
 }
 
-Case* caseSurvollee(int sx, int sy, const Plateau* p)
+Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p)
 {
     int i;
     for(i=0;i<p->capacite;i++)
     {
-        if(sourisDansCase(sx, sy, p->support[i])==1)
+        if(plateauSourisDansCase(sx, sy, p->support[i])==1)
             return p->support[i];
     }
     /* aucune case survollée */
     return 0;
 }
 
-void lirePlateau(Plateau* p, const char filename[])
+void plateauLireFichier(Plateau* p, const char filename[])
 {
     FILE* f;
 	int lecture;
@@ -181,7 +164,7 @@ void lirePlateau(Plateau* p, const char filename[])
     fclose(f);
 }
 
-int nbPossibilites(const Plateau* p,Case* c)
+int plateauNbPossibilites(const Plateau* p,Case* c)
 {
     Case* ctmp;
     int xtmp, ytmp;
@@ -202,7 +185,7 @@ int nbPossibilites(const Plateau* p,Case* c)
         ctmp = plateauGetCaseI(p,i);
         xtmp = caseGetX(ctmp);
         ytmp = caseGetY(ctmp);
-        dist = testCaseProche(xtmp-x,ytmp-y);
+        dist = plateauTestCaseProche(xtmp-x,ytmp-y);
 
         if(dist>0)
             retour++;
@@ -211,7 +194,7 @@ int nbPossibilites(const Plateau* p,Case* c)
     return retour;
 }
 
-int testCaseProche(int x,int y)
+int plateauTestCaseProche(int x,int y)
 {
     int i;
     /*
@@ -235,7 +218,7 @@ int testCaseProche(int x,int y)
     return 0;
 }
 
-void changeCasesAutour(Plateau* p, Case* c, int joueur)
+void plateauVolerPions(Plateau* p, Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
@@ -253,14 +236,14 @@ void changeCasesAutour(Plateau* p, Case* c, int joueur)
         ctmp = plateauGetCaseI(p,i);
         xtmp = caseGetX(ctmp);
         ytmp = caseGetY(ctmp);
-        dist = testCaseProche(xtmp-x,ytmp-y);
+        dist = plateauTestCaseProche(xtmp-x,ytmp-y);
 
         if(dist==1 && caseGetLibre(ctmp)==0)
             plateauChangeJoueur(p, ctmp,joueur);
     }
 }
 
-int getScore(const Plateau* p, int j)
+int plateauGetScore(const Plateau* p, int j)
 {
     if(j==1)
         return p->score_j1;
@@ -270,7 +253,7 @@ int getScore(const Plateau* p, int j)
         return 0;
 }
 
-int peutJouer(const Plateau* p, int j)
+int plateauPeutJouer(const Plateau* p, int j)
 {
     int i;
     Case* ctemp;
@@ -282,7 +265,7 @@ int peutJouer(const Plateau* p, int j)
         if(caseGetJoueur(ctemp)==j)
         {
             /* si au moins une a une possibilité de déplacement */
-            if(nbPossibilites(p,ctemp)>=1)
+            if(plateauNbPossibilites(p,ctemp)>=1)
                 return 1;
         }
     }
@@ -290,7 +273,7 @@ int peutJouer(const Plateau* p, int j)
     return 0;
 }
 
-void remplirPlateau(Plateau* p, int j)
+void plateauRemplirPions(Plateau* p, int j)
 {
     int i;
     int cpt;

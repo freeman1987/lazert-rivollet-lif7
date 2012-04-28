@@ -141,6 +141,7 @@ int main ()
                         else if(afficher==2)
                         {
                             plateauTestament(&jeu);
+                            caseCliquee = 0;
                             afficher = 1;
                         }
                     }
@@ -153,19 +154,19 @@ int main ()
 
                         if(event.key.keysym.sym == SDLK_F1)
                         {
-                            lirePlateau(&jeu,PLATEAU1);
+                            plateauLireFichier(&jeu,PLATEAU1);
                             afficher = 2;
                             qui_joue = 1;
                         }
                         else if(event.key.keysym.sym == SDLK_F2)
                         {
-                            lirePlateau(&jeu,PLATEAU2);
+                            plateauLireFichier(&jeu,PLATEAU2);
                             afficher = 2;
                             qui_joue = 1;
                         }
                         else if(event.key.keysym.sym == SDLK_F3)
                         {
-                            lirePlateau(&jeu,PLATEAU3);
+                            plateauLireFichier(&jeu,PLATEAU3);
                             afficher = 2;
                             qui_joue = 1;
                         }
@@ -183,7 +184,7 @@ int main ()
                     if(afficher==1)
                     {
                         /* on charge le plateau de jeu */
-                        lirePlateau(&jeu,PLATEAU1);
+                        plateauLireFichier(&jeu,PLATEAU1);
                         afficher = 2;
                         qui_joue = 1;
                     }
@@ -193,7 +194,7 @@ int main ()
                     else if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         /* on récupère la case cliquée si l'on clique dans une case */
-                        caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
+                        caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu);
 
                         if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
                         {
@@ -212,7 +213,7 @@ int main ()
                                     /* on vérifie qu'elle soit dans une zone où il peut jouer */
                                     xtemp = caseGetX(caseTemp) - caseGetX(caseCliquee);
                                     ytemp = caseGetY(caseTemp) - caseGetY(caseCliquee);
-                                    test = testCaseProche(xtemp,ytemp);
+                                    test = plateauTestCaseProche(xtemp,ytemp);
                                     if(test==1) /* il duplique son pion */
                                     {
                                         plateauDecrementePlacesLibres(&jeu);
@@ -229,16 +230,16 @@ int main ()
                                     if(test!=0) /* si il a pu jouer */
                                     {
                                         /* il récupère les pions qu'il touche */
-                                        changeCasesAutour(&jeu,caseTemp,qui_joue);
+                                        plateauVolerPions(&jeu,caseTemp,qui_joue);
 
                                         /* ce sera à l'autre joueur de jouer */
                                         qui_joue = (qui_joue%2)+1;
 
                                         /* on vérifie qu'il puisse jouer */
-                                        if(peutJouer(&jeu,qui_joue)==0)
+                                        if(plateauPeutJouer(&jeu,qui_joue)==0)
                                         {
                                             /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
-                                            remplirPlateau(&jeu,(qui_joue%2)+1);
+                                            plateauRemplirPions(&jeu,(qui_joue%2)+1);
                                             afficher = 3; /* afficher le message de fin */
                                         }
                                     }
@@ -302,12 +303,12 @@ int main ()
             }
 
             /* on affiche le score de chaque joueur */
-            afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
+            afficheScores(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
 
             /* si la fin du jeu est détectée, on affiche le message */
             if(afficher==3)
             {
-                afficheFinJeu(getScore(&jeu,1),getScore(&jeu,2));
+                afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2));
             }
         }
 

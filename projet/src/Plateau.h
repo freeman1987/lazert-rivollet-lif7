@@ -22,6 +22,17 @@ typedef struct
 
 
 /**
+    @brief Initialise le plateau
+
+    @param [IN,OUT] p : pointeur sur le plateau
+    @param [IN] capacite : nombre max de cases sur le plateau
+
+    @return void
+*/
+void plateauInit(Plateau* p, int capacite);
+
+
+/**
     @brief Definit quel joueur a une piece sur la case
     On modifie aussi les scores des joueurs.
 
@@ -32,17 +43,6 @@ typedef struct
     @return void
 */
 void plateauChangeJoueur(Plateau* p, Case* c, int joueur);
-
-
-/**
-    @brief Initialise le plateau
-
-    @param [IN,OUT] p : pointeur sur le plateau
-    @param [IN] capacite : nombre max de cases sur le plateau
-
-    @return void
-*/
-void plateauInit(Plateau* p, int capacite);
 
 
 /**
@@ -87,17 +87,6 @@ Case* plateauGetCaseI(const Plateau* p, int i);
 
 
 /**
-    @brief dessine une case du terrain à une position donnée
-
-    @param [IN] posX : position selon l'axe X
-    @param [IN] posY : position selon l'axe Y
-
-    @return void
-*/
-void dessineCase(float posX,float posY,int C);
-
-
-/**
     @brief Détermine si la souris est dans "un cercle" d'une case
 
     @param [IN] sx : position x de la souris
@@ -106,7 +95,7 @@ void dessineCase(float posX,float posY,int C);
 
     @return int (booléen)
 */
-int sourisDansCase(int sx, int sy, const Case* c);
+int plateauSourisDansCase(int sx, int sy, const Case* c);
 
 
 /**
@@ -118,7 +107,7 @@ int sourisDansCase(int sx, int sy, const Case* c);
 
     @return pointeur sur la case survollée, ou 0 si aucune survollée
 */
-Case* caseSurvollee(int sx, int sy, const Plateau* p);
+Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p);
 
 
 /**
@@ -129,7 +118,7 @@ Case* caseSurvollee(int sx, int sy, const Plateau* p);
 
     @return void
 */
-void lirePlateau(Plateau* p, const char filename[]);
+void plateauLireFichier(Plateau* p, const char filename[]);
 
 
 /**
@@ -140,7 +129,7 @@ void lirePlateau(Plateau* p, const char filename[]);
 
     @return void
 */
-int nbPossibilites(const Plateau* p,Case* c);
+int plateauNbPossibilites(const Plateau* p,Case* c);
 
 
 /**
@@ -155,7 +144,7 @@ int nbPossibilites(const Plateau* p,Case* c);
     @return int : 1 si elle est à distance = 1, 2 si elle est à distance = 2, 0 sinon
  *
  */
-int testCaseProche(int x,int y);
+int plateauTestCaseProche(int x,int y);
 
 
 /**
@@ -167,7 +156,7 @@ int testCaseProche(int x,int y);
 
     @return void
 */
-void changeCasesAutour(Plateau* p,Case* c,int joueur);
+void plateauVolerPions(Plateau* p,Case* c,int joueur);
 
 
 /**
@@ -186,8 +175,10 @@ void changeScoreJoueur(Plateau* p, int joueur, int dec);
 
     @param [IN] p : pointeur sur Plateau
     @param [IN] j : numéro du joueur
+
+    @return int (score > 0)
 */
-int getScore(const Plateau* p, int j);
+int plateauGetScore(const Plateau* p, int j);
 
 
 /**
@@ -196,9 +187,9 @@ int getScore(const Plateau* p, int j);
     @param [IN] p : Pointeur sur Plateau
     @param [IN] j : numéro du joueur
 
-    @return void
+    @return int (boléen)
 */
-int peutJouer(const Plateau* p, int j);
+int plateauPeutJouer(const Plateau* p, int j);
 
 
 /**
@@ -209,7 +200,7 @@ int peutJouer(const Plateau* p, int j);
 
     @return void
 */
-void remplirPlateau(Plateau* p, int j);
+void plateauRemplirPions(Plateau* p, int j);
 
 
 /**
