@@ -18,13 +18,12 @@ int main ()
 {
     Plateau jeu;
 
-
-    /* on charge le plateau de jeu */
-    lirePlateau(&jeu,PLATEAU1);
-
     /* on charge les images pour les pions des 2 joueurs */
     pion1 = IMG_Load(PION_JOUEUR_1);
     pion2 = IMG_Load(PION_JOUEUR_2);
+
+    SDL_Surface* menu;
+    menu = IMG_Load(MENU);
 
     /* erreurs de chargement ? */
     if (!pion1)
@@ -35,6 +34,11 @@ int main ()
     if (!pion2)
     {
         printf("Erreur de chargement du pion du joueur 2 : %s\n", SDL_GetError());
+        return 1;
+    }
+    if (!menu)
+    {
+        printf("Erreur de chargement du menu : %s\n", SDL_GetError());
         return 1;
     }
 
@@ -116,13 +120,13 @@ int main ()
         2 -> plateau de jeu
         3 -> fin du jeu
     */
-    int afficher = 2;
+    int afficher = 1;
 
     /* boucle principale du programme */
     int done = 0;
     while (done==0 && afficher!=0)
     {
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 10, 15, 40));
 
         /* détection des événements */
         SDL_Event event;
@@ -147,10 +151,7 @@ int main ()
                     /* touche ECHAP => quitter */
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                         done = 1;
-                    //break;
 
-                    if(event.key.keysym.sym == SDLK_p)
-                        afficheJeu(&jeu);
                     break;
                 }
 
@@ -158,8 +159,17 @@ int main ()
                 case SDL_MOUSEBUTTONDOWN:
                 {
 
-    /* JEU EN COURS : DETECTION CLIC */
-                    if(afficher==2) /* détecter le clic pour le jeu */
+    /* EVENEMENTS (CLICS) POUR LE MENU */
+                    if(afficher==1)
+                    {
+                        /* on charge le plateau de jeu */
+                        lirePlateau(&jeu,PLATEAU2);
+
+                        afficher = 2;
+                    }
+
+    /* EVENEMENTS (CLICS) POUR LE JEU */
+                    else if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         /* on récupère la case cliquée si l'on clique dans une case */
                         caseTemp = caseSurvollee(sourisx,sourisy,&jeu);
@@ -221,7 +231,7 @@ int main ()
 
                     } /* fin de détection du clic pour le jeu */
 
-    /* RESULTAT DE LA PARTIE : DETECTION CLIC */
+    /* EVENEMENTS (CLICS) POUR LA FIN DU JEU */
                     else if(afficher==3) /* détection du clic à la fin */
                     {
                         afficher = 1; /* on retourne au menu */
@@ -234,37 +244,43 @@ int main ()
 
         } /* fin de détection des événements */
 
-
-        /* afficher le terrain de jeu */
-        affichePlateau(&jeu);
-        affichePiece(&jeu);
-
-
-        /* afficher quel joueur doit jouer */
-        afficheQuiJoue(qui_joue);
-
-        /* si on a un pointeur de case cliquée non nul */
-        if(caseCliquee!=0)
+    /* AFFICHAGE DU MENU DU JEU */
+        if(afficher==1)
         {
-            /* on affiche la case en surbrillance */
-            dessineCase(
-                        UNITE_X*(caseGetX(caseCliquee)+DECAL_X),
-                        UNITE_Y*(caseGetY(caseCliquee)+DECAL_Y),
-                        1);
-
-            /* on affiche les possibilités de jeu autour de la case sélectionnée */
-            casesAutour(&jeu,caseCliquee);
+           afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu);
         }
 
-        /* on affiche le score de chaque joueur */
-        afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
-
-        /* si la fin du jeu est détectée, on affiche le message */
-        if(afficher==3)
+    /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
+        else if(afficher==2 || afficher==3)
         {
-            afficheFinJeu(getScore(&jeu,1),getScore(&jeu,2));
-        }
+            /* afficher le terrain de jeu */
+            afficheJeu(&jeu,case_vide, pion1, pion2);
 
+            /* afficher quel joueur doit jouer */
+            afficheQuiJoue(qui_joue);
+
+            /* si on a un pointeur de case cliquée non nul */
+            if(caseCliquee!=0)
+            {
+                /* on affiche la case en surbrillance */
+                dessineCase(
+                            UNITE_X*(caseGetX(caseCliquee)+DECAL_X),
+                            UNITE_Y*(caseGetY(caseCliquee)+DECAL_Y),
+                            1);
+
+                /* on affiche les possibilités de jeu autour de la case sélectionnée */
+                casesAutour(&jeu,caseCliquee);
+            }
+
+            /* on affiche le score de chaque joueur */
+            afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
+
+            /* si la fin du jeu est détectée, on affiche le message */
+            if(afficher==3)
+            {
+                afficheFinJeu(getScore(&jeu,1),getScore(&jeu,2));
+            }
+        }
 
         /* mettre à jour l'écran */
         SDL_Flip(screen);

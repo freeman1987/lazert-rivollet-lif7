@@ -8,6 +8,16 @@
 #include "Case.h"
 #include "Plateau.h"
 
+/**
+    @brief Transforme des coordonnées x,y de cases en un SDL_Rect
+
+    @param [IN] x : coordonnée x
+    @param [IN] y : coordonnée y
+
+    @return SDL_Rect
+*/
+SDL_Rect xy2rect(int x, int y);
+
 
 /**
     @brief Afficher les scores des joueurs
@@ -43,15 +53,38 @@ void afficheFinJeu(int s1, int s2);
 
 
 /**
-    @brief Afficher le pion d'un joueur
+    @brief Afficher une image à partir de coordonnées en pixels
 
-    @param [IN] x : coordonnée X
-    @param [IN] y : coordonnée y
-    @param [IN] image : image du pion
+    @param [IN] x : coordonnée X en pixels
+    @param [IN] y : coordonnée Y en pixels
+    @param [IN] image : image à afficher
 
     @return void
 */
-void affichePion(int x, int y, SDL_Surface* image);
+void afficheImage(int x, int y, SDL_Surface* image);
+
+
+/**
+    @brief Afficher une image à partir d'un rectangle SDL
+
+    @param [IN] rect : coordonnée SDL en pixels
+    @param [IN] image : image à afficher
+
+    @return void
+*/
+void afficheImageRect(SDL_Rect rect, SDL_Surface* image);
+
+
+/**
+    @brief Afficher une case
+
+    @param [IN] x : coordonnée X
+    @param [IN] y : coordonnée y
+    @param [IN] image : image de la case
+
+    @return void
+*/
+void afficheCase(int x, int y, SDL_Surface* image);
 
 
 /**
@@ -61,7 +94,7 @@ void affichePion(int x, int y, SDL_Surface* image);
 
     @return void
 */
-void afficheJeu(const Plateau* p);
+void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion1, SDL_Surface* pion2);
 
 
 #endif

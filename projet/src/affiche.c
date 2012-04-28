@@ -4,6 +4,15 @@
 #include "affiche.h"
 #include <SDL/SDL.h>
 
+SDL_Rect xy2rect(int x, int y)
+{
+    SDL_Rect retour;
+
+    retour.x = UNITE_X * (x + DECAL_X);
+    retour.y = UNITE_Y * (y + DECAL_Y);
+
+    return retour;
+}
 
 void afficheQuiJoue(int j)
 {
@@ -48,7 +57,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
             s1 /= 10;
         }
 
-    affichePion(140,165 + decalage_y,pion1);
+    afficheImage(140,165 + decalage_y,pion1);
 
     /* score du joueur 2 */
 
@@ -65,7 +74,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
             s2 /= 10;
         }
 
-    affichePion(140,215 + decalage_y,pion2);
+    afficheImage(140,215 + decalage_y,pion2);
 }
 
 void afficheFinJeu(int s1, int s2)
@@ -86,7 +95,7 @@ void afficheFinJeu(int s1, int s2)
     SDL_BlitSurface(bravo, 0, screen, &pos);
 }
 
-void affichePion(int x, int y, SDL_Surface* image)
+void afficheImage(int x, int y, SDL_Surface* image)
 {
     SDL_Rect dstrect;
     dstrect.x = x;
@@ -95,13 +104,29 @@ void affichePion(int x, int y, SDL_Surface* image)
     SDL_BlitSurface(image, 0, screen, &dstrect);
 }
 
-void afficheJeu(const Plateau* p)
+void afficheImageRect(SDL_Rect rect, SDL_Surface* image)
+{
+    SDL_BlitSurface(image, 0, screen, &rect);
+}
+
+void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion1, SDL_Surface* pion2)
 {
     int i;
+    SDL_Rect position;
     Case* c;
     for(i=0;i<plateauGetCapacite(p);i++)
     {
         c = plateauGetCaseI(p,i);
-        printf("Case %d : adresse %d\n",i,(int) c);
+        position = xy2rect(caseGetX(c),caseGetY(c));
+
+        afficheImageRect(position,image_case);
+
+        if(caseGetLibre(c)==0) /* il y a un pion */
+        {
+            if(caseGetJoueur(c)==1)
+                afficheImageRect(position, pion1);
+            else if(caseGetJoueur(c)==2)
+                afficheImageRect(position, pion2);
+        }
     }
 }
