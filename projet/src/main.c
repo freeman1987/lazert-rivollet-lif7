@@ -3,36 +3,24 @@
 
 #include "parametres.h"
 #include "Plateau.h"
+#include "affiche.h"
 
 #include <SDL/SDL.h>
 //#include <SDL/SDL_image.h>
 
-/**
-    @brief Afficher les scores des joueurs
-
-    @param [in] s1 : score 1
-    @param [IN] s2 : score 2
-
-    @return void
-*/
-void affiche_score(int s1, int s2);
-
 
 /**
-    @brief Affiche bravo qu gagnant
+    @brief Fonction du jeu
 
-    @param [in] joueur : joueur gagnant
-
-    @return void
+    @return int
 */
-void afficher_fin_jeu(int joueur);
-
 int main ()
 {
     Plateau jeu;
 
+
     /* on charge le plateau de jeu */
-    lirePlateau(&jeu,"../data/Plateau1.txt");
+    lirePlateau(&jeu,PLATEAU1);
 
     /* on charge les images pour les pions des 2 joueurs */
     pion1 = IMG_Load(PION_JOUEUR_1);
@@ -55,27 +43,24 @@ int main ()
     case_jouable = IMG_Load(CASE_JOUABLE);
     case_jouable_3 = IMG_Load(CASE_JOUABLE_3);
     case_jouable_4 = IMG_Load(CASE_JOUABLE_4);
-    logo_joueur_1 = IMG_Load(LOGO_JOUEUR_1);
-    logo_joueur_2 = IMG_Load(LOGO_JOUEUR_2);
 
-    /* la tableau pour les images des chiffres (déclaré dans parametres.h) */
-    chiffres[0] = IMG_Load("../data/Texture1/0.png");
-    chiffres[1] = IMG_Load("../data/Texture1/1.png");
-    chiffres[2] = IMG_Load("../data/Texture1/2.png");
-    chiffres[3] = IMG_Load("../data/Texture1/3.png");
-    chiffres[4] = IMG_Load("../data/Texture1/4.png");
-    chiffres[5] = IMG_Load("../data/Texture1/5.png");
-    chiffres[6] = IMG_Load("../data/Texture1/6.png");
-    chiffres[7] = IMG_Load("../data/Texture1/7.png");
-    chiffres[8] = IMG_Load("../data/Texture1/8.png");
-    chiffres[9] = IMG_Load("../data/Texture1/9.png");
+    /* IMAGES POUR LES SCORES */
 
-    texte_scores = IMG_Load(TEXTE_SCORES);
+        /* la tableau pour les images des chiffres */
+        SDL_Surface* chiffres[10];
+        chiffres[0] = IMG_Load("../data/Texture1/0.png");
+        chiffres[1] = IMG_Load("../data/Texture1/1.png");
+        chiffres[2] = IMG_Load("../data/Texture1/2.png");
+        chiffres[3] = IMG_Load("../data/Texture1/3.png");
+        chiffres[4] = IMG_Load("../data/Texture1/4.png");
+        chiffres[5] = IMG_Load("../data/Texture1/5.png");
+        chiffres[6] = IMG_Load("../data/Texture1/6.png");
+        chiffres[7] = IMG_Load("../data/Texture1/7.png");
+        chiffres[8] = IMG_Load("../data/Texture1/8.png");
+        chiffres[9] = IMG_Load("../data/Texture1/9.png");
 
-    /* charger les messages de fin de jeu */
-    bravo[0] = IMG_Load(BRAVO_0);
-    bravo[1] = IMG_Load(BRAVO_1);
-    bravo[2] = IMG_Load(BRAVO_2);
+        SDL_Surface* texte_scores;
+        texte_scores = IMG_Load(TEXTE_SCORES);
 
     /* erreurs de chargement ? */
     if (!case_vide)
@@ -172,6 +157,8 @@ int main ()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                 {
+
+    /* JEU EN COURS : DETECTION CLIC */
                     if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         /* on récupère la case cliquée si l'on clique dans une case */
@@ -180,7 +167,7 @@ int main ()
                         if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
                         {
                             /* si on clique sur un pion du joueur qui doit jouer */
-                            if((getJoueur(caseTemp))==qui_joue)
+                            if((caseGetJoueur(caseTemp))==qui_joue)
                             {
                                 /* on sélectionne un pion pour proposer ensuite les possibilités */
                                 caseCliquee = caseTemp;
@@ -189,22 +176,22 @@ int main ()
                             /* le joueur a déjà selectionné un case et clique sur un autre : il passe à l'action */
                             else if(caseCliquee!=0)
                             {
-                                if(getLibre(caseTemp)==1) /* la case est libre */
+                                if(caseGetLibre(caseTemp)==1) /* la case est libre */
                                 {
                                     /* on vérifie qu'elle soit dans une zone où il peut jouer */
-                                    xtemp = getX(caseTemp) - getX(caseCliquee);
-                                    ytemp = getY(caseTemp) - getY(caseCliquee);
+                                    xtemp = caseGetX(caseTemp) - caseGetX(caseCliquee);
+                                    ytemp = caseGetY(caseTemp) - caseGetY(caseCliquee);
                                     test = testCaseProche(xtemp,ytemp);
                                     if(test==1) /* il duplique son pion */
                                     {
-                                        decrementePlacesLibres(&jeu);
-                                        changeJoueur(&jeu,caseTemp,qui_joue);
+                                        plateauDecrementePlacesLibres(&jeu);
+                                        plateauChangeJoueur(&jeu,caseTemp,qui_joue);
                                         caseCliquee = 0;
                                     }
                                     else if(test==2) /* il déplace son pion */
                                     {
-                                        changeJoueur(&jeu, caseTemp,qui_joue);
-                                        changeJoueur(&jeu, caseCliquee,0);
+                                        plateauChangeJoueur(&jeu, caseTemp,qui_joue);
+                                        plateauChangeJoueur(&jeu, caseCliquee,0);
                                         caseCliquee = 0;
                                     }
 
@@ -229,14 +216,16 @@ int main ()
                         } /* fin de cliqué dans une case */
 
                         /* si la partie est finie : afficher le message de fin */
-                        if((getPlacesLibres(&jeu)==0)||(jeu.score_j1==0)||(jeu.score_j2==0))
+                        if((plateauGetPlacesLibres(&jeu)==0)||(jeu.score_j1==0)||(jeu.score_j2==0))
                             afficher = 3;
 
                     } /* fin de détection du clic pour le jeu */
 
+    /* RESULTAT DE LA PARTIE : DETECTION CLIC */
                     else if(afficher==3) /* détection du clic à la fin */
                     {
                         afficher = 1; /* on retourne au menu */
+                        plateauTestament(&jeu);
                     }
 
                 } /* fin de détection clic */
@@ -245,104 +234,38 @@ int main ()
 
         } /* fin de détection des événements */
 
-        // afficher quel joueur doit jouer
-        SDL_Rect place_qui_joue;
-        place_qui_joue.x = 50;
-        place_qui_joue.y = 50;
-        if(qui_joue==1)
-            SDL_BlitSurface(logo_joueur_1, 0, screen, &place_qui_joue);
-        else if(qui_joue==2)
-            SDL_BlitSurface(logo_joueur_2, 0, screen, &place_qui_joue);
+        /* afficher quel joueur doit jouer */
+        afficheQuiJoue(qui_joue);
 
-
-        float x;
-        float y;
         /* si on a un pointeur de case cliquée non nul */
         if(caseCliquee!=0)
         {
             /* on affiche la case en surbrillance */
-            x = UNITE_X*(getX(caseCliquee)+DECAL_X);
-            y = UNITE_Y*(getY(caseCliquee)+DECAL_Y);
-            dessineCase(x,y,1);
+            dessineCase(
+                        UNITE_X*(caseGetX(caseCliquee)+DECAL_X),
+                        UNITE_Y*(caseGetY(caseCliquee)+DECAL_Y),
+                        1);
 
             /* on affiche les possibilités de jeu autour de la case sélectionnée */
             casesAutour(&jeu,caseCliquee);
         }
 
-        /* on affiche le socre de chaque joueur */
-        affiche_score(getScore(&jeu,1),getScore(&jeu,2));
+        /* on affiche le score de chaque joueur */
+        afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores);
 
         /* si la fin du jeu est détectée, on affiche le message */
         if(afficher==3)
         {
-            if(getScore(&jeu,1)>getScore(&jeu,2))
-                afficher_fin_jeu(1);
-            else
-                afficher_fin_jeu(2);
+            afficheFinJeu(getScore(&jeu,1),getScore(&jeu,2));
         }
 
+
+        /* mettre à jour l'écran */
         SDL_Flip(screen);
 
     } /* fin de la boucle principale */
 
+    plateauTestament(&jeu);
     printf("Sortie du programme --- \n");
     return 0;
 }
-
-void affiche_score(int s1, int s2)
-{
-    /* pour monter ou descendre les scores */
-    int decalage_y;
-    decalage_y = 50;
-
-    /* position d'affichage */
-    SDL_Rect pos;
-
-    /* score du joueur 1 */
-    pos.x = 50;
-    pos.y = 150 + decalage_y;
-
-    SDL_BlitSurface(texte_scores, 0, screen, &pos);
-
-    pos.x = 100;
-    pos.y = 190 + decalage_y;
-
-    if(s1==0)
-        SDL_BlitSurface(chiffres[0], 0, screen, &pos);
-    else
-        while(s1!=0)
-        {
-            SDL_BlitSurface(chiffres[s1%10], 0, screen, &pos);
-            pos.x -= chiffres[s1%10]->w;
-            s1 /= 10;
-        }
-
-    dessinepion1(140,165 + decalage_y);
-
-    /* score du joueur 2 */
-
-    pos.x = 100;
-    pos.y = 240 + decalage_y;
-
-    if(s2==0)
-        SDL_BlitSurface(chiffres[0], 0, screen, &pos);
-    else
-        while(s2!=0)
-        {
-            SDL_BlitSurface(chiffres[s2%10], 0, screen, &pos);
-            pos.x -= chiffres[s2%10]->w;
-            s2 /= 10;
-        }
-
-    dessinepion2(140,215 + decalage_y);
-}
-
-void afficher_fin_jeu(int joueur)
-{
-    SDL_Rect pos;
-    pos.x = (screen->w - bravo[joueur]->w)/2;
-    pos.y = (screen->h - bravo[joueur]->h)/2;
-
-    SDL_BlitSurface(bravo[joueur], 0, screen, &pos);
-}
-

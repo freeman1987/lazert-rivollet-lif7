@@ -32,7 +32,7 @@ Case* caseInit();
 
     @return void
 */
-void setPos(Case* c, int x, int y);
+void caseSetPos(Case* c, int x, int y);
 
 
 /**
@@ -42,7 +42,7 @@ void setPos(Case* c, int x, int y);
 
     @return 1 si la case est libre et 0 sinon
 */
-int getLibre(const Case* c);
+int caseGetLibre(const Case* c);
 
 
 /**
@@ -53,7 +53,7 @@ int getLibre(const Case* c);
 
     @return void
 */
-void setLibre(Case* c, int val);
+void caseSetLibre(Case* c, int val);
 
 
 /**
@@ -63,7 +63,7 @@ void setLibre(Case* c, int val);
 
     @return numero du joueur
 */
-int getJoueur(const Case* c);
+int caseGetJoueur(const Case* c);
 
 
 /**
@@ -74,7 +74,7 @@ int getJoueur(const Case* c);
 
     @return void
 */
-void setJoueur(Case* c, int j);
+void caseSetJoueur(Case* c, int j);
 
 
 /**
@@ -84,7 +84,7 @@ void setJoueur(Case* c, int j);
 
     @return coordonnee entiere
 */
-int getX(const Case* c);
+int caseGetX(const Case* c);
 
 
 /**
@@ -94,8 +94,28 @@ int getX(const Case* c);
 
     @return coordonnee entiere
 */
-int getY(const Case* c);
+int caseGetY(const Case* c);
 
 
-int coordonneeCorrespondante(Case* c,int sx,int sy);
+/**
+    @brief Comparer les coordonnées en paramètres avec celles de la case
+
+    @param [IN] c : Pointeur sur Case
+    @param [IN] sx : coordonnée horizontale
+    @param [IN] sy : coordonnée verticale
+
+    @return int (booléen)
+*/
+int caseTestCoordonnees(Case* c,int sx,int sy);
+
+
+/**
+    @brief Détruire la case pour libérer la mémoire.
+
+    @param [IN] c : Pointeur sur la case à détruire
+
+    @return void
+*/
+void caseTestament(Case* c);
+
 #endif

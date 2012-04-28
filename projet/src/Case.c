@@ -17,13 +17,13 @@ Case* caseInit()
     return c;
 }
 
-void setLibre(Case* c, int val)
+void caseSetLibre(Case* c, int val)
 {
     c->libre = val;
     c->joueur = 0;
 }
 
-void setPos(Case* c, int x, int y)
+void caseSetPos(Case* c, int x, int y)
 {
     if(x<0 || y<0)
     {
@@ -36,17 +36,17 @@ void setPos(Case* c, int x, int y)
 }
 
 
-int getLibre(const Case* c)
+int caseGetLibre(const Case* c)
 {
     return c->libre;
 }
 
-int getJoueur(const Case* c)
+int caseGetJoueur(const Case* c)
 {
     return c->joueur;
 }
 
-void setJoueur(Case* c, int j)
+void caseSetJoueur(Case* c, int j)
 {
     c->joueur = j;
     if(j==0)
@@ -55,20 +55,28 @@ void setJoueur(Case* c, int j)
         c->libre = 0;
 }
 
-int getX(const Case* c)
+int caseGetX(const Case* c)
 {
     return c->posX;
 }
 
-int getY(const Case* c)
+int caseGetY(const Case* c)
 {
     return c->posY;
 }
 
-int coordonneeCorrespondante(Case* c,int sx,int sy)
+int caseTestCoordonnees(Case* c,int sx,int sy)
 {
     if((c->posX==sx)&&(c->posY==sy))
         return 1;
     else
         return 0;
+}
+
+void caseTestament(Case* c)
+{
+    /* libérer la mémoire */
+    if(c!=0)
+        free(c);
+    printf("case à l'adresse %u libérée\n",(int) c);
 }

@@ -9,8 +9,6 @@
 
 typedef struct
 {
-    /* nombre de pions déja placés */
-    int nb_piece_mise;
 	/* nombre de places libres sur le support */
 	int places_libres;
 	/* nombre de places au total sur le plateau (pour les boucles) */
@@ -33,7 +31,7 @@ typedef struct
 
     @return void
 */
-void changeJoueur(Plateau* p, Case* c, int joueur);
+void plateauChangeJoueur(Plateau* p, Case* c, int joueur);
 
 
 /**
@@ -54,7 +52,7 @@ void plateauInit(Plateau* p, int capacite);
 
     @return void
 */
-void decrementePlacesLibres(Plateau* p);
+void plateauDecrementePlacesLibres(Plateau* p);
 
 
 /**
@@ -64,7 +62,7 @@ void decrementePlacesLibres(Plateau* p);
 
     @return nombre de places
 */
-int getPlacesLibres(Plateau* p);
+int plateauGetPlacesLibres(Plateau* p);
 
 
 /**
@@ -244,5 +242,15 @@ int peutJouer(const Plateau* p, int j);
     @return void
 */
 void remplirPlateau(Plateau* p, int j);
+
+
+/**
+    @brief Libérer la mémoire proprement
+
+    @param [IN] p : Pointeur sur Plateau
+
+    @return void
+*/
+void plateauTestament(Plateau* p);
 
 #endif

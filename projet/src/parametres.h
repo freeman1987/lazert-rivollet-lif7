@@ -21,16 +21,24 @@
 
 	#define PION_JOUEUR_1 "../data/Texture1/Rubis.png"
 	#define PION_JOUEUR_2 "../data/Texture1/Perle.png"
+
 	#define CASE_VIDE "../data/Texture1/Case.png"
 	#define CASE_JOUABLE "../data/Texture1/Case2.png"
 	#define CASE_JOUABLE_3 "../data/Texture1/Case3.png"
 	#define CASE_JOUABLE_4 "../data/Texture1/Case4.png"
+
 	#define LOGO_JOUEUR_1 "../data/Texture1/joueur1.png"
 	#define LOGO_JOUEUR_2 "../data/Texture1/joueur2.png"
+
 	#define TEXTE_SCORES "../data/Texture1/texte_scores.png"
+
 	#define BRAVO_0 "../data/Texture1/bravo0.png"
 	#define BRAVO_1 "../data/Texture1/bravo1.png"
 	#define BRAVO_2 "../data/Texture1/bravo2.png"
+
+	#define PLATEAU1 "../data/Plateau1.txt"
+	#define PLATEAU2 "../data/Plateau2.txt"
+
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
@@ -51,11 +59,6 @@
     SDL_Surface* case_jouable_3;
     SDL_Surface* case_jouable_4;
     SDL_Surface* case_jouable_4;
-    SDL_Surface* logo_joueur_1;
-    SDL_Surface* logo_joueur_2;
-    SDL_Surface* chiffres[10];
-    SDL_Surface* bravo[3];
-    SDL_Surface* texte_scores;
 
 
 #endif
