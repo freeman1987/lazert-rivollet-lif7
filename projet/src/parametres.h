@@ -36,6 +36,8 @@
 	#define BRAVO_1 "../data/Texture1/bravo1.png"
 	#define BRAVO_2 "../data/Texture1/bravo2.png"
 
+	#define MENU "../data/Texture1/menu.png"
+
 	#define PLATEAU1 "../data/Plateau1.txt"
 	#define PLATEAU2 "../data/Plateau2.txt"
 
