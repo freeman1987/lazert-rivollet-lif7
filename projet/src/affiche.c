@@ -21,7 +21,7 @@ void afficheQuiJoue(int j)
     SDL_BlitSurface(logo_joueur, 0, screen, &place_qui_joue);
 }
 
-void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut)
+void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, SDL_Surface* pion1, SDL_Surface* pion2)
 {
     /* pour monter ou descendre les scores */
     int decalage_y;
@@ -29,15 +29,14 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut)
 
     /* position d'affichage */
     SDL_Rect pos;
-
-    /* score du joueur 1 */
     pos.x = 50;
     pos.y = 150 + decalage_y;
 
     SDL_BlitSurface(haut, 0, screen, &pos);
 
+    /* score du joueur 1 */
     pos.x = 100;
-    pos.y = 190 + decalage_y;
+    pos.y += haut->h + 5;
 
     if(s1==0)
         SDL_BlitSurface(chiffres[0], 0, screen, &pos);
@@ -49,7 +48,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut)
             s1 /= 10;
         }
 
-    dessinepion1(140,165 + decalage_y);
+    affichePion(140,165 + decalage_y,pion1);
 
     /* score du joueur 2 */
 
@@ -66,7 +65,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut)
             s2 /= 10;
         }
 
-    dessinepion2(140,215 + decalage_y);
+    affichePion(140,215 + decalage_y,pion2);
 }
 
 void afficheFinJeu(int s1, int s2)
@@ -85,4 +84,24 @@ void afficheFinJeu(int s1, int s2)
     pos.y = (screen->h - bravo->h)/2;
 
     SDL_BlitSurface(bravo, 0, screen, &pos);
+}
+
+void affichePion(int x, int y, SDL_Surface* image)
+{
+    SDL_Rect dstrect;
+    dstrect.x = x;
+    dstrect.y = y;
+
+    SDL_BlitSurface(image, 0, screen, &dstrect);
+}
+
+void afficheJeu(const Plateau* p)
+{
+    int i;
+    Case* c;
+    for(i=0;i<plateauGetCapacite(p);i++)
+    {
+        c = plateauGetCaseI(p,i);
+        printf("Case %d : adresse %d\n",i,(int) c);
+    }
 }

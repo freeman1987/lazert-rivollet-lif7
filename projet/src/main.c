@@ -124,10 +124,6 @@ int main ()
     {
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
 
-        /* afficher le terrain de jeu */
-        affichePlateau(&jeu);
-        affichePiece(&jeu);
-
         /* détection des événements */
         SDL_Event event;
 
@@ -151,6 +147,10 @@ int main ()
                     /* touche ECHAP => quitter */
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                         done = 1;
+                    //break;
+
+                    if(event.key.keysym.sym == SDLK_p)
+                        afficheJeu(&jeu);
                     break;
                 }
 
@@ -234,6 +234,12 @@ int main ()
 
         } /* fin de détection des événements */
 
+
+        /* afficher le terrain de jeu */
+        affichePlateau(&jeu);
+        affichePiece(&jeu);
+
+
         /* afficher quel joueur doit jouer */
         afficheQuiJoue(qui_joue);
 
@@ -251,7 +257,7 @@ int main ()
         }
 
         /* on affiche le score de chaque joueur */
-        afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores);
+        afficheScores(getScore(&jeu,1),getScore(&jeu,2),chiffres,texte_scores,pion1,pion2);
 
         /* si la fin du jeu est détectée, on affiche le message */
         if(afficher==3)
