@@ -54,6 +54,9 @@ int main ()
         */
         int afficher = 1;
 
+        /* jouer seul ou contre ordinateur */
+        int contreordinateur = 0;
+
     /* boucle principale du programme */
     int done = 0;
 
