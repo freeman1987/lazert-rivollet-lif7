@@ -237,6 +237,36 @@ void plateauVolerPions(Plateau* p, Case* c, int joueur)
     }
 }
 
+int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur)
+{
+    Case* ctmp;
+    int xtmp, ytmp;
+
+    int x,y;
+    x = caseGetX(c);
+    y = caseGetY(c);
+
+    int dist;
+
+    int i;
+
+    int retour;
+    retour = 0;
+
+    for(i=0;i<plateauGetCapacite(p);i++)
+    {
+        ctmp = plateauGetCaseI(p,i);
+        xtmp = caseGetX(ctmp);
+        ytmp = caseGetY(ctmp);
+        dist = plateauTestCaseProche(xtmp-x,ytmp-y);
+
+        if(dist==1 && caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)!=joueur)
+            retour++;
+    }
+
+    return retour;
+}
+
 int plateauGetScore(const Plateau* p, int j)
 {
     if(j==1)

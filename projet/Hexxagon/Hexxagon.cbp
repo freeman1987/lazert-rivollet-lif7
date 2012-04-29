@@ -39,6 +39,10 @@
 		<Unit filename="../src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../src/ordinateur.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/ordinateur.h" />
 		<Unit filename="../src/parametres.h" />
 		<Extensions>
 			<code_completion />

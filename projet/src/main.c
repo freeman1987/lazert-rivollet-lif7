@@ -4,6 +4,7 @@
 #include "parametres.h"
 #include "Plateau.h"
 #include "affiche.h"
+#include "ordinateur.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -183,6 +184,32 @@ int main ()
                         }
                     }
 
+    /* EVENEMENTS (CLAVIER) POUR LE JEU */
+
+                    else if(afficher==2)
+                    {
+                        /* faire jouer l'ordinateur en appuyant sur la touche o */
+                        if(event.key.keysym.sym == SDLK_o)
+                        {
+                            ordinateurJouer(&jeu,qui_joue);
+
+                            /* ce sera à l'autre joueur de jouer */
+                            qui_joue = (qui_joue%2)+1;
+
+                            /* on vérifie qu'il puisse jouer */
+                            if(plateauPeutJouer(&jeu,qui_joue)==0)
+                            {
+                                /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
+                                plateauRemplirPions(&jeu,(qui_joue%2)+1);
+                                afficher = 3; /* afficher le message de fin */
+                            }
+
+                            /* fin du jeu */
+                            if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
+                                afficher = 3;
+                        }
+                    }
+
                     break;
                 }
 
@@ -259,7 +286,7 @@ int main ()
                         } /* fin de cliqué dans une case */
 
                         /* si la partie est finie : afficher le message de fin */
-                        if((plateauGetPlacesLibres(&jeu)==0)||(jeu.score_j1==0)||(jeu.score_j2==0))
+                        if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
                             afficher = 3;
 
                     } /* fin de détection du clic pour le jeu */
