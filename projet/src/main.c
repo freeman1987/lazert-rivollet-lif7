@@ -171,12 +171,25 @@ int main ()
 
                     if(afficher==1)
                     {
-                        /* choix du plateau de jeu */
-
+                        /* choix du mode de jeu (contre ordi ou joueur) */
                         if(event.key.keysym.sym == SDLK_o)
                         {
                            contreordinateur = (contreordinateur + 1) % 2;
                         }
+
+                        /* choix du niveau ordi */
+                        else if(contreordinateur==1 && event.key.keysym.sym == SDLK_UP)
+                        {
+                            if(niveauordinateur<9)
+                                niveauordinateur++;
+                        }
+                        else if(contreordinateur==1 && event.key.keysym.sym == SDLK_DOWN)
+                        {
+                            if(niveauordinateur>1)
+                                niveauordinateur--;
+                        }
+
+                        /* choix du plateau de jeu */
                         else if(event.key.keysym.sym == SDLK_F1)
                         {
                             plateauLireFichier(&jeu,PLATEAU1);
@@ -335,7 +348,7 @@ int main ()
             if(contreordinateur==1)
             {
                 afficheImage((screen->w - vsordi->w) - 5,5,vsordi,screen);
-
+                afficheNiveauOrdinateur((screen->w - chiffres[0]->w) - 10, (vsordi->h + 10), niveauordinateur, chiffres, screen);
             }
             else
             {

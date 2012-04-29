@@ -74,6 +74,19 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
     afficheImage(140,215 + decalage_y,pion_j2,ecran);
 }
 
+void afficheNiveauOrdinateur(int x, int y, int niv, SDL_Surface* chiffre[], SDL_Surface* ecran)
+{
+    int niveau;
+    if(niv<1)
+        niveau = 1;
+    else if(niv>9)
+        niveau = 9;
+    else
+        niveau = niv;
+
+    afficheImage(x,y,chiffre[niveau],ecran);
+}
+
 void afficheFinJeu(int s1, int s2, SDL_Surface* ecran)
 {
     SDL_Rect pos;
