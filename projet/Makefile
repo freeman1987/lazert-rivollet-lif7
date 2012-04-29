@@ -9,19 +9,19 @@ OUT = hexxagon
 
 all: $(BIN)$(OUT)
 
-$(BIN)$(OUT): $(SRC)main.o $(SRC)Plateau.o $(SRC)Case.o $(SRC)affiche.o
+$(BIN)$(OUT): $(BIN)main.o $(BIN)Plateau.o $(BIN)Case.o $(BIN)affiche.o
 	$(CC) $+ -o $@
 
-$(SRC)main.o: $(SRC)main.c $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
+$(BIN)main.o: $(SRC)main.c $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)main.c -o $@
 	
-$(SRC)Plateau.o: $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
+$(BIN)Plateau.o: $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)Plateau.c -o $@
 	
-$(SRC)Case.o: $(SRC)Case.h $(SRC)parametres.h
+$(BIN)Case.o: $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)Case.c -o $@
 
-$(SRC)affiche.o: $(SRC)affiche.h $(SRC)parametres.h
+$(BIN)affiche.o: $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)affiche.c -o $@
 
 clean:
