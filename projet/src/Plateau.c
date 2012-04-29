@@ -1,11 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
 #include "Case.h"
 #include "Plateau.h"
-#include <SDL/SDL.h>
-#include <SDL_image.h>
 
 void plateauInit(Plateau* p, int capa)
 {

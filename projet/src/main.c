@@ -5,6 +5,8 @@
 #include "Plateau.h"
 #include "affiche.h"
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 /**
     @brief Fonction du jeu
@@ -14,69 +16,17 @@
 int main ()
 {
     Plateau jeu;
-    plateauInit(&jeu,0);
-
-    /* MENU PRINCIPAL */
-
-        SDL_Surface* menu;
-        menu = IMG_Load(MENU); afficheVerifChargement(menu);
-
-    /* IMAGES POUR LE PLATEAU DE JEU */
-
-        /* on charge les images pour les pions des 2 joueurs */
-        SDL_Surface* pion1;
-        SDL_Surface* pion2;
-        pion1 = IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pion1);
-        pion2 = IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pion2);
-
-        /* on charge l'image d'un case (normale et jouable) */
-        SDL_Surface* case_vide;
-        SDL_Surface* case_jouable;
-        SDL_Surface* case_jouable_3;
-        SDL_Surface* case_jouable_4;
-        case_vide = IMG_Load(CASE_VIDE); afficheVerifChargement(case_vide);
-        case_jouable = IMG_Load(CASE_JOUABLE); afficheVerifChargement(case_jouable);
-        case_jouable_3 = IMG_Load(CASE_JOUABLE_3); afficheVerifChargement(case_jouable_3);
-        case_jouable_4 = IMG_Load(CASE_JOUABLE_4); afficheVerifChargement(case_jouable_4);
-
-    /* IMAGES POUR LES SCORES */
-
-        /* la tableau pour les images des chiffres */
-        SDL_Surface* chiffres[10]; int i; // pour la boucle de free
-        chiffres[0] = IMG_Load("../data/Texture1/0.png");
-        chiffres[1] = IMG_Load("../data/Texture1/1.png");
-        chiffres[2] = IMG_Load("../data/Texture1/2.png");
-        chiffres[3] = IMG_Load("../data/Texture1/3.png");
-        chiffres[4] = IMG_Load("../data/Texture1/4.png");
-        chiffres[5] = IMG_Load("../data/Texture1/5.png");
-        chiffres[6] = IMG_Load("../data/Texture1/6.png");
-        chiffres[7] = IMG_Load("../data/Texture1/7.png");
-        chiffres[8] = IMG_Load("../data/Texture1/8.png");
-        chiffres[9] = IMG_Load("../data/Texture1/9.png");
-
-        SDL_Surface* texte_scores;
-        texte_scores = IMG_Load(TEXTE_SCORES);
-
-    /* INITIALISATIONS POUR L'AFFICHAGE SDL */
-
-        /* on charge l'écran d'affichage */
-        SDL_Surface* screen;
-        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
-        if (!screen)
-        {
-            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
-            return 1;
-        }
-        /* on vide l'écran */
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-        /* on initialise SDL video */
-        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-        {
-            printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
-            return 1;
-        }
-        /* make sure SDL cleans up before exit */
-        atexit(SDL_Quit);
+    SDL_Surface* menu;
+    SDL_Surface* pion1;
+    SDL_Surface* pion2;
+    SDL_Surface* case_vide;
+    SDL_Surface* case_jouable;
+    SDL_Surface* case_jouable_3;
+    SDL_Surface* case_jouable_4;
+    SDL_Surface* chiffres[10]; int i; /* pour la boucle de free */
+    SDL_Surface* texte_scores;
+    SDL_Surface* screen;
+    SDL_Event event;
 
 
     /* VARIABLES POUR LE JEU */
@@ -105,12 +55,69 @@ int main ()
 
     /* boucle principale du programme */
     int done = 0;
+
+    /* INITIALISATION DU JEU */
+        plateauInit(&jeu,0);
+
+    /* MENU PRINCIPAL */
+
+        menu = IMG_Load(MENU); afficheVerifChargement(menu);
+
+    /* IMAGES POUR LE PLATEAU DE JEU */
+
+        /* on charge les images pour les pions des 2 joueurs */
+
+        pion1 = IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pion1);
+        pion2 = IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pion2);
+
+        /* on charge l'image d'un case (normale et jouable) */
+        case_vide = IMG_Load(CASE_VIDE); afficheVerifChargement(case_vide);
+        case_jouable = IMG_Load(CASE_JOUABLE); afficheVerifChargement(case_jouable);
+        case_jouable_3 = IMG_Load(CASE_JOUABLE_3); afficheVerifChargement(case_jouable_3);
+        case_jouable_4 = IMG_Load(CASE_JOUABLE_4); afficheVerifChargement(case_jouable_4);
+
+    /* IMAGES POUR LES SCORES */
+
+        /* la tableau pour les images des chiffres */
+        chiffres[0] = IMG_Load("../data/Texture1/0.png"); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = IMG_Load("../data/Texture1/1.png"); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = IMG_Load("../data/Texture1/2.png"); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = IMG_Load("../data/Texture1/3.png"); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = IMG_Load("../data/Texture1/4.png"); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = IMG_Load("../data/Texture1/5.png"); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = IMG_Load("../data/Texture1/6.png"); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = IMG_Load("../data/Texture1/7.png"); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = IMG_Load("../data/Texture1/8.png"); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = IMG_Load("../data/Texture1/9.png"); afficheVerifChargement(chiffres[9]);
+
+        texte_scores = IMG_Load(TEXTE_SCORES);
+
+    /* INITIALISATIONS POUR L'AFFICHAGE SDL */
+
+        /* on charge l'écran d'affichage */
+
+        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        if (!screen)
+        {
+            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
+            return 1;
+        }
+        /* on vide l'écran */
+        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+        /* on initialise SDL video */
+        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        {
+            printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
+            return 1;
+        }
+        /* make sure SDL cleans up before exit */
+        atexit(SDL_Quit);
+
+
+
     while (done==0 && afficher!=0)
     {
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
-
-        /* détection des événements */
-        SDL_Event event;
 
         /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
@@ -140,7 +147,7 @@ int main ()
                     {
                         if(afficher==1 || afficher==3)
                         {
-                            afficher = 0; // fin du jeu
+                            afficher = 0; /* fin du jeu */
                         }
                         else if(afficher==2)
                         {

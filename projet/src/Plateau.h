@@ -2,10 +2,12 @@
 #define _PLATEAU
 
 #include "parametres.h"
+#include "Case.h"
+
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
-#include "Case.h"
 
 typedef struct
 {
