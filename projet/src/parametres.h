@@ -37,6 +37,8 @@
 	@param UNITE_Y : unités pour les coordonnées verticales
 	@param DECAL_X : décalage du plateau par rapport au haut de l'écran
 	@param DECAL_Y : décalage du plateau par rapport au côté gauche de l'écran
+
+	@param COMMENATIRES : si 0 pas de commentaires des actions, sinon 1
 *//*
     Les coordonnées correspondent aux images "case"
     Leur valeur permet d'aligner correctement les hexagones.
@@ -75,5 +77,7 @@
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
 	#define DECAL_Y 3
+
+	#define COMMENTAIRES 0
 
 #endif

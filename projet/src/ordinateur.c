@@ -2,7 +2,12 @@
 
 void ordinateurJouer(Plateau* p, int joueur, int niv)
 {
-    int afficher_txt = 1; /* afficher ou non les commantaires */
+    #if COMMENTAIRES==0
+        int afficher_txt = 0; /* ne pas afficher les commantaires */
+    #else
+        int afficher_txt = 1; /* afficher les commantaires */
+        printf("--ENTREE DANS LA FONCTION ordinateurJouer--\n");
+    #endif
 
     int niveau;
 

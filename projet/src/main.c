@@ -160,12 +160,20 @@ int main ()
                         if(afficher==1 || afficher==3)
                         {
                             afficher = 0; /* fin du jeu */
+
+                            #if COMMENTAIRES==1
+                                printf("Echap => on quitte le jeu.\n");
+                            #endif
                         }
                         else if(afficher==2)
                         {
                             plateauTestament(&jeu);
                             caseCliquee = 0;
                             afficher = 1;
+
+                            #if COMMENTAIRES==1
+                                printf("Echap => fin de la partie, retour au menu.\n");
+                            #endif
                         }
                     }
 
@@ -177,6 +185,10 @@ int main ()
                         if(event.key.keysym.sym == SDLK_o)
                         {
                            contreordinateur = (contreordinateur + 1) % 2;
+
+                           #if COMMENTAIRES==1
+                                printf("On change le mode de jeu.\n");
+                            #endif
                         }
 
                         /* choix du niveau ordi */
@@ -184,11 +196,19 @@ int main ()
                         {
                             if(niveauordinateur<9)
                                 niveauordinateur++;
+
+                            #if COMMENTAIRES==1
+                                printf("On augmente le niveau de l'ordinateur.\n");
+                            #endif
                         }
                         else if(contreordinateur==1 && event.key.keysym.sym == SDLK_DOWN)
                         {
                             if(niveauordinateur>1)
                                 niveauordinateur--;
+
+                            #if COMMENTAIRES==1
+                                printf("On baisse le niveau de l'ordinateur.\n");
+                            #endif
                         }
 
                         /* choix du plateau de jeu */
@@ -216,26 +236,7 @@ int main ()
 
                     else if(afficher==2)
                     {
-                        /* faire jouer l'ordinateur en appuyant sur la touche o */
-                        if(event.key.keysym.sym == SDLK_o)
-                        {
-                            ordinateurJouer(&jeu,qui_joue,niveauordinateur);
 
-                            /* ce sera à l'autre joueur de jouer */
-                            qui_joue = (qui_joue%2)+1;
-
-                            /* on vérifie qu'il puisse jouer */
-                            if(plateauPeutJouer(&jeu,qui_joue)==0)
-                            {
-                                /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
-                                plateauRemplirPions(&jeu,(qui_joue%2)+1);
-                                afficher = 3; /* afficher le message de fin */
-                            }
-
-                            /* fin du jeu */
-                            if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
-                                afficher = 3;
-                        }
                     }
 
                     break;
@@ -253,6 +254,11 @@ int main ()
                         plateauLireFichier(&jeu,PLATEAU1);
                         afficher = 2;
                         qui_joue = 1;
+
+                        #if COMMENTAIRES==1
+                            printf("Chargement du plateau par défaut...\nAffichage du jeu.\n");
+                        #endif
+
                     }
 
     /* EVENEMENTS (CLICS) POUR LE JEU */
@@ -264,11 +270,19 @@ int main ()
 
                         if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
                         {
+                            #if COMMENTAIRES==1
+                                printf("Case à l'adresse %d cliquée par le joueur %d.\n",(int) caseTemp, qui_joue);
+                            #endif
+
                             /* si on clique sur un pion du joueur qui doit jouer */
                             if((caseGetJoueur(caseTemp))==qui_joue)
                             {
                                 /* on sélectionne un pion pour proposer ensuite les possibilités */
                                 caseCliquee = caseTemp;
+
+                                #if COMMENTAIRES==1
+                                    printf("La case a été sélectionnée.\n");
+                                #endif
                             }
 
                             /* le joueur a déjà selectionné un case et clique sur un autre : il passe à l'action */
@@ -285,12 +299,20 @@ int main ()
                                         plateauDecrementePlacesLibres(&jeu);
                                         plateauChangeJoueur(&jeu,caseTemp,qui_joue);
                                         caseCliquee = 0;
+
+                                        #if COMMENTAIRES==1
+                                            printf("Le joueur y duplique son pion.\n");
+                                        #endif
                                     }
                                     else if(test==2) /* il déplace son pion */
                                     {
                                         plateauChangeJoueur(&jeu, caseTemp,qui_joue);
                                         plateauChangeJoueur(&jeu, caseCliquee,0);
                                         caseCliquee = 0;
+
+                                        #if COMMENTAIRES==1
+                                            printf("Le joueur y déplace son pion.\n");
+                                        #endif
                                     }
 
                                     if(test!=0) /* si il a pu jouer */
@@ -298,24 +320,44 @@ int main ()
                                         /* il récupère les pions qu'il touche */
                                         plateauVolerPions(&jeu,caseTemp,qui_joue);
 
+                                        #if COMMENTAIRES==1
+                                            printf("Il vole les pions adverses à voler.\n");
+                                        #endif
+
                                         /* ce sera à l'autre joueur de jouer */
                                         qui_joue = (qui_joue%2)+1;
+
+                                        #if COMMENTAIRES==1
+                                            printf("La main passe au joueur %d.\n",qui_joue);
+                                        #endif
 
                                         /* on vérifie qu'il puisse jouer */
                                         if(plateauPeutJouer(&jeu,qui_joue)==0)
                                         {
                                             /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
                                             plateauRemplirPions(&jeu,(qui_joue%2)+1);
+                                            caseCliquee = 0;
                                             afficher = 3; /* afficher le message de fin */
+
+                                            #if COMMENTAIRES==1
+                                                printf("Le joueur %d ne peut pas jouer => fin de la partie.\n",qui_joue);
+                                            #endif
                                         }
                                     }
                                 }
                             }
                         } /* fin de cliqué dans une case */
 
-                        /* si la partie est finie : afficher le message de fin */
-                        if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
+                        /* si la partie est finie ... */
+                        if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
+                        {
                             afficher = 3;
+                            caseCliquee = 0;
+
+                             #if COMMENTAIRES==1
+                                printf("Il n'y a plus de place, ou un joueur a perdu => fin de la partie.\n");
+                            #endif
+                        }
 
                     } /* fin de détection du clic pour le jeu */
 
@@ -325,6 +367,10 @@ int main ()
                     {
                         afficher = 1; /* on retourne au menu */
                         plateauTestament(&jeu);
+
+                        #if COMMENTAIRES==1
+                            printf("Clic sur le message de fin => retour au menu.\n");
+                        #endif
                     }
 
                     break;
