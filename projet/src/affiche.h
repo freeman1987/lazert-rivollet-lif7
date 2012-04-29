@@ -67,11 +67,12 @@ void afficheQuiJoue(int j, SDL_Surface* ecran);
 
     @param [IN] s1 : score du joueur 1
     @param [IN] s2 : score du joueur 2
+    @param [IN] ordi : 1 si on a joué contre l'ordi
     @param [IN,OUT] ecran : SDL_Surface de l'écran
 
     @return void
 */
-void afficheFinJeu(int s1, int s2, SDL_Surface* ecran);
+void afficheFinJeu(int s1, int s2, int ordi, SDL_Surface* ecran);
 
 
 /**
