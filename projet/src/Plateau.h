@@ -154,13 +154,25 @@ int plateauTestCaseProche(int x,int y);
 /**
     @brief Transforme les pièces situées autour de la case où le joueur joue
 
-    @param [IN] p : pointeur sur le plateau
+    @param [IN] p : pointeur sur Plateau
     @param [IN] c : pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return void
 */
-void plateauVolerPions(Plateau* p,Case* c,int joueur);
+void plateauVolerPions(Plateau* p, Case* c, int joueur);
+
+
+/**
+    @brief Compte le nombre de pions adverses à voler autour d'une case
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] c : Pointeur sur une Case
+    @param joueur : le joueur en cours
+
+    @return int
+*/
+int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur);
 
 
 /**
