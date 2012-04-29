@@ -10,11 +10,12 @@
 /**
     @brief Faire jouer automatiquement un joueur
 
-    @param [IN] p : Pointeur sur Plateau
+    @param [IN,OUT] p : Pointeur sur Plateau
     @param [IN] joueur : Numéro du joueur
+    @param [IN] niveau : nombre de changements d'avis (plus c'est bas, moins l'analyse est bonne)
 
     @return void
 */
-void ordinateurJouer(Plateau* p, int joueur);
+void ordinateurJouer(Plateau* p, int joueur, int niveau);
 
 #endif
