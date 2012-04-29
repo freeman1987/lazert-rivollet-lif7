@@ -87,17 +87,19 @@ void afficheNiveauOrdinateur(int x, int y, int niv, SDL_Surface* chiffre[], SDL_
     afficheImage(x,y,chiffre[niveau],ecran);
 }
 
-void afficheFinJeu(int s1, int s2, SDL_Surface* ecran)
+void afficheFinJeu(int s1, int s2, int ordi, SDL_Surface* ecran)
 {
     SDL_Rect pos;
     SDL_Surface* bravo;
 
     if(s1==s2)
         bravo = IMG_Load(BRAVO_0);
-    else if(s1>s2)
-        bravo = IMG_Load(BRAVO_1);
-    else
+    else if(s1<s2 && ordi==0)
         bravo = IMG_Load(BRAVO_2);
+    else if(s1<s2 && ordi==1)
+        bravo = IMG_Load(BRAVO_3);
+    else
+        bravo = IMG_Load(BRAVO_1);
 
     pos.x = (ecran->w - bravo->w)/2;
     pos.y = (ecran->h - bravo->h)/2;

@@ -28,6 +28,7 @@ int main ()
     SDL_Surface* texte_scores;
     SDL_Surface* vsjoueur;
     SDL_Surface* vsordi;
+    SDL_Surface* texte_niveau;
     SDL_Surface* screen;
     SDL_Event event;
 
@@ -98,6 +99,7 @@ int main ()
         chiffres[9] = IMG_Load("../data/Texture1/9.png"); afficheVerifChargement(chiffres[9]);
 
         texte_scores = IMG_Load(TEXTE_SCORES);
+        texte_niveau = IMG_Load(TEXTE_NIVEAU);
 
         vsjoueur = IMG_Load(VSJOUEUR);
         vsordi = IMG_Load(VSORDI);
@@ -349,6 +351,7 @@ int main ()
             {
                 afficheImage((screen->w - vsordi->w) - 5,5,vsordi,screen);
                 afficheNiveauOrdinateur((screen->w - chiffres[0]->w) - 10, (vsordi->h + 10), niveauordinateur, chiffres, screen);
+                afficheImage((screen->w - chiffres[0]->w - texte_niveau->w) - 15, (vsordi->h + 10), texte_niveau, screen);
             }
             else
             {
@@ -407,7 +410,7 @@ int main ()
             /* si la fin du jeu est détectée, on affiche le message */
             if(afficher==3)
             {
-                afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),screen);
+                afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),contreordinateur,screen);
             }
         }
 
@@ -429,6 +432,7 @@ int main ()
     SDL_FreeSurface(case_jouable_3);
     SDL_FreeSurface(case_jouable_4);
     SDL_FreeSurface(texte_scores);
+    SDL_FreeSurface(texte_niveau);
     SDL_FreeSurface(vsjoueur);
     SDL_FreeSurface(vsordi);
     for(i=0;i<10;i++)
