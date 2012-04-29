@@ -38,6 +38,20 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
 
 
 /**
+    @brief Afficher le niveau de l'ordinateur sur le menu
+
+    @param [IN] x : coordonnée x en pixels
+    @param [IN] y : coordonnée y en pixels
+    @param [IN] niveau : valeur du niveau
+    @param [IN] chiffre : SDL_Surface (tableau de chiffres 0-9)
+    @param [IN,OUT] ecran : SDL_Surface de l'écran
+
+    @return void
+*/
+void afficheNiveauOrdinateur(int x, int y, int niv, SDL_Surface* chiffre[], SDL_Surface* ecran);
+
+
+/**
     @brief Afficher quel joueur à la main
 
     @param [IN] j : joueur

@@ -1,8 +1,15 @@
 #include "ordinateur.h"
 
-void ordinateurJouer(Plateau* p, int joueur, int niveau)
+void ordinateurJouer(Plateau* p, int joueur, int niv)
 {
-    int afficher_txt = 1;
+    int afficher_txt = 1; /* afficher ou non les commantaires */
+
+    int niveau;
+
+    if(niv>=9) /* 9 étant le niveau max, on fixe une limite inatteignable */
+        niveau = 1000;
+    else /* pas de problème pour un niveau <1 : seule la première case jouable sera jouée */
+        niveau = niv;
 
     int i,j;
     Case* ctmp;
