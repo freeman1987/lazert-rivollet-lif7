@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "affiche.h"
-#include <SDL/SDL.h>
 
 SDL_Rect xy2rect(int x, int y)
 {

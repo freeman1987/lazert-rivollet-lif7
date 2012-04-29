@@ -1,13 +1,13 @@
 #ifndef _AFFICHE
 #define _AFFICHE
 
-#include "parametres.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 #include <SDL/SDL.h>
-#include <SDL_image.h>
+#include <SDL/SDL_image.h>
 
+#include "parametres.h"
 #include "Case.h"
 #include "Plateau.h"
 
