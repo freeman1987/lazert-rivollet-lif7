@@ -1,6 +1,6 @@
 #include "ordinateur.h"
 
-void ordinateurJouer(Plateau* p, int joueur)
+void ordinateurJouer(Plateau* p, int joueur, int niveau)
 {
     int afficher_txt = 1;
 
@@ -8,6 +8,7 @@ void ordinateurJouer(Plateau* p, int joueur)
     Case* ctmp;
     Case* ctmp2;
     int dist;
+    int compteur = 0; /* compter le nombre de meilleurs solutions trouvées */
 
     int nbAVoler, nbAVolerTmp;
     Case* source;
@@ -43,6 +44,7 @@ void ordinateurJouer(Plateau* p, int joueur)
                     {
                         source = ctmp; destination = ctmp2; action = dist;
                         if(afficher_txt==1) printf("\tPar défaut\n");
+                        compteur++;
                     }
 
                     /* on peut se dupliquer ctmp dans ctmp2 */
@@ -52,13 +54,14 @@ void ordinateurJouer(Plateau* p, int joueur)
                         if(afficher_txt==1) printf("\t\ton peut s'y dupliquer et voler %d pion(s)\n",nbAVolerTmp);
 
                         /* il y a plus de pions à prendre en jouant ici */
-                        if(nbAVolerTmp>nbAVoler)
+                        if(nbAVolerTmp>nbAVoler && niveau>compteur)
                         {
                             source = ctmp;
                             destination = ctmp2;
                             action = 1; /* dupliquer */
                             nbAVoler = nbAVolerTmp;
                             if(afficher_txt==1) printf("\t\t\tC'est mieux ici !\n");
+                            compteur++;
                         }
 
                     }
@@ -69,13 +72,14 @@ void ordinateurJouer(Plateau* p, int joueur)
                         if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
 
                         /* il y a plus de pions à prendre en jouant ici */
-                        if(nbAVolerTmp>nbAVoler)
+                        if(nbAVolerTmp>nbAVoler && niveau>compteur)
                         {
                             source = ctmp;
                             destination = ctmp2;
                             action = 2; /* dupliquer */
                             nbAVoler = nbAVolerTmp;
                             if(afficher_txt==1) printf("\t\t\tC'est mieux ici !\n");
+                            compteur++;
                         }
                     }
                 }

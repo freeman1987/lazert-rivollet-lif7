@@ -26,6 +26,8 @@ int main ()
     SDL_Surface* case_jouable_4;
     SDL_Surface* chiffres[10]; int i; /* pour la boucle de free */
     SDL_Surface* texte_scores;
+    SDL_Surface* vsjoueur;
+    SDL_Surface* vsordi;
     SDL_Surface* screen;
     SDL_Event event;
 
@@ -56,6 +58,7 @@ int main ()
 
         /* jouer seul ou contre ordinateur */
         int contreordinateur = 0;
+        int niveauordinateur = 1;
 
     /* boucle principale du programme */
     int done = 0;
@@ -95,6 +98,9 @@ int main ()
         chiffres[9] = IMG_Load("../data/Texture1/9.png"); afficheVerifChargement(chiffres[9]);
 
         texte_scores = IMG_Load(TEXTE_SCORES);
+
+        vsjoueur = IMG_Load(VSJOUEUR);
+        vsordi = IMG_Load(VSORDI);
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
@@ -167,7 +173,11 @@ int main ()
                     {
                         /* choix du plateau de jeu */
 
-                        if(event.key.keysym.sym == SDLK_F1)
+                        if(event.key.keysym.sym == SDLK_o)
+                        {
+                           contreordinateur = (contreordinateur + 1) % 2;
+                        }
+                        else if(event.key.keysym.sym == SDLK_F1)
                         {
                             plateauLireFichier(&jeu,PLATEAU1);
                             afficher = 2;
@@ -194,7 +204,7 @@ int main ()
                         /* faire jouer l'ordinateur en appuyant sur la touche o */
                         if(event.key.keysym.sym == SDLK_o)
                         {
-                            ordinateurJouer(&jeu,qui_joue);
+                            ordinateurJouer(&jeu,qui_joue,niveauordinateur);
 
                             /* ce sera à l'autre joueur de jouer */
                             qui_joue = (qui_joue%2)+1;
@@ -320,13 +330,48 @@ int main ()
 
         if(afficher==1)
         {
-           afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu,screen);
+            afficheImage((screen->w - menu->w)/2,(screen->h - menu->h)/2,menu,screen);
+
+            if(contreordinateur==1)
+            {
+                afficheImage((screen->w - vsordi->w) - 5,5,vsordi,screen);
+
+            }
+            else
+            {
+                afficheImage((screen->w - vsjoueur->w) - 5 ,5,vsjoueur,screen);
+            }
+
+
+
         }
 
     /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
 
         else if(afficher==2 || afficher==3)
         {
+
+            /* c'est à l'ordinateur de jouer */
+            if(contreordinateur==1 && qui_joue==2)
+            {
+                ordinateurJouer(&jeu,qui_joue,niveauordinateur);
+
+                /* ce sera à l'autre joueur de jouer */
+                qui_joue = (qui_joue%2)+1;
+
+                /* on vérifie qu'il puisse jouer */
+                if(plateauPeutJouer(&jeu,qui_joue)==0)
+                {
+                    /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
+                    plateauRemplirPions(&jeu,(qui_joue%2)+1);
+                    afficher = 3; /* afficher le message de fin */
+                }
+
+                /* fin du jeu */
+                if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
+                    afficher = 3;
+            }
+
             /* afficher le terrain de jeu */
             afficheJeu(&jeu,case_vide, pion1, pion2, screen);
 
@@ -371,6 +416,8 @@ int main ()
     SDL_FreeSurface(case_jouable_3);
     SDL_FreeSurface(case_jouable_4);
     SDL_FreeSurface(texte_scores);
+    SDL_FreeSurface(vsjoueur);
+    SDL_FreeSurface(vsordi);
     for(i=0;i<10;i++)
         SDL_FreeSurface(chiffres[i]);
     SDL_FreeSurface(screen);

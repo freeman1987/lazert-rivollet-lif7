@@ -21,6 +21,9 @@
 	@param BRAVO_1 : chemin vers l'image affichée en fin de jeu (joueur 1 gagnant)
 	@param BRAVO_2 : chemin vers l'image affichée en fin de jeu (joueur 2 gagnant)
 
+	@param VSJOUEUR : chemin vers l'image pour 2 joueurs
+	@param VSORDI : chemin vers l'image pour 1 joueur contre ordinateur
+
 	@param MENU : chemin vers l'image du menu principal
 
 	@param PLATEAU1 : chemin vers le fichier du plateau 1
@@ -52,6 +55,9 @@
 	#define BRAVO_0 "../data/Texture1/bravo0.png"
 	#define BRAVO_1 "../data/Texture1/bravo1.png"
 	#define BRAVO_2 "../data/Texture1/bravo2.png"
+
+	#define VSJOUEUR "../data/Texture1/1vs2.png"
+	#define VSORDI "../data/Texture1/1vsordi.png"
 
 	#define MENU "../data/Texture1/menu.png"
 
