@@ -174,6 +174,10 @@ int plateauNbPossibilites(const Plateau* p,Case* c)
 
     int i;
 
+    #if COMMENTAIRES==1
+        printf("\tOn compte le nombre de possibilités pour le case %d.\n",(int) c);
+    #endif
+
     for(i=0;i<plateauGetCapacite(p);i++)
     {
         ctmp = plateauGetCaseI(p,i);
@@ -181,8 +185,14 @@ int plateauNbPossibilites(const Plateau* p,Case* c)
         ytmp = caseGetY(ctmp);
         dist = plateauTestCaseProche(xtmp-x,ytmp-y);
 
-        if(dist>0)
+        if(dist>0 && caseGetLibre(ctmp)==1)
+        {
             retour++;
+
+            #if COMMENTAIRES==1
+                printf("\t\tcase trouvée => %d\n",retour);
+            #endif
+        }
     }
 
     return retour;
@@ -282,6 +292,10 @@ int plateauPeutJouer(const Plateau* p, int j)
     int i;
     Case* ctemp;
 
+    #if COMMENTAIRES==1
+        printf("On regarde si le joueur %d peut jouer.\n",(int) j);
+    #endif
+
     /* on parcourt toutes les cases du plateau qui appartiennent au joueur */
     for(i=0;i<p->capacite;i++)
     {
@@ -290,9 +304,18 @@ int plateauPeutJouer(const Plateau* p, int j)
         {
             /* si au moins une a une possibilité de déplacement */
             if(plateauNbPossibilites(p,ctemp)>=1)
+            {
+                #if COMMENTAIRES==1
+                    printf("\tIl peut jouer à la case %d.\n",(int) ctemp);
+                #endif
                 return 1;
+            }
         }
     }
+
+    #if COMMENTAIRES==1
+        printf("\tAucune case trouvée...\n");
+    #endif
 
     return 0;
 }
