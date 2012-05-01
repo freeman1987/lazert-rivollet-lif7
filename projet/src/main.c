@@ -48,6 +48,9 @@ int main ()
         int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
         int test; /* bouléen pour stocker le résultats d'un test */
 
+        int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
+                                    peut appuyer O pour faire jouer l'ordi */
+
 
         /* qu'afficher ?
             0 -> quitter
@@ -236,7 +239,9 @@ int main ()
 
                     else if(afficher==2)
                     {
-
+                        /* option pour faire jouer l'ordinateur en appuyant sur la touche o */
+                        if(event.key.keysym.sym == SDLK_o)
+                            tourautomatique = 1;
                     }
 
                     break;
@@ -414,7 +419,7 @@ int main ()
         {
 
             /* c'est à l'ordinateur de jouer */
-            if(contreordinateur==1 && qui_joue==2)
+            if((contreordinateur==1 && qui_joue==2) || tourautomatique==1)
             {
                 ordinateurJouer(&jeu,qui_joue,niveauordinateur);
 
@@ -432,6 +437,8 @@ int main ()
                 /* fin du jeu */
                 if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
                     afficher = 3;
+
+                tourautomatique = 0;
             }
 
             /* afficher le terrain de jeu */
