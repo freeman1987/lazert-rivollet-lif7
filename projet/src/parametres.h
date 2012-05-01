@@ -44,30 +44,32 @@
     Leur valeur permet d'aligner correctement les hexagones.
 */
 
-	#define PION_JOUEUR_1 "../data/Texture1/Rubis.png"
-	#define PION_JOUEUR_2 "../data/Texture1/Perle.png"
+    #define TEXTURE "Texture1"
 
-	#define CASE_VIDE "../data/Texture1/Case.png"
-	#define CASE_JOUABLE "../data/Texture1/Case2.png"
-	#define CASE_JOUABLE_3 "../data/Texture1/Case3.png"
-	#define CASE_JOUABLE_4 "../data/Texture1/Case4.png"
+	#define PION_JOUEUR_1 "../data/"TEXTURE"/pion1.png"
+	#define PION_JOUEUR_2 "../data/"TEXTURE"/pion2.png"
 
-	#define LOGO_JOUEUR_1 "../data/Texture1/joueur1.png"
-	#define LOGO_JOUEUR_2 "../data/Texture1/joueur2.png"
+	#define CASE_VIDE "../data/"TEXTURE"/Case.png"
+	#define CASE_JOUABLE "../data/"TEXTURE"/Case2.png"
+	#define CASE_JOUABLE_3 "../data/"TEXTURE"/Case3.png"
+	#define CASE_JOUABLE_4 "../data/"TEXTURE"/Case4.png"
 
-	#define TEXTE_SCORES "../data/Texture1/texte_scores.png"
+	#define LOGO_JOUEUR_1 "../data/"TEXTURE"/joueur1.png"
+	#define LOGO_JOUEUR_2 "../data/"TEXTURE"/joueur2.png"
 
-	#define BRAVO_0 "../data/Texture1/bravo0.png"
-	#define BRAVO_1 "../data/Texture1/bravo1.png"
-	#define BRAVO_2 "../data/Texture1/bravo2.png"
-	#define BRAVO_3 "../data/Texture1/bravo3.png"
+	#define TEXTE_SCORES "../data/images/texte_scores.png"
 
-	#define VSJOUEUR "../data/Texture1/1vs2.png"
-	#define VSORDI "../data/Texture1/1vsordi.png"
+	#define BRAVO_0 "../data/images/bravo0.png"
+	#define BRAVO_1 "../data/images/bravo1.png"
+	#define BRAVO_2 "../data/images/bravo2.png"
+	#define BRAVO_3 "../data/images/bravo3.png"
 
-	#define TEXTE_NIVEAU "../data/Texture1/niveau.png"
+	#define VSJOUEUR "../data/images/1vs2.png"
+	#define VSORDI "../data/images/1vsordi.png"
 
-	#define MENU "../data/Texture1/menu.png"
+	#define TEXTE_NIVEAU "../data/images/niveau.png"
+
+	#define MENU "../data/images/menu.png"
 
 	#define PLATEAU1 "../data/Plateau1.txt"
 	#define PLATEAU2 "../data/Plateau2.txt"
