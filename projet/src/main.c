@@ -90,16 +90,16 @@ int main ()
     /* IMAGES POUR LES SCORES */
 
         /* la tableau pour les images des chiffres */
-        chiffres[0] = IMG_Load("../data/Texture1/0.png"); afficheVerifChargement(chiffres[0]);
-        chiffres[1] = IMG_Load("../data/Texture1/1.png"); afficheVerifChargement(chiffres[1]);
-        chiffres[2] = IMG_Load("../data/Texture1/2.png"); afficheVerifChargement(chiffres[2]);
-        chiffres[3] = IMG_Load("../data/Texture1/3.png"); afficheVerifChargement(chiffres[3]);
-        chiffres[4] = IMG_Load("../data/Texture1/4.png"); afficheVerifChargement(chiffres[4]);
-        chiffres[5] = IMG_Load("../data/Texture1/5.png"); afficheVerifChargement(chiffres[5]);
-        chiffres[6] = IMG_Load("../data/Texture1/6.png"); afficheVerifChargement(chiffres[6]);
-        chiffres[7] = IMG_Load("../data/Texture1/7.png"); afficheVerifChargement(chiffres[7]);
-        chiffres[8] = IMG_Load("../data/Texture1/8.png"); afficheVerifChargement(chiffres[8]);
-        chiffres[9] = IMG_Load("../data/Texture1/9.png"); afficheVerifChargement(chiffres[9]);
+        chiffres[0] = IMG_Load("../data/chiffres/0.png"); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = IMG_Load("../data/chiffres/1.png"); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = IMG_Load("../data/chiffres/2.png"); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = IMG_Load("../data/chiffres/3.png"); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = IMG_Load("../data/chiffres/4.png"); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = IMG_Load("../data/chiffres/5.png"); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = IMG_Load("../data/chiffres/6.png"); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = IMG_Load("../data/chiffres/7.png"); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = IMG_Load("../data/chiffres/8.png"); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = IMG_Load("../data/chiffres/9.png"); afficheVerifChargement(chiffres[9]);
 
         texte_scores = IMG_Load(TEXTE_SCORES);
         texte_niveau = IMG_Load(TEXTE_NIVEAU);
@@ -439,6 +439,8 @@ int main ()
                     afficher = 3;
 
                 tourautomatique = 0;
+
+                caseCliquee = 0;
             }
 
             /* afficher le terrain de jeu */
