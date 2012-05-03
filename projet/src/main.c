@@ -55,7 +55,8 @@ int main ()
 
         int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
                                     peut appuyer O pour faire jouer l'ordi */
-
+        int attente; /* temp d'attente de l'ordinateur */
+        attente=100; /* initialiser */
 
         /* qu'afficher ?
             0 -> quitter
@@ -393,10 +394,16 @@ int main ()
 
         else if(afficher==2 || afficher==3)
         {
-
             /* c'est à l'ordinateur de jouer */
             if((contreordinateur==1 && qui_joue==2) || tourautomatique==1)
             {
+
+
+                if(attente>=0)
+                {
+                    attente-=1;
+                }
+                else{
                 ordinateurJouer(&jeu,qui_joue,niveauordinateur);
 
                 /* ce sera à l'autre joueur de jouer */
@@ -417,6 +424,11 @@ int main ()
                 tourautomatique = 0;
 
                 caseCliquee = 0;
+                }
+                if (attente==-1)
+                {
+                    attente=10;
+                }
             }
 
             /* afficher le terrain de jeu */
