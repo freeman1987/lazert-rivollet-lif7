@@ -80,6 +80,6 @@
 	#define DECAL_X 4
 	#define DECAL_Y 3
 
-	#define COMMENTAIRES 0
+	#define COMMENTAIRES 1
 
 #endif
