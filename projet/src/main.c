@@ -321,6 +321,8 @@ int main ()
                                         xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
                                         deplacement.x = xyArrivee.x - xyPionAnim.x;
                                         deplacement.y = xyArrivee.y - xyPionAnim.y;
+                                        xyArrivee.x -= (int) deplacement.x / 10;
+                                        xyArrivee.y -= (int) deplacement.y / 10;
                                         animation = 1;
                                     }
                                 }
@@ -431,8 +433,8 @@ int main ()
                     ||
                     (deplacement.y<0 && xyPionAnim.y>xyArrivee.y)))
                 {
-                    xyPionAnim.x += (int) deplacement.x / 5;
-                    xyPionAnim.y += (int) deplacement.y / 5;
+                    xyPionAnim.x += (int) deplacement.x / 10;
+                    xyPionAnim.y += (int) deplacement.y / 10;
                     if(qui_joue==2) /* c'est encore le J2 qui bouge */
                         afficheImageRect(xyPionAnim,pion2,screen);
                     else
@@ -509,7 +511,7 @@ int main ()
             afficheQuiJoue(qui_joue,screen);
 
             /* si on a un pointeur de case cliquée non nul */
-            if(caseCliquee!=0)
+            if(caseCliquee!=0 && animation!=1)
             {
                 /* on affiche la case en surbrillance */
                 afficheCaseJeu(caseCliquee, case_jouable, screen);
