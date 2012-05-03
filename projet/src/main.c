@@ -56,7 +56,7 @@ int main ()
         int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
                                     peut appuyer O pour faire jouer l'ordi */
         int attente; /* temp d'attente de l'ordinateur */
-        attente=100; /* initialiser */
+        attente=10; /* initialiser */
 
         /* qu'afficher ?
             0 -> quitter
@@ -402,8 +402,8 @@ int main ()
                 if(attente>=0)
                 {
                     attente-=1;
-                }
-                else{
+                }else{
+
                 ordinateurJouer(&jeu,qui_joue,niveauordinateur);
 
                 /* ce sera à l'autre joueur de jouer */
@@ -424,10 +424,7 @@ int main ()
                 tourautomatique = 0;
 
                 caseCliquee = 0;
-                }
-                if (attente==-1)
-                {
-                    attente=10;
+                attente=10;
                 }
             }
 
