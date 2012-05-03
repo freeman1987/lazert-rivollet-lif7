@@ -310,69 +310,18 @@ int main ()
                             {
                                 if(caseGetLibre(caseTemp)==1) /* la case est libre */
                                 {
-                                    /* on vérifie qu'elle soit dans une zone où il peut jouer */
-                                    xtemp = caseGetX(caseTemp) - caseGetX(caseCliquee);
-                                    ytemp = caseGetY(caseTemp) - caseGetY(caseCliquee);
-                                    test = plateauTestCaseProche(xtemp,ytemp);
-                                    if(test==1) /* il duplique son pion */
+
+                                        /* on vérifie qu'elle soit dans une zone où il peut jouer */
+                                        xtemp = caseGetX(caseTemp) - caseGetX(caseCliquee);
+                                        ytemp = caseGetY(caseTemp) - caseGetY(caseCliquee);
+                                        test = plateauTestCaseProche(xtemp,ytemp);
+                                    if(test!=0 && animation==0)
                                     {
-                                        plateauDecrementePlacesLibres(&jeu);
-                                        plateauChangeJoueur(&jeu,caseTemp,qui_joue);
-                                        caseCliquee = 0;
-
-                                        #if COMMENTAIRES==1
-                                            printf("Le joueur y duplique son pion.\n");
-                                        #endif
-                                    }
-                                    else if(test==2) /* il déplace son pion */
-                                    {
-                                        plateauChangeJoueur(&jeu, caseTemp,qui_joue);
-                                        plateauChangeJoueur(&jeu, caseCliquee,0);
-                                        caseCliquee = 0;
-
-                                        #if COMMENTAIRES==1
-                                            printf("Le joueur y déplace son pion.\n");
-                                        #endif
-                                    }
-
-                                    if(test!=0) /* si il a pu jouer */
-                                    {
-                                        /* il récupère les pions qu'il touche */
-                                        plateauVolerPions(&jeu,caseTemp,qui_joue);
-
-                                        #if COMMENTAIRES==1
-                                            printf("Il vole les pions adverses à voler.\n");
-                                        #endif
-
-                                        /* ce sera à l'autre joueur de jouer */
-                                        qui_joue = (qui_joue%2)+1;
-
                                         /* pour l'animation */
                                         xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
                                         deplacement.x = xyArrivee.x - xyPionAnim.x;
                                         deplacement.y = xyArrivee.y - xyPionAnim.y;
                                         animation = 1;
-
-                                         #if COMMENTAIRES==1
-                                            printf("Coordonnées d'arrivée %d,%d.\n",xyArrivee.x,xyArrivee.y);
-                                        #endif
-
-                                        #if COMMENTAIRES==1
-                                            printf("La main passe au joueur %d.\n",qui_joue);
-                                        #endif
-
-                                        /* on vérifie qu'il puisse jouer */
-                                        if(plateauPeutJouer(&jeu,qui_joue)==0)
-                                        {
-                                            /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
-                                            plateauRemplirPions(&jeu,(qui_joue%2)+1);
-                                            caseCliquee = 0;
-                                            afficher = 3; /* afficher le message de fin */
-
-                                            #if COMMENTAIRES==1
-                                                printf("Le joueur %d ne peut pas jouer => fin de la partie.\n",qui_joue);
-                                            #endif
-                                        }
                                     }
                                 }
                             }
@@ -482,9 +431,9 @@ int main ()
                     ||
                     (deplacement.y<0 && xyPionAnim.y>xyArrivee.y)))
                 {
-                    xyPionAnim.x += (int) deplacement.x / 10;
-                    xyPionAnim.y += (int) deplacement.y / 10;
-                    if(qui_joue==1) /* c'est encore le J2 qui bouge */
+                    xyPionAnim.x += (int) deplacement.x / 5;
+                    xyPionAnim.y += (int) deplacement.y / 5;
+                    if(qui_joue==2) /* c'est encore le J2 qui bouge */
                         afficheImageRect(xyPionAnim,pion2,screen);
                     else
                         afficheImageRect(xyPionAnim,pion1,screen);
@@ -492,9 +441,68 @@ int main ()
                 }
                 else
                 {
-                    animation = 0;
+                    animation = 2;
                     printf("--- Fini de bouger !\n");
                 }
+            }
+
+            if(animation==2)
+            {
+                if(test==1) /* il duplique son pion */
+                {
+                    plateauDecrementePlacesLibres(&jeu);
+                    plateauChangeJoueur(&jeu,caseTemp,qui_joue);
+                    caseCliquee = 0;
+
+                    #if COMMENTAIRES==1
+                        printf("Le joueur y duplique son pion.\n");
+                    #endif
+                }
+                else if(test==2) /* il déplace son pion */
+                {
+                    plateauChangeJoueur(&jeu, caseTemp,qui_joue);
+                    plateauChangeJoueur(&jeu, caseCliquee,0);
+                    caseCliquee = 0;
+
+                    #if COMMENTAIRES==1
+                        printf("Le joueur y déplace son pion.\n");
+                    #endif
+                }
+
+                if(test!=0) /* si il a pu jouer */
+                {
+                    /* il récupère les pions qu'il touche */
+                    plateauVolerPions(&jeu,caseTemp,qui_joue);
+
+                    #if COMMENTAIRES==1
+                        printf("Il vole les pions adverses à voler.\n");
+                    #endif
+
+                    /* ce sera à l'autre joueur de jouer */
+                    qui_joue = (qui_joue%2)+1;
+
+                     #if COMMENTAIRES==1
+                        printf("Coordonnées d'arrivée %d,%d.\n",xyArrivee.x,xyArrivee.y);
+                    #endif
+
+                    #if COMMENTAIRES==1
+                        printf("La main passe au joueur %d.\n",qui_joue);
+                    #endif
+
+                    /* on vérifie qu'il puisse jouer */
+                    if(plateauPeutJouer(&jeu,qui_joue)==0)
+                    {
+                        /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
+                        plateauRemplirPions(&jeu,(qui_joue%2)+1);
+                        caseCliquee = 0;
+                        afficher = 3; /* afficher le message de fin */
+
+                        #if COMMENTAIRES==1
+                            printf("Le joueur %d ne peut pas jouer => fin de la partie.\n",qui_joue);
+                        #endif
+                    }
+                }
+                animation = 0;
             }
 
             /* afficher quel joueur doit jouer */
