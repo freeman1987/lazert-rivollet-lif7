@@ -1,5 +1,6 @@
 CC = gcc
-FLAGS = -Wall -pedantic -ansi -ggdb -lm -lSDL
+FLAGS = -Wall -pedantic -ansi -ggdb 
+LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS)
 
 BIN = bin/
 OBJ = bin/
@@ -9,15 +10,18 @@ OUT = hexxagon
 
 all: $(BIN)$(OUT)
 
-$(BIN)$(OUT): $(BIN)main.o $(BIN)Plateau.o $(BIN)Case.o $(BIN)affiche.o
-	$(CC) $+ -o $@
+$(BIN)$(OUT): $(BIN)main.o $(BIN)Plateau.o $(BIN)Case.o $(BIN)affiche.o $(BIN)ordinateur.o
+	$(CC) $(LDFLAGS) $+ -o $@
+
+$(BIN)ordinateur.o: $(SRC)ordinateur.c $(SRC)ordinateur.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
+	$(CC) -c $(FLAGS) $(SRC)ordinateur.c -o $@
 
 $(BIN)main.o: $(SRC)main.c $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)main.c -o $@
-	
+
 $(BIN)Plateau.o: $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)Plateau.c -o $@
-	
+
 $(BIN)Case.o: $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)Case.c -o $@
 
