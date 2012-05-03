@@ -48,6 +48,11 @@ int main ()
         int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
         int test; /* bouléen pour stocker le résultats d'un test */
 
+        int animation = 0; /* savoir si une animation de pion est en cours */
+        SDL_Rect xyPionAnim;
+        SDL_Rect deplacement;
+        SDL_Rect xyArrivee;
+
         int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
                                     peut appuyer O pour faire jouer l'ordi */
 
@@ -270,8 +275,11 @@ int main ()
 
                     else if(afficher==2) /* détecter le clic pour le jeu */
                     {
-                        /* on récupère la case cliquée si l'on clique dans une case */
-                        caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu,case_vide->w);
+                        if(animation==0) /* on ne peut cliquer sur une case que si il n'y a pas d'anim */
+                        {
+                            /* on récupère la case cliquée si l'on clique dans une case */
+                            caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu,case_vide->w);
+                        }
 
                         if(caseTemp!=0) /* on a cliqué à l'intéreur d'une case */
                         {
@@ -287,6 +295,13 @@ int main ()
 
                                 #if COMMENTAIRES==1
                                     printf("La case a été sélectionnée.\n");
+                                #endif
+
+                                /* on stocke les coordonnée de la case cliquée si elle est amenée à bouger */
+                                xyPionAnim = xy2rect(caseGetX(caseCliquee),caseGetY(caseCliquee));
+
+                                #if COMMENTAIRES==1
+                                    printf("Ses coordonnées : %d,%d\n",xyPionAnim.x,xyPionAnim.y);
                                 #endif
                             }
 
@@ -331,6 +346,16 @@ int main ()
 
                                         /* ce sera à l'autre joueur de jouer */
                                         qui_joue = (qui_joue%2)+1;
+
+                                        /* pour l'animation */
+                                        xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
+                                        deplacement.x = xyArrivee.x - xyPionAnim.x;
+                                        deplacement.y = xyArrivee.y - xyPionAnim.y;
+                                        animation = 1;
+
+                                         #if COMMENTAIRES==1
+                                            printf("Coordonnées d'arrivée %d,%d.\n",xyArrivee.x,xyArrivee.y);
+                                        #endif
 
                                         #if COMMENTAIRES==1
                                             printf("La main passe au joueur %d.\n",qui_joue);
@@ -435,7 +460,7 @@ int main ()
                 }
 
                 /* fin du jeu */
-                if(plateauGetPlacesLibres(&jeu)==0 || jeu.score_j1==0 || jeu.score_j2==0)
+                if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
                     afficher = 3;
 
                 tourautomatique = 0;
@@ -445,6 +470,32 @@ int main ()
 
             /* afficher le terrain de jeu */
             afficheJeu(&jeu,case_vide, pion1, pion2, screen);
+
+            if(animation==1)
+            {
+                if(
+                   ((deplacement.x>0 && xyPionAnim.x<xyArrivee.x) /* on peut deplacer vers la droite */
+                    ||
+                    (deplacement.x<0 && xyPionAnim.x>xyArrivee.x)) /* ... ou on peut se déplacer vers la gauche */
+                   ||
+                   ((deplacement.y>0 && xyPionAnim.y<xyArrivee.y) /* ... et se déplacer en bas */
+                    ||
+                    (deplacement.y<0 && xyPionAnim.y>xyArrivee.y)))
+                {
+                    xyPionAnim.x += (int) deplacement.x / 10;
+                    xyPionAnim.y += (int) deplacement.y / 10;
+                    if(qui_joue==1) /* c'est encore le J2 qui bouge */
+                        afficheImageRect(xyPionAnim,pion2,screen);
+                    else
+                        afficheImageRect(xyPionAnim,pion1,screen);
+                    printf("--- On bouge !\n");
+                }
+                else
+                {
+                    animation = 0;
+                    printf("--- Fini de bouger !\n");
+                }
+            }
 
             /* afficher quel joueur doit jouer */
             afficheQuiJoue(qui_joue,screen);
