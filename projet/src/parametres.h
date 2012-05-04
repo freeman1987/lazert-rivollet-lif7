@@ -44,7 +44,7 @@
     Leur valeur permet d'aligner correctement les hexagones.
 */
 
-    #define TEXTURE "style5"
+    #define TEXTURE "style2"
 
 	#define PION_JOUEUR_1 "../data/"TEXTURE"/pion1.png"
 	#define PION_JOUEUR_2 "../data/"TEXTURE"/pion2.png"
