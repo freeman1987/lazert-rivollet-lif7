@@ -83,8 +83,8 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                         nbAVolerTmp = plateauNbPionsAVoler(p,ctmp2,joueur);
                         if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
 
-                        /* il y a plus de pions à prendre en jouant ici */
-                        if(nbAVolerTmp>nbAVoler && niveau>compteur)
+                        /* il y a plus de pions à prendre en jouant ici && plateauNbPionsPerdu(p,ctmp,joueur)<=7 */
+                        if(nbAVolerTmp>nbAVoler && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3)
                         {
                             source = ctmp;
                             destination = ctmp2;
