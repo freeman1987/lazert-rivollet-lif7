@@ -204,7 +204,7 @@ int plateauTestCaseProche(int x,int y)
     /*
     Remarque importante : les valeurs du tableau pos1 et du tableau pos2 sont à lire 2 par 2
     pos1 : les valeurs correspondent à des décalages d'une case par rapport à C
-    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à
+    pos2 : les valeurs correspondent à des décalages de 2 cases par rapport à C
     */
     const int pos1[] = {0,2, 0,-2, 1,1, -1,-1, -1,1, 1,-1};
     const int pos2[] = {0,4, 0,-4, 2,0, -2,0, 2,2, 1,3, -2,-2, -1,-3, -1,3, -2,2, 1,-3, 2,-2};
@@ -277,6 +277,31 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur)
     return retour;
 }
 
+int plateauNbPionsPerdu(Plateau* p, Case* c, int joueur)
+{
+    int compteur;
+    Case* ctemp;
+    int x,y,dist;
+    x = caseGetX(c);
+    y = caseGetY(c);
+    compteur=0;
+
+    int xtemp, ytemp;
+    int i;
+    for(i=0;i<plateauGetCapacite(p);i++)
+    {
+        ctemp = plateauGetCaseI(p,i);
+        xtemp = caseGetX(ctemp);
+        ytemp = caseGetY(ctemp);
+        dist = plateauTestCaseProche(xtemp-x,ytemp-y);
+
+        if(caseGetJoueur(ctemp)==joueur && caseGetLibre(ctemp)==0 && dist==1)
+        {
+            compteur++;
+        }
+    }
+    return compteur;
+}
 int plateauGetScore(const Plateau* p, int j)
 {
     if(j==1)
