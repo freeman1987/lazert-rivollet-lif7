@@ -276,7 +276,7 @@ int main ()
 
                     else if(afficher==2) /* détecter le clic pour le jeu */
                     {
-                        if(animation==0) /* on ne peut cliquer sur une case que si il n'y a pas d'anim */
+                        if(animation==0 && !(contreordinateur==1 && qui_joue==2)) /* on ne peut cliquer sur une case que si il n'y a pas d'anim et que ce n'est pas l'ordi */
                         {
                             /* on récupère la case cliquée si l'on clique dans une case */
                             caseTemp = plateauCaseSurvollee(sourisx,sourisy,&jeu,case_vide->w);
