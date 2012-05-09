@@ -22,7 +22,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
     int dist;
     int compteur = 0; /* compter le nombre de meilleurs solutions trouvées */
 
-    int nbAVoler, nbAVolerTmp;
+    int nbAVoler, nbAVolerTmp, pionAdversePerdu, pionAdversePerduTmp;
     Case* source;
     Case* destination;
     int action; /* 1 dupliquer, 2 deplacer */
@@ -63,6 +63,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                     if(dist==1)
                     {
                         nbAVolerTmp = plateauNbPionsAVoler(p,ctmp2,joueur) + 1; /* +1 car on duplique */
+                        pionAdversePerduTmp = nbAVolerTmp - 1;
                         if(afficher_txt==1) printf("\t\ton peut s'y dupliquer et voler %d pion(s)\n",nbAVolerTmp);
 
                         /* il y a plus de pions à prendre en jouant ici */
@@ -72,6 +73,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                             destination = ctmp2;
                             action = 1; /* dupliquer */
                             nbAVoler = nbAVolerTmp;
+                            pionAdversePerdu = pionAdversePerduTmp;
                             if(afficher_txt==1) printf("\t\t\tC'est mieux ici !\n");
                             compteur++;
                         }
@@ -81,15 +83,18 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                     else if(dist==2)
                     {
                         nbAVolerTmp = plateauNbPionsAVoler(p,ctmp2,joueur);
+                        pionAdversePerduTmp = nbAVolerTmp;
                         if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
 
                         /* il y a plus de pions à prendre en jouant ici && plateauNbPionsPerdu(p,ctmp,joueur)<=7 */
-                        if(nbAVolerTmp>nbAVoler && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3)
+                        if((nbAVolerTmp>nbAVoler && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3)||
+                           (pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3))
                         {
                             source = ctmp;
                             destination = ctmp2;
                             action = 2; /* dupliquer */
                             nbAVoler = nbAVolerTmp;
+                            pionAdversePerdu = pionAdversePerduTmp;
                             if(afficher_txt==1) printf("\t\t\tC'est mieux ici !\n");
                             compteur++;
                         }
