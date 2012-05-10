@@ -55,7 +55,7 @@ int Jouer()
             2 -> plateau de jeu
             3 -> fin du jeu
         */
-        int afficher = 1;
+        int afficher = 2;
 
         /* jouer seul ou contre ordinateur */
         int contreordinateur = 0;
@@ -320,7 +320,7 @@ int Jouer()
                         /* si la partie est finie ... */
                         if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
                         {
-                            afficher = 3;
+                            return 1;
                             caseCliquee = 0;
 
                              #if COMMENTAIRES==1
@@ -331,16 +331,6 @@ int Jouer()
                     } /* fin de détection du clic pour le jeu */
 
     /* EVENEMENTS (CLICS) POUR LA FIN DU JEU */
-
-                    else if(afficher==3) /* détection du clic à la fin */
-                    {
-                        afficher = 1; /* on retourne au menu */
-                        plateauTestament(&jeu);
-
-                        #if COMMENTAIRES==1
-                            printf("Clic sur le message de fin => retour au menu.\n");
-                        #endif
-                    }
 
                     break;
 
@@ -378,12 +368,12 @@ int Jouer()
                 {
                     /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
                     plateauRemplirPions(&jeu,(qui_joue%2)+1);
-                    afficher = 3; /* afficher le message de fin */
+                    return 1;
                 }
 
                 /* fin du jeu */
                 if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
-                    afficher = 3;
+                    return 1;
 
                 tourautomatique = 0;
 
@@ -470,7 +460,7 @@ int Jouer()
                         /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
                         plateauRemplirPions(&jeu,(qui_joue%2)+1);
                         caseCliquee = 0;
-                        afficher = 3; /* afficher le message de fin */
+                        return 1; /* afficher le message de fin */
 
                         #if COMMENTAIRES==1
                             printf("Le joueur %d ne peut pas jouer => fin de la partie.\n",qui_joue);
