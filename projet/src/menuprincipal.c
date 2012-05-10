@@ -115,18 +115,22 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
                 case SDL_MOUSEBUTTONDOWN:
                 {
+                     /* So on clic sur le bouton "joueur contre un joueur humain" */
                     if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur))
                     {
                         *contreordinateur = 0;
                     }
+                    /* So on clic sur le bouton "joueur contre un joueur ordinateur" */
                     else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi))
                     {
                         *contreordinateur = 1;
                     }
+                    /* lancement de la partie */
                     else if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
                     {
                         done = 1;
                     }
+
                 }
                 break;
             }
@@ -158,8 +162,6 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
 int sourisDansRectangle(int x, int y, SDL_Rect rectangle)
 {
-    printf("Dedans ? Rect : %d %d - %d %d",rectangle.x,rectangle.y,rectangle.h,rectangle.w);
-    printf(" souris : %d %d\n",x,y);
     if(x>=rectangle.x && x<=(rectangle.w+rectangle.x) && y>=rectangle.y && y<=(rectangle.h+rectangle.y))
         return 1;
     else
