@@ -14,6 +14,6 @@
 
     @return int : 0 pour quitter et 1 pour lancer le jeu
 */
-int menuPrincipal();
+int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau);
 
 #endif
