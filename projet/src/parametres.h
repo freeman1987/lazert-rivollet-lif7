@@ -71,6 +71,8 @@
 	#define BOUTONJOUER "../data/images/boutonjouer.png"
 	#define BOUTONJOUERSURVOL "../data/images/boutonjouersurvol.png"
 
+	#define ICONE "../data/images/icone.ico"
+
 	#define TEXTE_NIVEAU "../data/images/niveau.png"
 
 	#define MENU "../data/images/menu.png"

@@ -3,7 +3,9 @@
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     SDL_Surface* screen;
-    SDL_Surface* menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
+    SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
+    SDL_Surface *imagePlateau[3];
+    SDL_Rect positionPlateau[3];
     SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer;
     SDL_Event event;
 
@@ -39,6 +41,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         }
         /* make sure SDL cleans up before exit */
         atexit(SDL_Quit);
+
+        SDL_WM_SetCaption("Hexxagon : Menu du jeu","Hexxagon");
 
         /* MENU PRINCIPAL */
 
@@ -115,18 +119,15 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
                 case SDL_MOUSEBUTTONDOWN:
                 {
-                     /* So on clic sur le bouton "joueur contre un joueur humain" */
-                    if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur))
+                    if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur)) /* clic sur contre joueur */
                     {
                         *contreordinateur = 0;
                     }
-                    /* So on clic sur le bouton "joueur contre un joueur ordinateur" */
-                    else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi))
+                    else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi)) /* clic sur contre ordi */
                     {
                         *contreordinateur = 1;
                     }
-                    /* lancement de la partie */
-                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
+                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer)) /* clic sur bouton jouer */
                     {
                         done = 1;
                     }
