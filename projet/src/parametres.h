@@ -77,11 +77,9 @@
 
 	#define MENU "../data/images/menu.png"
 	#define PLATEAU1_MENU "../data/images/plateau1.png"
-	#define PLATEAU1BIS_MENU "../data/images/plateau1bis.png"
 	#define PLATEAU2_MENU "../data/images/plateau2.png"
-	#define PLATEAU2BIS_MENU "../data/images/plateau2bis.png"
 	#define PLATEAU3_MENU "../data/images/plateau3.png"
-	#define PLATEAU3BIS_MENU "../data/images/plateau3bis.png"
+	#define PLATEAU_SELECTIONNE_MENU "../data/images/plateauselectionne.png"
 
 
 	#define PLATEAU1 "../data/Plateau1.txt"
