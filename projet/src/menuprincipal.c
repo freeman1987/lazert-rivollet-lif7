@@ -3,9 +3,13 @@
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     SDL_Surface* screen;
-    SDL_Surface* menu;
-    SDL_Rect positionMenu;
+    SDL_Surface* menu, *imageContreJoueur, *imageContreOrdi, *imageSelection;
+    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi;
     SDL_Event event;
+
+    *contreordinateur = 1;
+    *niveauordinateur = 1;
+    *plateau = 1;
 
     /* variables pour contenir les coordonnées de la souris */
     int sourisx;
@@ -46,6 +50,15 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionMenu.x = 0;
         positionMenu.y = 0;
 
+        imageContreJoueur = IMG_Load(VSJOUEUR); afficheVerifChargement(imageContreJoueur);
+        positionContreJoueur.x = 100;
+        positionContreJoueur.y = screen->h - 200;
+
+        imageContreOrdi = IMG_Load(VSORDI); afficheVerifChargement(imageContreOrdi);
+        positionContreOrdi.x = 300;
+        positionContreOrdi.y = screen->h - 200;
+
+        imageSelection = IMG_Load(SELECTIONMODE); afficheVerifChargement(imageSelection);
 
 
     while (done==0)
@@ -53,7 +66,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        SDL_PollEvent(&event);
+        SDL_WaitEvent(&event);
         /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
         sourisy = event.motion.y;
@@ -83,11 +96,26 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     done = 1;
                     retour = 1;
                 }
+
+                if(event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_RIGHT)
+                {
+                    *contreordinateur = ((*contreordinateur + 1) % 2);
+                    printf("Changement mode jeu %d\n",*contreordinateur);
+                }
             }
             break;
         }
 
         SDL_BlitSurface(menu,0,screen,&positionMenu);
+
+        if(*contreordinateur==1)
+            SDL_BlitSurface(imageSelection,0,screen,&positionContreOrdi);
+        else
+            SDL_BlitSurface(imageSelection,0,screen,&positionContreJoueur);
+
+        SDL_BlitSurface(imageContreJoueur,0,screen,&positionContreJoueur);
+        SDL_BlitSurface(imageContreOrdi,0,screen,&positionContreOrdi);
+
 
         SDL_Flip(screen);
     }

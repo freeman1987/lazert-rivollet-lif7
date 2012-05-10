@@ -66,6 +66,7 @@
 
 	#define VSJOUEUR "../data/images/1vs2.png"
 	#define VSORDI "../data/images/1vsordi.png"
+	#define SELECTIONMODE "../data/images/selectionmode.png"
 
 	#define TEXTE_NIVEAU "../data/images/niveau.png"
 
