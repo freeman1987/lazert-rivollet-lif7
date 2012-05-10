@@ -53,10 +53,14 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         imageContreJoueur = IMG_Load(VSJOUEUR); afficheVerifChargement(imageContreJoueur);
         positionContreJoueur.x = 100;
         positionContreJoueur.y = screen->h - 200;
+        positionContreJoueur.h = imageContreJoueur->h;
+        positionContreJoueur.w = imageContreJoueur->w;
 
         imageContreOrdi = IMG_Load(VSORDI); afficheVerifChargement(imageContreOrdi);
         positionContreOrdi.x = 300;
         positionContreOrdi.y = screen->h - 200;
+        positionContreOrdi.h = imageContreOrdi->h;
+        positionContreOrdi.w = imageContreOrdi->w;
 
         imageSelection = IMG_Load(SELECTIONMODE); afficheVerifChargement(imageSelection);
 
@@ -66,7 +70,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        SDL_PollEvent(&event);
+        SDL_WaitEvent(&event);
         /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
         sourisy = event.motion.y;
@@ -100,7 +104,20 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                 if((event.key.keysym.sym == SDLK_LEFT && *contreordinateur==1) || (event.key.keysym.sym == SDLK_RIGHT && *contreordinateur==0))
                 {
                     *contreordinateur = ((*contreordinateur + 1) % 2);
-                    printf("Changement mode jeu %d\n",*contreordinateur);
+                }
+            }
+            break;
+
+            case SDL_MOUSEBUTTONDOWN:
+            {
+                printf("Clic\n");
+                if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur))
+                {
+                    *contreordinateur = 0;
+                }
+                else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi))
+                {
+                    *contreordinateur = 1;
                 }
             }
             break;
@@ -123,4 +140,14 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     SDL_Quit();
 
     return retour;
+}
+
+int sourisDansRectangle(int x, int y, SDL_Rect rectangle)
+{
+    printf("Dedans ? Rect : %d %d - %d %d",rectangle.x,rectangle.y,rectangle.h,rectangle.w);
+    printf(" souris : %d %d\n",x,y);
+    if(x>=rectangle.x && x<=(rectangle.w+rectangle.x) && y>=rectangle.y && y<=(rectangle.h+rectangle.y))
+        return 1;
+    else
+        return 0;
 }
