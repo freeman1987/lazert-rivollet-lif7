@@ -3,13 +3,9 @@
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     SDL_Surface* screen;
-    SDL_Surface* menu, *imageContreJoueur, *imageContreOrdi, *imageSelection;
-    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi;
+    SDL_Surface* menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
+    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer;
     SDL_Event event;
-
-    *contreordinateur = 1;
-    *niveauordinateur = 1;
-    *plateau = 1;
 
     /* variables pour contenir les coordonnées de la souris */
     int sourisx;
@@ -52,17 +48,24 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
         imageContreJoueur = IMG_Load(VSJOUEUR); afficheVerifChargement(imageContreJoueur);
         positionContreJoueur.x = 100;
-        positionContreJoueur.y = screen->h - 200;
+        positionContreJoueur.y = screen->h - 120;
         positionContreJoueur.h = imageContreJoueur->h;
         positionContreJoueur.w = imageContreJoueur->w;
 
         imageContreOrdi = IMG_Load(VSORDI); afficheVerifChargement(imageContreOrdi);
         positionContreOrdi.x = 300;
-        positionContreOrdi.y = screen->h - 200;
+        positionContreOrdi.y = screen->h - 120;
         positionContreOrdi.h = imageContreOrdi->h;
         positionContreOrdi.w = imageContreOrdi->w;
 
         imageSelection = IMG_Load(SELECTIONMODE); afficheVerifChargement(imageSelection);
+
+        imageBoutonJouer = IMG_Load(BOUTONJOUER); afficheVerifChargement(imageBoutonJouer);
+        imageBoutonJouerSurvol = IMG_Load(BOUTONJOUERSURVOL); afficheVerifChargement(imageBoutonJouerSurvol);
+        positionBoutonJouer.x = 600;
+        positionBoutonJouer.y = screen->h - 120;
+        positionBoutonJouer.h = imageBoutonJouer->h;
+        positionBoutonJouer.w = imageBoutonJouer->w;
 
 
     while (done==0)
@@ -70,57 +73,63 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        SDL_WaitEvent(&event);
+
         /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
         sourisy = event.motion.y;
 
-        switch(event.type)
+        while(SDL_PollEvent(&event))
         {
-            /* fermer */
-            case SDL_QUIT:
-            {
-                done = 1;
-                retour = 0;
-            }
-            break;
-
-            /* touche enfoncée */
-            case SDL_KEYDOWN:
+            switch(event.type)
             {
                 /* fermer */
-                if(event.key.keysym.sym == SDLK_ESCAPE)
+                case SDL_QUIT:
                 {
                     done = 1;
                     retour = 0;
                 }
+                break;
 
-                if(event.key.keysym.sym == SDLK_SPACE)
+                /* touche enfoncée */
+                case SDL_KEYDOWN:
                 {
-                    done = 1;
-                    retour = 1;
-                }
+                    /* fermer */
+                    if(event.key.keysym.sym == SDLK_ESCAPE)
+                    {
+                        done = 1;
+                        retour = 0;
+                    }
 
-                if((event.key.keysym.sym == SDLK_LEFT && *contreordinateur==1) || (event.key.keysym.sym == SDLK_RIGHT && *contreordinateur==0))
-                {
-                    *contreordinateur = ((*contreordinateur + 1) % 2);
+                    if(event.key.keysym.sym == SDLK_SPACE)
+                    {
+                        done = 1;
+                        retour = 1;
+                    }
+
+                    if((event.key.keysym.sym == SDLK_LEFT && *contreordinateur==1) || (event.key.keysym.sym == SDLK_RIGHT && *contreordinateur==0))
+                    {
+                        *contreordinateur = ((*contreordinateur + 1) % 2);
+                    }
                 }
+                break;
+
+                case SDL_MOUSEBUTTONDOWN:
+                {
+                    if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur))
+                    {
+                        *contreordinateur = 0;
+                    }
+                    else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi))
+                    {
+                        *contreordinateur = 1;
+                    }
+                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
+                    {
+                        done = 1;
+                    }
+                }
+                break;
             }
-            break;
-
-            case SDL_MOUSEBUTTONDOWN:
-            {
-                printf("Clic\n");
-                if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur))
-                {
-                    *contreordinateur = 0;
-                }
-                else if(sourisDansRectangle(sourisx,sourisy,positionContreOrdi))
-                {
-                    *contreordinateur = 1;
-                }
-            }
-            break;
         }
 
         SDL_BlitSurface(menu,0,screen,&positionMenu);
@@ -132,6 +141,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
         SDL_BlitSurface(imageContreJoueur,0,screen,&positionContreJoueur);
         SDL_BlitSurface(imageContreOrdi,0,screen,&positionContreOrdi);
+
+        if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
+            SDL_BlitSurface(imageBoutonJouerSurvol,0,screen,&positionBoutonJouer);
+        else
+            SDL_BlitSurface(imageBoutonJouer,0,screen,&positionBoutonJouer);
 
 
         SDL_Flip(screen);

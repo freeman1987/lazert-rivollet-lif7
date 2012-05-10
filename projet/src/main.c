@@ -23,6 +23,11 @@ int main ()
     plateau=1;
     rejouer = 1;
 
+    /* paramètres de jeu par défaut */
+    contreordinateur = 1;
+    niveauordinateur = 5;
+    plateau = 1;
+
     while(menuPrincipal(&contreordinateur, &niveauordinateur, &plateau)==1)
     {
         Jouer( contreordinateur, niveauordinateur, plateau);

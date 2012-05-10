@@ -68,6 +68,9 @@
 	#define VSORDI "../data/images/1vsordi.png"
 	#define SELECTIONMODE "../data/images/selectionmode.png"
 
+	#define BOUTONJOUER "../data/images/boutonjouer.png"
+	#define BOUTONJOUERSURVOL "../data/images/boutonjouersurvol.png"
+
 	#define TEXTE_NIVEAU "../data/images/niveau.png"
 
 	#define MENU "../data/images/menu.png"
