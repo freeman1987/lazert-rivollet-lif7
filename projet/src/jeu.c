@@ -6,7 +6,7 @@
 
     @return int
 */
-int Jouer()
+int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau)
 {
     Plateau jeu;
     SDL_Surface* pion1;
@@ -56,17 +56,19 @@ int Jouer()
             3 -> fin du jeu
         */
         int afficher = 2;
+        plateauInit(&jeu,0);
+        switch (plateau)
+        {
+            case 1: plateauLireFichier(&jeu,PLATEAU1); break;
+            case 2: plateauLireFichier(&jeu,PLATEAU2); break;
+            case 3: plateauLireFichier(&jeu,PLATEAU3); break;
+        }
 
-        /* jouer seul ou contre ordinateur */
-        int contreordinateur = 0;
-        int niveauordinateur = 1;
+
+
 
     /* boucle principale du programme */
     int done = 0;
-
-    /* INITIALISATION DU JEU */
-        plateauInit(&jeu,0);
-
     /* IMAGES POUR LE PLATEAU DE JEU */
 
         /* on charge les images pour les pions des 2 joueurs */
@@ -108,7 +110,7 @@ int Jouer()
         if (!screen)
         {
             printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
-            return 1;
+            afficher = 3;
         }
         /* on vide l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
@@ -116,7 +118,7 @@ int Jouer()
         if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
         {
             printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
-            return 1;
+            afficher = 3;
         }
         /* make sure SDL cleans up before exit */
         atexit(SDL_Quit);
@@ -153,7 +155,7 @@ int Jouer()
 
                     if (event.key.keysym.sym == SDLK_ESCAPE)
                     {
-                        if(afficher==1 || afficher==3)
+                        if(afficher==3)
                         {
                             afficher = 0; /* fin du jeu */
 
@@ -165,66 +167,11 @@ int Jouer()
                         {
                             plateauTestament(&jeu);
                             caseCliquee = 0;
-                            afficher = 1;
+                            return 1;
 
                             #if COMMENTAIRES==1
                                 printf("Echap => fin de la partie, retour au menu.\n");
                             #endif
-                        }
-                    }
-
-    /* EVENEMENTS (CLAVIER) POUR LE MENU */
-
-                    if(afficher==1)
-                    {
-                        /* choix du mode de jeu (contre ordi ou joueur) */
-                        if(event.key.keysym.sym == SDLK_o)
-                        {
-                           contreordinateur = (contreordinateur + 1) % 2;
-
-                           #if COMMENTAIRES==1
-                                printf("On change le mode de jeu.\n");
-                            #endif
-                        }
-
-                        /* choix du niveau ordi */
-                        else if(contreordinateur==1 && event.key.keysym.sym == SDLK_UP)
-                        {
-                            if(niveauordinateur<9)
-                                niveauordinateur++;
-
-                            #if COMMENTAIRES==1
-                                printf("On augmente le niveau de l'ordinateur.\n");
-                            #endif
-                        }
-                        else if(contreordinateur==1 && event.key.keysym.sym == SDLK_DOWN)
-                        {
-                            if(niveauordinateur>1)
-                                niveauordinateur--;
-
-                            #if COMMENTAIRES==1
-                                printf("On baisse le niveau de l'ordinateur.\n");
-                            #endif
-                        }
-
-                        /* choix du plateau de jeu */
-                        else if(event.key.keysym.sym == SDLK_F1)
-                        {
-                            plateauLireFichier(&jeu,PLATEAU1);
-                            afficher = 2;
-                            qui_joue = 1;
-                        }
-                        else if(event.key.keysym.sym == SDLK_F2)
-                        {
-                            plateauLireFichier(&jeu,PLATEAU2);
-                            afficher = 2;
-                            qui_joue = 1;
-                        }
-                        else if(event.key.keysym.sym == SDLK_F3)
-                        {
-                            plateauLireFichier(&jeu,PLATEAU3);
-                            afficher = 2;
-                            qui_joue = 1;
                         }
                     }
 
@@ -243,25 +190,9 @@ int Jouer()
                 /* clic de souris */
                 case SDL_MOUSEBUTTONDOWN:
                 {
-
-    /* EVENEMENTS (CLICS) POUR LE MENU */
-
-                    if(afficher==1)
-                    {
-                        /* on charge le plateau de jeu */
-                        plateauLireFichier(&jeu,PLATEAU1);
-                        afficher = 2;
-                        qui_joue = 1;
-
-                        #if COMMENTAIRES==1
-                            printf("Chargement du plateau par défaut...\nAffichage du jeu.\n");
-                        #endif
-
-                    }
-
     /* EVENEMENTS (CLICS) POUR LE JEU */
 
-                    else if(afficher==2) /* détecter le clic pour le jeu */
+                    if(afficher==2) /* détecter le clic pour le jeu */
                     {
                         if(animation==0 && !(contreordinateur==1 && qui_joue==2)) /* on ne peut cliquer sur une case que si il n'y a pas d'anim et que ce n'est pas l'ordi */
                         {
@@ -320,7 +251,7 @@ int Jouer()
                         /* si la partie est finie ... */
                         if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
                         {
-                            return 1;
+                            afficher = 3;
                             caseCliquee = 0;
 
                              #if COMMENTAIRES==1
@@ -329,6 +260,13 @@ int Jouer()
                         }
 
                     } /* fin de détection du clic pour le jeu */
+                    else if(afficher==3)
+                    {
+                        if(SDL_MOUSEBUTTONDOWN)
+                        {
+                            return 1;
+                        }
+                    }
 
     /* EVENEMENTS (CLICS) POUR LA FIN DU JEU */
 
@@ -368,12 +306,12 @@ int Jouer()
                 {
                     /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
                     plateauRemplirPions(&jeu,(qui_joue%2)+1);
-                    return 1;
+                    afficher = 3;
                 }
 
                 /* fin du jeu */
                 if(plateauGetPlacesLibres(&jeu)==0 || plateauGetScore(&jeu,1)==0 || plateauGetScore(&jeu,2)==0)
-                    return 1;
+                    afficher = 3;
 
                 tourautomatique = 0;
 
@@ -460,7 +398,7 @@ int Jouer()
                         /* s'il ne peut pas jouer : on remplit le plateau avec les pions de l'autre, qui gagne ! */
                         plateauRemplirPions(&jeu,(qui_joue%2)+1);
                         caseCliquee = 0;
-                        return 1; /* afficher le message de fin */
+                        afficher = 3; /* afficher le message de fin */
 
                         #if COMMENTAIRES==1
                             printf("Le joueur %d ne peut pas jouer => fin de la partie.\n",qui_joue);
