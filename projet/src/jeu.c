@@ -123,6 +123,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         /* make sure SDL cleans up before exit */
         atexit(SDL_Quit);
 
+        SDL_WM_SetCaption("Hexxagon : copie originale du jeu d'origine qui existait avant","Hexxagon");
+
 
 
     while (done==0 && afficher!=0)
