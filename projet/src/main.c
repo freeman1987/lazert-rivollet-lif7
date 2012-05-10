@@ -20,7 +20,6 @@ int main ()
 {
     int rejouer;
     int contreordinateur, niveauordinateur, plateau;
-    plateau=1;
     rejouer = 1;
 
     /* paramètres de jeu par défaut */
