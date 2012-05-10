@@ -18,6 +18,6 @@
  *  \return void
  *
  */
-/*int Jouer();*/
+int Jouer();
 
 #endif

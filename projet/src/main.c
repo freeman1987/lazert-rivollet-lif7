@@ -5,8 +5,8 @@
 #include "Plateau.h"
 #include "affiche.h"
 #include "ordinateur.h"
-#include "menuprincipal.c"
-#include "jeu.c"
+#include "menuprincipal.h"
+#include "jeu.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -23,7 +23,7 @@ int main ()
     while(rejouer==1)
     {
         rejouer=menuPrincipal();
-        /*rejouer=Jouer();*/
+        rejouer=Jouer();
     }
     return 0;
 }
