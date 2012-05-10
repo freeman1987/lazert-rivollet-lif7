@@ -36,6 +36,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../src/affiche.h" />
+		<Unit filename="../src/jeu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../src/jeu.h" />
 		<Unit filename="../src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>

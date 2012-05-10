@@ -1,20 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "jeu.h"
 
-#include "parametres.h"
-#include "Plateau.h"
-#include "affiche.h"
-#include "ordinateur.h"
-
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 
 /**
     @brief Fonction du jeu
 
     @return int
 */
-void Jouer()
+int Jouer()
 {
     Plateau jeu;
     SDL_Surface* pion1;
@@ -362,7 +354,7 @@ void Jouer()
  ************************
  * AFFICHAGE
  ************************
-
+*/
     /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
 
         if(afficher==2 || afficher==3)
