@@ -16,4 +16,11 @@
 */
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau);
 
+/**
+    @brief Determine si la souris est dans un rectangle
+
+    @return int (booléen)
+*/
+int sourisDansRectangle(int x, int y, SDL_Rect rectangle);
+
 #endif
