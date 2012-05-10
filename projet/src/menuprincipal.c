@@ -1,15 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "menuprincipal.h"
 
-#include "parametres.h"
-
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-
-int menuPrincipal()
+int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     SDL_Surface* screen;
     SDL_Surface* menu;
+    SDL_Rect positionMenu;
     SDL_Event event;
 
     /* variables pour contenir les coordonnées de la souris */
@@ -23,16 +18,14 @@ int menuPrincipal()
     int done = 0;
 
 
-    /* MENU PRINCIPAL */
 
-    menu = IMG_Load(MENU); afficheVerifChargement(menu);
 
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
         /* on charge l'écran d'affichage */
 
-        screen = SDL_SetVideoMode(500, 500, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if (!screen)
         {
             printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
@@ -46,6 +39,12 @@ int menuPrincipal()
         }
         /* make sure SDL cleans up before exit */
         atexit(SDL_Quit);
+
+        /* MENU PRINCIPAL */
+
+        menu = IMG_Load(MENU); afficheVerifChargement(menu);
+        positionMenu.x = 0;
+        positionMenu.y = 0;
 
 
 
@@ -78,9 +77,17 @@ int menuPrincipal()
                     done = 1;
                     retour = 0;
                 }
+
+                if(event.key.keysym.sym == SDLK_SPACE)
+                {
+                    done = 1;
+                    retour = 1;
+                }
             }
             break;
         }
+
+        SDL_BlitSurface(menu,0,screen,&positionMenu);
 
         SDL_Flip(screen);
     }

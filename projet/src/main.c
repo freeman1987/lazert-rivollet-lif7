@@ -19,11 +19,14 @@
 int main ()
 {
     int rejouer;
-    rejouer=1;
+    int contreordinateur, niveauordinateur, plateau;
+
+    rejouer = 1;
+
     while(rejouer==1)
     {
-        rejouer=menuPrincipal();
-        rejouer=Jouer();
+        rejouer = menuPrincipal(&contreordinateur, &niveauordinateur, &plateau);
+        Jouer();
     }
     return 0;
 }
