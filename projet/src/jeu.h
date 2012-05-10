@@ -18,6 +18,6 @@
  *  \return void
  *
  */
-int Jouer();
+int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau);
 
 #endif
