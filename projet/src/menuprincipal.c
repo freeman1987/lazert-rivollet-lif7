@@ -6,7 +6,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
     SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
     SDL_Rect positionPlateau[3];
-    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer;
+    SDL_Surface *chiffres[10], *texte_niveau;
+    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau;
     SDL_Event event;
 
     /* variables pour contenir les coordonnées de la souris */
@@ -91,6 +92,23 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionBoutonJouer.h = imageBoutonJouer->h;
         positionBoutonJouer.w = imageBoutonJouer->w;
 
+        chiffres[0] = IMG_Load("../data/chiffres/0.png"); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = IMG_Load("../data/chiffres/1.png"); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = IMG_Load("../data/chiffres/2.png"); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = IMG_Load("../data/chiffres/3.png"); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = IMG_Load("../data/chiffres/4.png"); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = IMG_Load("../data/chiffres/5.png"); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = IMG_Load("../data/chiffres/6.png"); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = IMG_Load("../data/chiffres/7.png"); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = IMG_Load("../data/chiffres/8.png"); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = IMG_Load("../data/chiffres/9.png"); afficheVerifChargement(chiffres[9]);
+        positionNiveau.x = 390;
+        positionNiveau.y = screen->h - 40;
+
+        texte_niveau = IMG_Load(TEXTE_NIVEAU);
+        positionTexteNiveau.x = 320;
+        positionTexteNiveau.y = screen->h - 40;
+
 
     while (done==0)
     {
@@ -134,6 +152,16 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         *contreordinateur = ((*contreordinateur + 1) % 2);
                     }
+
+                    if(event.key.keysym.sym == SDLK_UP && *niveauordinateur<9 && *contreordinateur==1)
+                    {
+                        (*niveauordinateur)++;
+                    }
+
+                    if(event.key.keysym.sym == SDLK_DOWN && *niveauordinateur>0 && *contreordinateur==1)
+                    {
+                        (*niveauordinateur)--;
+                    }
                 }
                 break;
 
@@ -172,9 +200,15 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(menu,0,screen,&positionMenu);
 
         if(*contreordinateur==1)
+        {
             SDL_BlitSurface(imageSelection,0,screen,&positionContreOrdi);
+            SDL_BlitSurface(texte_niveau,0,screen,&positionTexteNiveau);
+            SDL_BlitSurface(chiffres[*niveauordinateur],0,screen,&positionNiveau);
+        }
         else
+        {
             SDL_BlitSurface(imageSelection,0,screen,&positionContreJoueur);
+        }
 
         SDL_BlitSurface(imageContreJoueur,0,screen,&positionContreJoueur);
         SDL_BlitSurface(imageContreOrdi,0,screen,&positionContreOrdi);
@@ -183,6 +217,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(imagePlateau[0],0,screen,&positionPlateau[0]);
         SDL_BlitSurface(imagePlateau[1],0,screen,&positionPlateau[1]);
         SDL_BlitSurface(imagePlateau[2],0,screen,&positionPlateau[2]);
+
+
 
         if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
             SDL_BlitSurface(imageBoutonJouerSurvol,0,screen,&positionBoutonJouer);
