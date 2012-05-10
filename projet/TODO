@@ -2,3 +2,9 @@ Dans la fonction ordinateur :
 	- détecter si on est à deux cases de l'adversaire : dupliquer au mieux au lieu d'y aller (et de mourir)
 	- détecter cb de pieces il laisse prenables en comptant les pieces qu'il me volerait
 	- combler un trou >= 3
+	
+SDL_FreeSurface ? finalement les remettres le prof préfère et puis ça ne coute rien
+
+Animation sur la page du menu
+
+Tests de régression
