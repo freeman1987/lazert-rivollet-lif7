@@ -66,7 +66,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        SDL_WaitEvent(&event);
+        SDL_PollEvent(&event);
         /* récupérer la position de la souris sur l'écran */
         sourisx = event.motion.x;
         sourisy = event.motion.y;
@@ -97,7 +97,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     retour = 1;
                 }
 
-                if(event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_RIGHT)
+                if((event.key.keysym.sym == SDLK_LEFT && *contreordinateur==1) || (event.key.keysym.sym == SDLK_RIGHT && *contreordinateur==0))
                 {
                     *contreordinateur = ((*contreordinateur + 1) % 2);
                     printf("Changement mode jeu %d\n",*contreordinateur);
