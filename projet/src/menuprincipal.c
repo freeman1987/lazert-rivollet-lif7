@@ -5,6 +5,9 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     SDL_Surface* screen;
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
     SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
+    SDL_Surface *pieceAnimeeRubis, *pieceAnimeePerle;
+    SDL_Rect positionRubis, positionPerle, VecteurPerle, VecteurRubis;
+
     SDL_Rect positionPlateau[3];
     SDL_Surface *chiffres[10], *texte_niveau;
     SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau;
@@ -81,6 +84,18 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionPlateau[2].h = imagePlateau[2]->h;
         positionPlateau[2].w = imagePlateau[2]->w;
 
+        pieceAnimeePerle=IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pieceAnimeePerle);
+        pieceAnimeeRubis=IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pieceAnimeeRubis);
+
+        positionPerle.x=0;
+        positionPerle.y=0;
+        positionRubis.x=0;
+        positionRubis.y=0;
+        VecteurPerle.x=5;
+        VecteurPerle.y=5;
+
+
+
         imagePlateauSelectionne = IMG_Load(PLATEAU_SELECTIONNE_MENU); afficheVerifChargement(imagePlateau[0]);
 
         imageSelection = IMG_Load(SELECTIONMODE); afficheVerifChargement(imageSelection);
@@ -114,6 +129,17 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     {
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
+
+        if(VecteurPerle.x>screen->w || VecteurPerle.x<0)
+        {
+            VecteurPerle.x*=-1;
+        }
+        if(VecteurPerle.y<0 || VecteurPerle.y>screen->h)
+        {
+            VecteurPerle.y*=-1;
+        }
+        positionPerle.x+=VecteurPerle.x;
+        positionPerle.y+=VecteurPerle.y;
 
 
         /* récupérer la position de la souris sur l'écran */
@@ -225,7 +251,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         else
             SDL_BlitSurface(imageBoutonJouer,0,screen,&positionBoutonJouer);
 
-
+        SDL_BlitSurface(pieceAnimeePerle, 0, screen, &positionPerle);
         SDL_Flip(screen);
     }
 
