@@ -388,7 +388,6 @@ int main ()
 
 
 
-
         }
 
     /* AFFICHAGE DU JEU OU DE LA FIN DU JEU */
@@ -398,7 +397,7 @@ int main ()
             /* c'est à l'ordinateur de jouer */
             if((contreordinateur==1 && qui_joue==2) || tourautomatique==1)
             {
-
+                printf("bouya");
 
                 if(attente>=0)
                 {
