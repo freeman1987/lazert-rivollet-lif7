@@ -130,11 +130,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        if(VecteurPerle.x>screen->w || VecteurPerle.x<0)
+        if(positionPerle.x>screen->w || positionPerle.x<=0)
         {
             VecteurPerle.x*=-1;
         }
-        if(VecteurPerle.y<0 || VecteurPerle.y>screen->h)
+        if(positionPerle.y<=0 || positionPerle.y>screen->h)
         {
             VecteurPerle.y*=-1;
         }
