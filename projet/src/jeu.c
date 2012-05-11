@@ -21,6 +21,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     SDL_Surface* vsordi;
     SDL_Surface* texte_niveau;
     SDL_Surface* screen;
+    SDL_Surface* sablier;
     SDL_Event event;
 
 
@@ -43,6 +44,11 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         SDL_Rect xyPionAnim;
         SDL_Rect deplacement;
         SDL_Rect xyArrivee;
+        SDL_Rect xySablier;
+        /* Initialise la position du sablier */
+        xySablier.x= 1000;
+        xySablier.y= 50;
+
 
         int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
                                     peut appuyer O pour faire jouer l'ordi */
@@ -98,6 +104,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
         texte_scores = IMG_Load(TEXTE_SCORES);
         texte_niveau = IMG_Load(TEXTE_NIVEAU);
+        sablier = IMG_Load(SABLIER);
 
         vsjoueur = IMG_Load(VSJOUEUR);
         vsordi = IMG_Load(VSORDI);
@@ -295,6 +302,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
                 if(attente>=0)
                 {
+                    SDL_BlitSurface(sablier, 0, screen, &xySablier);
                     attente-=1;
                 }else{
 
