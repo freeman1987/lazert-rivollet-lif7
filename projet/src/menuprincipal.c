@@ -89,10 +89,12 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
         positionPerle.x=0;
         positionPerle.y=0;
-        positionRubis.x=0;
-        positionRubis.y=0;
+        positionRubis.x=800;
+        positionRubis.y=500;
         VecteurPerle.x=5;
         VecteurPerle.y=5;
+        VecteurRubis.x=-5;
+        VecteurRubis.y=5;
 
 
 
@@ -130,16 +132,26 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
-        if(positionPerle.x>screen->w || positionPerle.x<=0)
+        if(positionPerle.x>(screen->w-(pieceAnimeePerle->w)*3/4) || positionPerle.x<=0)
         {
             VecteurPerle.x*=-1;
         }
-        if(positionPerle.y<=0 || positionPerle.y>screen->h)
+        if(positionPerle.y<=0 || positionPerle.y>(screen->h-(pieceAnimeePerle->h)*3/4))
         {
             VecteurPerle.y*=-1;
         }
+        if(positionRubis.x>(screen->w-(pieceAnimeeRubis->w)*3/4) || positionRubis.x<=0)
+        {
+            VecteurRubis.x*=-1;
+        }
+        if(positionRubis.y<=0 || positionRubis.y>(screen->h-(pieceAnimeeRubis->h)*3/4))
+        {
+            VecteurRubis.y*=-1;
+        }
         positionPerle.x+=VecteurPerle.x;
         positionPerle.y+=VecteurPerle.y;
+        positionRubis.x+=VecteurRubis.x;
+        positionRubis.y+=VecteurRubis.y;
 
 
         /* récupérer la position de la souris sur l'écran */
@@ -252,6 +264,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
             SDL_BlitSurface(imageBoutonJouer,0,screen,&positionBoutonJouer);
 
         SDL_BlitSurface(pieceAnimeePerle, 0, screen, &positionPerle);
+        SDL_BlitSurface(pieceAnimeeRubis, 0, screen, &positionRubis);
         SDL_Flip(screen);
     }
 
