@@ -392,3 +392,37 @@ void plateauTestament(Plateau* p)
     p->score_j1 = 0;
     p->score_j2 = 0;
 }
+
+int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur)
+{
+    Case* ctmp;
+    int xtmp, ytmp;
+
+    int x,y;
+    x = caseGetX(c);
+    y = caseGetY(c);
+
+    int dist;
+
+    int i;
+
+    int retour;
+    retour = 0;
+
+    for(i=0;i<plateauGetCapacite(p);i++)
+    {
+        ctmp = plateauGetCaseI(p,i);
+        xtmp = caseGetX(ctmp);
+        ytmp = caseGetY(ctmp);
+        dist = plateauTestCaseProche(xtmp-x,ytmp-y);
+
+        if((dist==1||dist==2) && caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)!=joueur)
+        {
+            printf("ZZZZZZZZZZZZZZZZZZZZZZ\n");
+            retour++;
+        }
+
+    }
+
+    return retour;
+}

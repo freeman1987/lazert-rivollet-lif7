@@ -238,4 +238,14 @@ void plateauRemplirPions(Plateau* p, int j);
 */
 void plateauTestament(Plateau* p);
 
+
+/** \brief
+ *
+ * \param
+ * \param
+ * \return
+ *
+ */
+int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur);
+
 #endif
