@@ -57,7 +57,7 @@
 	#define LOGO_JOUEUR_2 "../data/"TEXTURE"/joueur2.png"
 
 	#define TEXTE_SCORES "../data/images/texte_scores.png"
-	#define SABLIER "../data/images/sablier.png"
+	#define SABLIER "../data/images/sablier3.png"
 
 	#define BRAVO_0 "../data/images/bravo0.png"
 	#define BRAVO_1 "../data/images/bravo1.png"
