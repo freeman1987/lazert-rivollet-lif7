@@ -6,4 +6,11 @@
 *********************************************
 
 Pour compiler le programme :
-    make
+$    make
+  
+Pour jouer
+$	sh jouer
+(la commande précédente compile le jeu s'il ne l'est pas)
+
+Pour nettoyer les fichiers
+$	make clean
