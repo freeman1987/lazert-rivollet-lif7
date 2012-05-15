@@ -52,7 +52,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                     dist = plateauTestCaseProche(caseGetX(ctmp)-caseGetX(ctmp2),caseGetY(ctmp)-caseGetY(ctmp2));
 
                     /* par défaut, on suppose que le premier pion jouable est la meilleure solution */
-                    if((action==0 || source==0 || destination==0) && (dist==1 || dist==2))
+                    if((action==0 || source==0 || destination==0) && dist==1)
                     {
                         source = ctmp; destination = ctmp2; action = dist;
                         if(afficher_txt==1) printf("\tPar défaut\n");

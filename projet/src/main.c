@@ -8,16 +8,17 @@
 #include "menuprincipal.h"
 #include "jeu.h"
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 /**
     @brief Fonction du jeu
 
     @return int
 */
-int main ()
+int main (int argc, char *argv[])
 {
+
     int rejouer;
     int contreordinateur, niveauordinateur, plateau;
     rejouer = 1;

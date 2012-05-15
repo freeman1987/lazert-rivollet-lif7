@@ -10,6 +10,7 @@
 #include "affiche.h"
 #include "ordinateur.h"
 
+#include "api/inc/fmod.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
