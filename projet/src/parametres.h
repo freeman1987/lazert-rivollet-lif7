@@ -86,6 +86,9 @@
 	#define PLATEAU2 "../data/Plateau2.txt"
 	#define PLATEAU3 "../data/Plateau3.txt"
 
+	#define BOUTONPLUS "../data/images/plus.png"
+    #define BOUTONMOINS "../data/images/moins.png"
+
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
