@@ -4,6 +4,8 @@
 /**
 	Paramètres pour les images à charger.
 
+	@param TEXTURE : nom du dossier pour le style des images
+
 	@param PION_JOUEUR_1 : chemin vers l'image du pion 1
 	@param PION_JOUEUR_2 : chemin vers l'image du pion 2
 
@@ -16,6 +18,7 @@
 	@param LOGO_JOUEUR_2 : chemin vers l'image pour indiquer que J2 a la main
 
 	@param TEXTE_SCORES : chemin vers l'image affichée juste au dessus des scores
+	@param SABLIER : chemin vers l'image du sablier affichee quand l'ordi reflechit
 
 	@param BRAVO_0 : chemin vers l'image affichée en fin de jeu (pas de gagnant)
 	@param BRAVO_1 : chemin vers l'image affichée en fin de jeu (joueur 1 gagnant)
@@ -24,21 +27,35 @@
 
 	@param VSJOUEUR : chemin vers l'image pour 2 joueurs
 	@param VSORDI : chemin vers l'image pour 1 joueur contre ordinateur
+	@param SELECTIONMODE : rectangle pour la selection du mode de jeu dans le menu
+
+	@param BOUTONJOUER : chemin vers l'image du bouton pour "Jouer"
+	@param BOUTONJOUERSURVOL : image quand le bouton est survolle
+
+	@param ICONE : chamin vers une icone
 
 	@param TEXTE_NIVEAU : chemin vers l'image du mot niveau
 
 	@param MENU : chemin vers l'image du menu principal
+	@param PLATEAU1_MENU : chemin vers l'apercu du plateau 1
+	@param PLATEAU2_MENU : chemin vers l'apercu du plateau 2
+	@param PLATEAU3_MENU : chemin vers l'apercu du plateau 3
+	@param PLATEAU_SELECTIONNE_MENU : rectangle de selection du plateau
 
 	@param PLATEAU1 : chemin vers le fichier du plateau 1
 	@param PLATEAU2 : chemin vers le fichier du plateau 2
 	@param PLATEAU3 : chemin vers le fichier du plateau 3
+
+	@param BOUTONPLUS : chemin vers le fichier du bouton "+"
+	@param BOUTONMOINS : chemin vers le fichier du bouton "-"
 
 	@param UNITE_X : unités pour les coordonnées horizontales
 	@param UNITE_Y : unités pour les coordonnées verticales
 	@param DECAL_X : décalage du plateau par rapport au haut de l'écran
 	@param DECAL_Y : décalage du plateau par rapport au côté gauche de l'écran
 
-	@param COMMENATIRES : si 0 pas de commentaires des actions, sinon 1
+	@param COMMENTAIRES : si 0 pas de commentaires des actions, sinon 1
+	@param SONS : si 0 pas de sons pour le jeu, sinon 1
 *//*
     Les coordonnées correspondent aux images "case"
     Leur valeur permet d'aligner correctement les hexagones.
