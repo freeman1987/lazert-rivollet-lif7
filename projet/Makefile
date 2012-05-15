@@ -1,6 +1,6 @@
 CC = gcc
 FLAGS = -Wall -pedantic -ansi -ggdb 
-LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS)
+LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS) bin/libfmodex.so
 
 BIN = bin/
 OBJ = bin/

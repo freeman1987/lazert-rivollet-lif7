@@ -1,16 +1,17 @@
 #include "menuprincipal.h"
+#include "api/inc/fmod.h"
 
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     SDL_Surface* screen;
-    SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol;
+    SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
     SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
     SDL_Surface *pieceAnimeeRubis, *pieceAnimeePerle;
     SDL_Rect positionRubis, positionPerle, VecteurPerle, VecteurRubis;
 
     SDL_Rect positionPlateau[3];
-    SDL_Surface *chiffres[10], *texte_niveau;
-    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau;
+    SDL_Surface *chiffres[10], *texte_niveau; int ich;
+    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
     SDL_Event event;
 
     /* variables pour contenir les coordonnées de la souris */
@@ -24,7 +25,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     int done = 0;
 
 
-
+//FMOD_SYSTEM *system;FMOD_System_Create(&system);printf("Resultat FMODInit : %d\n",(int) FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, 0));FMOD_SOUND *son = NULL;
+//FMOD_System_CreateSound(system, "../son.wav", FMOD_CREATESAMPLE, 0, &son);if(son==0){printf("Erreur son\n"); }
 
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
@@ -228,7 +230,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     else if(sourisDansRectangle(sourisx,sourisy,positionPlateau[2]))
                     {
                         *plateau=3;
-                    }
+                    }//FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, son, 0, NULL);printf("Son joue.\n");
 
                 }
                 break;
@@ -267,7 +269,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(pieceAnimeeRubis, 0, screen, &positionRubis);
         SDL_Flip(screen);
     }
-
+//FMOD_Sound_Release(son);FMOD_System_Close(system);FMOD_System_Release(system);
     SDL_Quit();
 
     return retour;
