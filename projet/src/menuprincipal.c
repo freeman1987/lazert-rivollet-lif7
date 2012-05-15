@@ -1,8 +1,25 @@
 #include "menuprincipal.h"
 #include "api/inc/fmod.h"
 
+
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
+    FMOD_SYSTEM *system;
+    FMOD_System_Create(&system);
+    FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+    int isplaying=1;
+
+
+    FMOD_SOUND *hello = NULL;
+    FMOD_SOUND *menuMus = NULL;
+    FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
+
+    FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_CREATESAMPLE, 0, &menuMus);
+
+    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
+    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
+
+
     SDL_Surface* screen;
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
     SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
@@ -19,6 +36,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     int sourisy;
 
     int retour = 1; /* par défaut, on joue */
+
 
 
     /* boucle principale du programme */
@@ -131,6 +149,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
     while (done==0)
     {
+
+
         /* vider l'écran */
         SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
 
@@ -270,6 +290,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_Flip(screen);
     }
 //FMOD_Sound_Release(son);FMOD_System_Close(system);FMOD_System_Release(system);
+    FMOD_Sound_Release(hello);
+
+    FMOD_System_Close(system);
+    FMOD_System_Release(system);
+
     SDL_Quit();
 
     return retour;
