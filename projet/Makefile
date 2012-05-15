@@ -28,10 +28,10 @@ $(BIN)Case.o: $(SRC)Case.h $(SRC)parametres.h
 
 $(BIN)affiche.o: $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)affiche.c -o $@
-	
+
 $(BIN)jeu.o: $(SRC)jeu.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)jeu.c -o $@
-	
+
 $(BIN)menuprincipal.o: $(SRC)menuprincipal.h $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)menuprincipal.c -o $@
 
