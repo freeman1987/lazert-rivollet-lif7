@@ -22,10 +22,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
         FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
         FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
-        FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_CREATESAMPLE, 0, &jeuMus);
+        FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
         FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
-        if(rire==0)
-            printf("ERRRROOOORRR\n");
     #endif
 
     Plateau jeu;

@@ -13,7 +13,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_SOUND *menuMus = NULL;
         FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
 
-        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_CREATESAMPLE, 0, &menuMus);
+        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_LOOP_NORMAL, 0, &menuMus);
 
 
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
