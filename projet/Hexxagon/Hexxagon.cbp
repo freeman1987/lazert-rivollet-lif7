@@ -15,7 +15,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="../lib/libfmodex.so" />
+					<Add library="/home/etu/r/p1005202/LIF7/Projet_LIF7/bin/lib/libfmodex.so" />
 				</Linker>
 			</Target>
 		</Build>
@@ -26,7 +26,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="`sdl-config --libs`-lSDL_image" />
-			<Add library="../lib/libfmodex.so" />
+			<Add library="/home/etu/r/p1005202/LIF7/Projet_LIF7/src/api/lib/libfmodex.so" />
 		</Linker>
 		<Unit filename="../src/Case.c">
 			<Option compilerVar="CC" />
