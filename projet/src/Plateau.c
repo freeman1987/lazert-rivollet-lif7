@@ -418,7 +418,6 @@ int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur)
 
         if((dist==1||dist==2) && caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)!=joueur)
         {
-            printf("ZZZZZZZZZZZZZZZZZZZZZZ\n");
             retour++;
         }
 

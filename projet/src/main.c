@@ -8,8 +8,6 @@
 #include "menuprincipal.h"
 #include "jeu.h"
 
-#include <SDL.h>
-#include <SDL_image.h>
 
 /**
     @brief Fonction du jeu
