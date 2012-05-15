@@ -4,21 +4,20 @@
 
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
-    FMOD_SYSTEM *system;
-    FMOD_System_Create(&system);
-    FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-    int isplaying=1;
+    #if SONS==1
+        FMOD_SYSTEM *system;
+        FMOD_System_Create(&system);
+        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+        int isplaying = 1;
+        FMOD_SOUND *hello = NULL;
+        FMOD_SOUND *menuMus = NULL;
+        FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
 
+        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_CREATESAMPLE, 0, &menuMus);
 
-    FMOD_SOUND *hello = NULL;
-    FMOD_SOUND *menuMus = NULL;
-    FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
-
-    FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_CREATESAMPLE, 0, &menuMus);
-
-    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
-    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-
+        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
+        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
+    #endif
 
     SDL_Surface* screen;
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
@@ -41,10 +40,6 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
     /* boucle principale du programme */
     int done = 0;
-
-
-//FMOD_SYSTEM *system;FMOD_System_Create(&system);printf("Resultat FMODInit : %d\n",(int) FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, 0));FMOD_SOUND *son = NULL;
-//FMOD_System_CreateSound(system, "../son.wav", FMOD_CREATESAMPLE, 0, &son);if(son==0){printf("Erreur son\n"); }
 
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
@@ -250,7 +245,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     else if(sourisDansRectangle(sourisx,sourisy,positionPlateau[2]))
                     {
                         *plateau=3;
-                    }//FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, son, 0, NULL);printf("Son joue.\n");
+                    }
 
                 }
                 break;
@@ -289,11 +284,12 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(pieceAnimeeRubis, 0, screen, &positionRubis);
         SDL_Flip(screen);
     }
-//FMOD_Sound_Release(son);FMOD_System_Close(system);FMOD_System_Release(system);
-    FMOD_Sound_Release(hello);
 
-    FMOD_System_Close(system);
-    FMOD_System_Release(system);
+    #if SONS==1
+        FMOD_Sound_Release(hello);
+        FMOD_System_Close(system);
+        FMOD_System_Release(system);
+    #endif
 
     SDL_Quit();
 

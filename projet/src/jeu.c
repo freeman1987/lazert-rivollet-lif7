@@ -8,23 +8,25 @@
 */
 int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau)
 {
-    FMOD_SYSTEM *system;
-    FMOD_System_Create(&system);
-    FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+    #if SONS==1
+        FMOD_SYSTEM *system;
+        FMOD_System_Create(&system);
+        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
 
 
-    FMOD_SOUND *rire = NULL;
-    FMOD_SOUND *boing = NULL;
-    FMOD_SOUND *clic = NULL;
-    FMOD_SOUND *jeuMus = NULL;
-    FMOD_SOUND *bravo = NULL;
-    FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
-    FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
-    FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
-    FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_CREATESAMPLE, 0, &jeuMus);
-    FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
-    if(rire==0)
-        printf("ERRRROOOORRR\n");
+        FMOD_SOUND *rire = NULL;
+        FMOD_SOUND *boing = NULL;
+        FMOD_SOUND *clic = NULL;
+        FMOD_SOUND *jeuMus = NULL;
+        FMOD_SOUND *bravo = NULL;
+        FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
+        FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
+        FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
+        FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_CREATESAMPLE, 0, &jeuMus);
+        FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
+        if(rire==0)
+            printf("ERRRROOOORRR\n");
+    #endif
 
     Plateau jeu;
     SDL_Surface* pion1;
@@ -89,8 +91,9 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             case 3: plateauLireFichier(&jeu,PLATEAU3); break;
         }
 
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, jeuMus, 0, NULL);
-
+        #if SONS==1
+            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, jeuMus, 0, NULL);
+        #endif
 
     /* boucle principale du programme */
     int done = 0;
@@ -135,7 +138,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if (!screen)
         {
-            printf("Erreur de définition de l'écraFMOD_System_LockDSP(system); video : %s\n", SDL_GetError());
+            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
             afficher = 3;
         }
         /* on vide l'écran */
@@ -239,7 +242,9 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                             {
                                 /* on sélectionne un pion pour proposer ensuite les possibilités */
                                 caseCliquee = caseTemp;
-                                FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, clic, 0, NULL);
+                                #if SONS==1
+                                    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, clic, 0, NULL);
+                                #endif
 
                                 #if COMMENTAIRES==1
                                     printf("La case a été sélectionnée.\n");
@@ -265,7 +270,9 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                                         test = plateauTestCaseProche(xtemp,ytemp);
                                     if(test!=0 && animation==0)
                                     {
-                                        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
+                                        #if SONS==1
+                                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
+                                        #endif
                                         /* pour l'animation */
                                         xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
                                         deplacement.x = xyArrivee.x - xyPionAnim.x;
@@ -326,8 +333,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
                 if(attente>=0)
                 {
-                    if(sonFinJeu!=0)
-                    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
+                    #if SONS==1
+                        if(sonFinJeu!=0)
+                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
+                    #endif
                     SDL_BlitSurface(sablier, 0, screen, &xySablier);
                     attente-=1;
                 }else{
@@ -463,16 +472,18 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             /* si la fin du jeu est détectée, on affiche le message */
             if(afficher==3)
             {
-                if(sonFinJeu==1){
-                    if(plateauGetScore(&jeu,1)<plateauGetScore(&jeu,2))
-                    {
-                        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, rire, 0, NULL);
+                #if SONS==1
+                    if(sonFinJeu==1){
+                        if(plateauGetScore(&jeu,1)<plateauGetScore(&jeu,2))
+                        {
+                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, rire, 0, NULL);
 
-                    }else{
-                        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, bravo, 0, NULL);
-                        }
-                    sonFinJeu=0;
-                }
+                        }else{
+                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, bravo, 0, NULL);
+                            }
+                        sonFinJeu=0;
+                    }
+                #endif
                 afficheFinJeu(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),contreordinateur,screen);
             }
         }
@@ -502,14 +513,16 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         SDL_FreeSurface(chiffres[i]);
         SDL_FreeSurface(screen);
 
-    FMOD_System_LockDSP(system);
-    FMOD_Sound_Release(rire);
-    FMOD_Sound_Release(clic);
-    FMOD_Sound_Release(boing);
-    FMOD_Sound_Release(bravo);
-    FMOD_Sound_Release(jeuMus);
-    FMOD_System_Close(system);
-    FMOD_System_Release(system);
+    #if SONS==1
+        FMOD_System_LockDSP(system);
+        FMOD_Sound_Release(rire);
+        FMOD_Sound_Release(clic);
+        FMOD_Sound_Release(boing);
+        FMOD_Sound_Release(bravo);
+        FMOD_Sound_Release(jeuMus);
+        FMOD_System_Close(system);
+        FMOD_System_Release(system);
+    #endif
     plateauTestament(&jeu);
     return 0;
 }

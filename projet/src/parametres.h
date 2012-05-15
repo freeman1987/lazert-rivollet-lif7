@@ -91,6 +91,7 @@
 	#define DECAL_X 4
 	#define DECAL_Y 3
 
-	#define COMMENTAIRES 1
+	#define COMMENTAIRES 0
+	#define SONS 0
 
 #endif
