@@ -6,6 +6,7 @@
 
 #include "parametres.h"
 #include "affiche.h"
+#include "affiche.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>

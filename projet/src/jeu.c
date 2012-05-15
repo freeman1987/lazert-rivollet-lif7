@@ -47,6 +47,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
     /* VARIABLES POUR LE JEU */
 
+
         int sonFinJeu = 1;
         /* variables pour contenir les coordonnées de la souris */
         int sourisx;
@@ -198,7 +199,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         {
                             plateauTestament(&jeu);
                             caseCliquee = 0;
-                            return 1;
+                            afficher=0;
 
                             #if COMMENTAIRES==1
                                 printf("Echap => fin de la partie, retour au menu.\n");
@@ -303,7 +304,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         if(SDL_MOUSEBUTTONDOWN)
                         {
 
-                            return 1;
+                            afficher=0;
                         }
                     }
 
