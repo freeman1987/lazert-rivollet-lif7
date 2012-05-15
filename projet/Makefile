@@ -1,10 +1,11 @@
 BIN = bin/
 OBJ = bin/
 SRC = src/
+LIB = lib/
 
 CC = gcc
 FLAGS = -Wall -pedantic -ansi -ggdb 
-LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS) $(SRC)api/lib/libfmodex.so
+LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS) $(LIB)libfmodex.so
 
 OUT = hexxagon
 
