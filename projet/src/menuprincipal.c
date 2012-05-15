@@ -134,12 +134,19 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         chiffres[7] = IMG_Load("../data/chiffres/7.png"); afficheVerifChargement(chiffres[7]);
         chiffres[8] = IMG_Load("../data/chiffres/8.png"); afficheVerifChargement(chiffres[8]);
         chiffres[9] = IMG_Load("../data/chiffres/9.png"); afficheVerifChargement(chiffres[9]);
-        positionNiveau.x = 390;
+        positionNiveau.x = 370;
         positionNiveau.y = screen->h - 40;
 
         texte_niveau = IMG_Load(TEXTE_NIVEAU);
-        positionTexteNiveau.x = 320;
+        positionTexteNiveau.x = 300;
         positionTexteNiveau.y = screen->h - 40;
+
+        imageBoutonPlus = IMG_Load(BOUTONPLUS); afficheVerifChargement(imageBoutonPlus);
+        imageBoutonMoins = IMG_Load(BOUTONMOINS); afficheVerifChargement(imageBoutonMoins);
+        positionBoutonPlus.x = 425;
+        positionBoutonPlus.y = screen->h - 40;
+        positionBoutonMoins.x = 400;
+        positionBoutonMoins.y = screen->h - 40;
 
 
     while (done==0)
@@ -246,6 +253,16 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         *plateau=3;
                     }
+                    /* changer de niveau ordi */
+                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<9 && *contreordinateur==1)
+                    {
+                        (*niveauordinateur)++;
+                    }
+
+                    if(sourisDansRectangle(sourisx,sourisy,positionBoutonMoins) && *niveauordinateur>0 && *contreordinateur==1)
+                    {
+                        (*niveauordinateur)--;
+                    }
 
                 }
                 break;
@@ -273,6 +290,10 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(imagePlateau[1],0,screen,&positionPlateau[1]);
         SDL_BlitSurface(imagePlateau[2],0,screen,&positionPlateau[2]);
 
+        if(*niveauordinateur<9)
+            SDL_BlitSurface(imageBoutonPlus,0,screen,&positionBoutonPlus);
+        if(*niveauordinateur>0)
+            SDL_BlitSurface(imageBoutonMoins,0,screen,&positionBoutonMoins);
 
 
         if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
@@ -290,6 +311,25 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_System_Close(system);
         FMOD_System_Release(system);
     #endif
+
+    SDL_FreeSurface(menu);
+    SDL_FreeSurface(imageContreJoueur);
+    SDL_FreeSurface(imageContreOrdi);
+    SDL_FreeSurface(imageSelection);
+    SDL_FreeSurface(imageBoutonJouer);
+    SDL_FreeSurface(imageBoutonJouerSurvol);
+    SDL_FreeSurface(imageBoutonPlus);
+    SDL_FreeSurface(imageBoutonMoins);
+    SDL_FreeSurface(imagePlateau[0]);
+    SDL_FreeSurface(imagePlateau[1]);
+    SDL_FreeSurface(imagePlateau[2]);
+    SDL_FreeSurface(imagePlateauSelectionne);
+    SDL_FreeSurface(pieceAnimeeRubis);
+    SDL_FreeSurface(pieceAnimeePerle);
+    SDL_FreeSurface(texte_niveau);
+    for(ich=0;ich<9;ich++)
+        SDL_FreeSurface(chiffres[ich]);
+    SDL_FreeSurface(screen);
 
     SDL_Quit();
 
