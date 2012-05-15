@@ -22,7 +22,14 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
         FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
         FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
-        FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+        if(contreordinateur==1)
+        {
+            FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+        }
+        else
+        {
+            FMOD_System_CreateSound(system, "../data/music/menu_suite.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+        }
         FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
     #endif
 
@@ -384,12 +391,16 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         afficheImageRect(xyPionAnim,pion2,screen);
                     else
                         afficheImageRect(xyPionAnim,pion1,screen);
+                    #if COMMENTAIRES==1
                     printf("--- On bouge !\n");
+                    #endif
                 }
                 else
                 {
                     animation = 2;
+                    #if COMMENTAIRES==1
                     printf("--- Fini de bouger !\n");
+                    #endif
                 }
             }
 
