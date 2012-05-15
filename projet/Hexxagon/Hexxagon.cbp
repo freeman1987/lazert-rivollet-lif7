@@ -25,7 +25,6 @@
 			<Add option="`sdl-config --libs`-lSDL_image" />
 			<Add library="/home/etu/r/p1005202/LIF7/Projet_LIF7/usr (2)/lib/libSDL_mixer.a" />
 		</Linker>
-		<Unit filename="../../../.cache/.fr-8OH1Me/usr/include/SDL/SDL_mixer.h" />
 		<Unit filename="../src/Case.c">
 			<Option compilerVar="CC" />
 		</Unit>
