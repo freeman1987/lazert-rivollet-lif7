@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1337108109 source:c:\users\mickael\documents\projet hexxagon\src\plateau.c
+	"Case.h"
+	"Plateau.h"
+
+1336043690 c:\users\mickael\documents\projet hexxagon\src\case.h
+	"parametres.h"
+	<stdlib.h>
+	<stdio.h>
+
+1337097502 c:\users\mickael\documents\projet hexxagon\src\parametres.h
+
+1337108185 c:\users\mickael\documents\projet hexxagon\src\plateau.h
+	"parametres.h"
+	"Case.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+

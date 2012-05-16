@@ -2,65 +2,85 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Hexxagon" />
+		<Option title="proj" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Hexxagon" prefix_auto="1" extension_auto="1" />
-				<Option object_output="bin/Debug/" />
+				<Option output="bin\Debug\proj" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\proj" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
 				<Linker>
-					<Add library="/home/etu/r/p1005202/LIF7/Projet_LIF7/bin/lib/libfmodex.so" />
+					<Add option="-s" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wextra" />
 			<Add option="-Wall" />
-			<Add option="`sdl-config --cflags`" />
+			<Add directory="C:\Users\Mickael\Documents\Code blocks\SDL-1.2.15\include" />
 		</Compiler>
 		<Linker>
-			<Add option="`sdl-config --libs`-lSDL_image" />
-			<Add library="/home/etu/r/p1005202/LIF7/Projet_LIF7/src/api/lib/libfmodex.so" />
+			<Add library="mingw32" />
+			<Add library="SDLmain" />
+			<Add library="SDL.dll" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="C:\Users\Mickael\Documents\Code blocks\SDL-1.2.15\lib\SDL_image.lib" />
+			<Add library="C:\Users\Mickael\Documents\Code blocks\SDL-1.2.15\lib\SDL_ttf.lib" />
+			<Add library="C:\Users\Mickael\Documents\Code blocks\SDL-1.2.15\lib\libfmodex.a" />
+			<Add directory="C:\Users\Mickael\Documents\Code blocks\SDL-1.2.15\lib" />
 		</Linker>
-		<Unit filename="../src/Case.c">
+		<Unit filename="src\Case.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/Case.h" />
-		<Unit filename="../src/Plateau.c">
+		<Unit filename="src\Case.h" />
+		<Unit filename="src\Plateau.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/Plateau.h" />
-		<Unit filename="../src/affiche.c">
+		<Unit filename="src\Plateau.h" />
+		<Unit filename="src\affiche.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/affiche.h" />
-		<Unit filename="../src/jeu.c">
+		<Unit filename="src\affiche.h" />
+		<Unit filename="src\jeu.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/jeu.h" />
-		<Unit filename="../src/main.c">
+		<Unit filename="src\jeu.h" />
+		<Unit filename="src\main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/menuprincipal.c">
+		<Unit filename="src\menuprincipal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/menuprincipal.h" />
-		<Unit filename="../src/ordinateur.c">
+		<Unit filename="src\menuprincipal.h" />
+		<Unit filename="src\ordinateur.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../src/ordinateur.h" />
-		<Unit filename="../src/parametres.h" />
+		<Unit filename="src\ordinateur.h" />
+		<Unit filename="src\parametres.h" />
+		<Unit filename="src\son.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\son.h" />
+		<Unit filename="src\svn-commit.tmp" />
 		<Extensions>
 			<code_completion />
-			<envvars />
 			<debugger />
-			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

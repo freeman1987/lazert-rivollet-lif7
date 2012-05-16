@@ -174,6 +174,16 @@ void plateauVolerPions(Plateau* p, Case* c, int joueur);
 */
 int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur);
 
+/**
+    @brief Compte le nombre de pions adverses à voler autour de la case de départ
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] c : Pointeur sur une Case
+    @param joueur : le joueur en cours
+
+    @return int
+*/
+int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur);
 /** \brief Compte le nombre de pions que l'ordinateur perdra s'il bouge son pion
 
     @param [IN] p : Pointeur sur Plateau
