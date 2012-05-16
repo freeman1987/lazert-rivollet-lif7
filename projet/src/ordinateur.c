@@ -25,6 +25,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
     int nbAVoler, nbAVolerTmp, pionAdversePerdu, pionAdversePerduTmp;
     Case* source;
     Case* destination;
+
     int action; /* 1 dupliquer, 2 deplacer */
     nbAVoler = 0;
     action = 0;
@@ -35,6 +36,21 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
     {
         ctmp = plateauGetCaseI(p,i);
 
+        if(plateauNbPionsAVoler(p,ctmp,((joueur+1)%2))>=4 && caseGetLibre(ctmp)==1)
+        {
+            ctmp2=ctmp;
+            action=1;
+            for(j=0;j<plateauGetCapacite(p);j++)
+            {
+                ctmp=plateauGetCaseI(p,j);
+                if(plateauTestCaseProche(caseGetX(destination)-caseGetX(ctmp),caseGetY(destination)-caseGetY(ctmp))==1 && caseGetJoueur(ctmp)==joueur);
+                {
+                    destination=ctmp2;
+                    source=ctmp;
+                    i=10000000;
+                }
+            }
+        }else{
         if(afficher_txt==1) printf("Case %d (%d)\n",i,(int) ctmp);
 
         /* la case appartient au joueur */
@@ -87,8 +103,8 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                         if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
 
                         /* il y a plus de pions à prendre en jouant ici && plateauNbPionsPerdu(p,ctmp,joueur)<=7 */
-                        if((nbAVolerTmp>nbAVoler && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3)||
-                           ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && plateauNbPionsPerdu(p,ctmp,joueur)<=3))
+                        if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)||
+                           ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4))||destination==0)
                         {
                             source = ctmp;
                             destination = ctmp2;
@@ -103,7 +119,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
             }
 
         }
-
+       }
     }
 
     if(afficher_txt==1)

@@ -524,7 +524,6 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         SDL_FreeSurface(screen);
 
     #if SONS==1
-        FMOD_System_LockDSP(system);
         FMOD_Sound_Release(rire);
         FMOD_Sound_Release(clic);
         FMOD_Sound_Release(boing);

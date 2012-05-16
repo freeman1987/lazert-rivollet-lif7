@@ -8,8 +8,6 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_SYSTEM *system;
         FMOD_System_Create(&system);
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-        FMOD_CHANNEL *channel;
-        int *chan;
 
         FMOD_BOOL *isplaying = 0;
         FMOD_SOUND *hello = NULL;
@@ -318,6 +316,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
     #if SONS==1
         FMOD_Sound_Release(hello);
+        FMOD_Sound_Release(menuMus);
         FMOD_System_Close(system);
         FMOD_System_Release(system);
     #endif
