@@ -5,7 +5,7 @@
 make clean
 make
 cd bin/
-valgrind ./hexxagon
+valgrind ./hexxagon --leak-check=full
 clear
 cd ../
 
