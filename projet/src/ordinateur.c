@@ -2,36 +2,37 @@
 
 void ordinateurJouer(Plateau* p, int joueur, int niv)
 {
-    #if COMMENTAIRES==0
-        int afficher_txt = 0; /* ne pas afficher les commantaires */
-    #else
-        int afficher_txt = 1; /* afficher les commantaires */
-        printf("--ENTREE DANS LA FONCTION ordinateurJouer--\n");
-    #endif
 
     int niveau;
+    int i,j;
+    Case* ctmp;
+    Case* ctmp2;
+    int dist;
+    int compteur;
+
+
+    int nbAVoler, nbAVolerTmp, pionAdversePerdu, pionAdversePerduTmp;
+    Case* source;
+    Case* destination;
+    int afficher_txt;
+    int action; /* 1 dupliquer, 2 deplacer */
+    #if COMMENTAIRES==0
+        afficher_txt = 0; /* ne pas afficher les commantaires */
+    #else
+        afficher_txt = 1; /* afficher les commantaires */
+        printf("--ENTREE DANS LA FONCTION ordinateurJouer--\n");
+    #endif
 
     if(niv>=9) /* 9 étant le niveau max, on fixe une limite inatteignable */
         niveau = 1000;
     else /* pas de problème pour un niveau <1 : seule la première case jouable sera jouée */
         niveau = niv;
 
-    int i,j;
-    Case* ctmp;
-    Case* ctmp2;
-    int dist;
-    int compteur = 0; /* compter le nombre de meilleurs solutions trouvées */
-
-    int nbAVoler, nbAVolerTmp, pionAdversePerdu, pionAdversePerduTmp;
-    Case* source;
-    Case* destination;
-
-    int action; /* 1 dupliquer, 2 deplacer */
     nbAVoler = 0;
     action = 0;
     source = 0;
     destination = 0;
-
+    compteur = 0; /* compter le nombre de meilleurs solutions trouvées */
     for(i=0;i<plateauGetCapacite(p);i++)
     {
         ctmp = plateauGetCaseI(p,i);
@@ -102,7 +103,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                         pionAdversePerduTmp = nbAVolerTmp;
                         if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
 
-                        /* il y a plus de pions à prendre en jouant ici && plateauNbPionsPerdu(p,ctmp,joueur)<=7 */
+                        /* il y a plus de pions à prendre en jouant ici*/
                         if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)||
                            ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4))||destination==0)
                         {
