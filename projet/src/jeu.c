@@ -165,7 +165,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
         /* on charge l'écran d'affichage */
 
-        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = SDL_SetVideoMode(1100, 720, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if (!screen)
         {
             printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());

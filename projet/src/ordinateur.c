@@ -26,7 +26,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
     if(niv>=9) /* 9 étant le niveau max, on fixe une limite inatteignable */
         niveau = 1000;
     else /* pas de problème pour un niveau <1 : seule la première case jouable sera jouée */
-        niveau = niv;
+        niveau = niv + 1;
 
     nbAVoler = 0;
     action = 0;
