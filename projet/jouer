@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! -e "bin/hexxagon" ]; then
+	echo "---- COMPILATION ----\n"
+	make
+	clear
+fi;
+
+	cd bin/
+	./hexxagon
+	clear
+	cd ../
+
