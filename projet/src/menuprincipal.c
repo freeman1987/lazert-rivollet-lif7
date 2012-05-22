@@ -158,6 +158,9 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionBoutonMoins.y = screen->h - 40;
 
 
+        sourisx = 0;
+        sourisy = 0;
+
     while (done==0)
     {
         if(isplaying==0)
@@ -190,15 +193,18 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionRubis.x+=VecteurRubis.x;
         positionRubis.y+=VecteurRubis.y;
 
-
-        /* récupérer la position de la souris sur l'écran */
-        sourisx = event.motion.x;
-        sourisy = event.motion.y;
-
         while(SDL_PollEvent(&event))
         {
             switch(event.type)
             {
+                /* récupérer la position de la souris sur l'écran */
+                case SDL_MOUSEMOTION:
+                {
+                    sourisx = event.motion.x;
+                    sourisy = event.motion.y;
+                }
+                break;
+
                 /* fermer */
                 case SDL_QUIT:
                 {
