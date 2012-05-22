@@ -543,9 +543,12 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     SDL_FreeSurface(texte_niveau);
     SDL_FreeSurface(vsjoueur);
     SDL_FreeSurface(vsordi);
+    SDL_FreeSurface(sablier);
     for(i=0;i<10;i++)
         SDL_FreeSurface(chiffres[i]);
-        SDL_FreeSurface(screen);
+    SDL_FreeSurface(screen);
+
+    SDL_Quit();
 
     #if SONS==1
         FMOD_Sound_Release(rire);

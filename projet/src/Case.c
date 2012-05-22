@@ -3,11 +3,18 @@
 Case* caseInit()
 {
     Case* c;
+    c = 0;
     c = (Case *) malloc(sizeof(Case));
     if(c==0)
     {
         printf("Erreur d'allocation pour une case.");
         exit(1);
+    }
+    else
+    {
+        #if COMMENTAIRES==1
+            printf("MALLOC : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
+        #endif
     }
     c->libre = 1;
     c->joueur = 0;
@@ -75,6 +82,12 @@ void caseTestament(Case* c)
 {
     /* libérer la mémoire */
     if(c!=0)
+    {
         free(c);
-    /*printf("case à l'adresse %u libérée\n",(int) c);*/
+        #if COMMENTAIRES==1
+            printf("FREE   : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
+        #endif
+        c = 0;
+    }
+
 }
