@@ -31,12 +31,15 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
 {
     /* pour monter ou descendre les scores */
     int decalage_y;
-    decalage_y = 50;
+
 
     /* position d'affichage */
     SDL_Rect pos;
+
+    decalage_y = 50;
     pos.x = 50;
     pos.y = 150 + decalage_y;
+
 
     SDL_BlitSurface(haut, 0, ecran, &pos);
 
@@ -165,15 +168,12 @@ void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliq
 
     Case* ctmp;
     int xtmp, ytmp;
-
     int x,y;
-    x = caseGetX(c);
-    y = caseGetY(c);
-
     int dist;
-
     int i;
 
+    x = caseGetX(c);
+    y = caseGetY(c);
     for(i=0;i<plateauGetCapacite(p);i++)
     {
         ctmp = plateauGetCaseI(p,i);
