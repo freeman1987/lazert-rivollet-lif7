@@ -47,9 +47,9 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
     #endif
 
-    retour = 0;
-    done = 0;
-    isplaying = 0;
+    retour = 1; /* par défaut on accède au jeu après le menu */
+    done = 0; /* sortie de boucle */
+    isplaying = (FMOD_BOOL*) 0;
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
@@ -163,7 +163,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         if(isplaying==0)
         {
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-        *isplaying=1;
+        isplaying = (FMOD_BOOL*) 1;
         }
 
         /* vider l'écran */
