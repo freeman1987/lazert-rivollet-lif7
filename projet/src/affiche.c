@@ -104,8 +104,8 @@ void afficheFinJeu(int s1, int s2, int ordi, SDL_Surface* ecran)
     else
         bravo = IMG_Load(BRAVO_1);
 
-    pos.x = (ecran->w - bravo->w)/2;
-    pos.y = (ecran->h - bravo->h)/2;
+    pos.x = (ecran->w - bravo->w)/2 + 90;
+    pos.y = (ecran->h - bravo->h)/2 ;
 
     SDL_BlitSurface(bravo, 0, ecran, &pos);
     SDL_FreeSurface(bravo);

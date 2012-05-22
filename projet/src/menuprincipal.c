@@ -55,7 +55,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
         /* on charge l'écran d'affichage */
 
-        screen = SDL_SetVideoMode(1100, 800, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = SDL_SetVideoMode(1100, 720, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
         if (!screen)
         {
             printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
@@ -234,12 +234,12 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                         *contreordinateur = ((*contreordinateur + 1) % 2);
                     }
 
-                    if(event.key.keysym.sym == SDLK_UP && *niveauordinateur<9 && *contreordinateur==1)
+                    if((event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_KP_PLUS) && *niveauordinateur<9 && *contreordinateur==1)
                     {
                         (*niveauordinateur)++;
                     }
 
-                    if(event.key.keysym.sym == SDLK_DOWN && *niveauordinateur>0 && *contreordinateur==1)
+                    if((event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_KP_MINUS) && *niveauordinateur>1 && *contreordinateur==1)
                     {
                         (*niveauordinateur)--;
                     }
@@ -309,9 +309,9 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         SDL_BlitSurface(imagePlateau[1],0,screen,&positionPlateau[1]);
         SDL_BlitSurface(imagePlateau[2],0,screen,&positionPlateau[2]);
 
-        if(*niveauordinateur<9)
+        if(*niveauordinateur<9 && *contreordinateur==1)
             SDL_BlitSurface(imageBoutonPlus,0,screen,&positionBoutonPlus);
-        if(*niveauordinateur>0)
+        if(*niveauordinateur>0 && *contreordinateur==1)
             SDL_BlitSurface(imageBoutonMoins,0,screen,&positionBoutonMoins);
 
 

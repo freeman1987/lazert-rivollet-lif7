@@ -109,7 +109,7 @@
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
 	#define DECAL_X 4
-	#define DECAL_Y 3
+	#define DECAL_Y 1
 
 	#define COMMENTAIRES 1
 	#define SONS 1
