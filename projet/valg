@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Script qui recompile le jeu et le lance avec Valgrind
+
+make clean
+make
+cd bin/
+valgrind ./hexxagon
+clear
+cd ../
+
