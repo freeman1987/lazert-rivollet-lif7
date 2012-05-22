@@ -164,16 +164,17 @@ int plateauNbPossibilites(const Plateau* p,Case* c)
     int xtmp, ytmp;
 
     int x,y;
-    x = caseGetX(c);
-    y = caseGetY(c);
 
     int dist;
 
     int retour;
-    retour = 0;
+
 
     int i;
 
+    x = caseGetX(c);
+    y = caseGetY(c);
+    retour = 0;
     #if COMMENTAIRES==1
         printf("\tOn compte le nombre de possibilités pour le case %d.\n",(int) c);
     #endif
@@ -226,14 +227,12 @@ void plateauVolerPions(Plateau* p, Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
-
     int x,y;
+    int dist;
+    int i;
+
     x = caseGetX(c);
     y = caseGetY(c);
-
-    int dist;
-
-    int i;
 
     for(i=0;i<plateauGetCapacite(p);i++)
     {
@@ -251,17 +250,14 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
-
     int x,y;
+    int dist;
+    int i;
+    int retour;
+
+    retour = 0;
     x = caseGetX(c);
     y = caseGetY(c);
-
-    int dist;
-
-    int i;
-
-    int retour;
-    retour = 0;
 
     for(i=0;i<plateauGetCapacite(p);i++)
     {
@@ -280,17 +276,14 @@ int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
-
     int x,y;
+    int dist;
+    int i;
+    int retour;
+
+    retour = 0;
     x = caseGetX(c);
     y = caseGetY(c);
-
-    int dist;
-
-    int i;
-
-    int retour;
-    retour = 0;
 
     for(i=0;i<plateauGetCapacite(p);i++)
     {
@@ -311,12 +304,13 @@ int plateauNbPionsPerdu(Plateau* p, Case* c, int joueur)
     int compteur;
     Case* ctemp;
     int x,y,dist;
+    int xtemp, ytemp;
+    int i;
+
     x = caseGetX(c);
     y = caseGetY(c);
     compteur=0;
 
-    int xtemp, ytemp;
-    int i;
     for(i=0;i<plateauGetCapacite(p);i++)
     {
         ctemp = plateauGetCaseI(p,i);
@@ -426,17 +420,14 @@ int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
-
     int x,y;
+    int dist;
+    int i;
+    int retour;
+
+    retour = 0;
     x = caseGetX(c);
     y = caseGetY(c);
-
-    int dist;
-
-    int i;
-
-    int retour;
-    retour = 0;
 
     for(i=0;i<plateauGetCapacite(p);i++)
     {
