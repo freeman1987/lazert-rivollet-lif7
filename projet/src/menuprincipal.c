@@ -4,24 +4,6 @@
 
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
-    #if SONS==1
-        FMOD_SYSTEM *system;
-        FMOD_System_Create(&system);
-        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-
-        FMOD_BOOL *isplaying = 0;
-        FMOD_SOUND *hello = NULL;
-        FMOD_SOUND *menuMus = NULL;
-        FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
-
-        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_LOOP_NORMAL, 0, &menuMus);
-
-
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-
-
-    #endif
 
     SDL_Surface* screen;
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
@@ -38,13 +20,36 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     int sourisx;
     int sourisy;
 
-    int retour = 1; /* par défaut, on joue */
+    int retour; /* par défaut, on joue */
 
 
 
     /* boucle principale du programme */
-    int done = 0;
+    int done;
 
+    #if SONS==1
+        FMOD_SYSTEM *system;
+
+
+        FMOD_BOOL *isplaying;
+        FMOD_SOUND *hello = NULL;
+        FMOD_SOUND *menuMus = NULL;
+        FMOD_System_Create(&system);
+        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+        FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
+
+        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_LOOP_NORMAL, 0, &menuMus);
+
+
+        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
+        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
+
+
+    #endif
+
+    retour = 0;
+    done = 0;
+    isplaying = 0;
 
     /* INITIALISATIONS POUR L'AFFICHAGE SDL */
 
@@ -158,7 +163,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         if(isplaying==0)
         {
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-        isplaying=1;
+        *isplaying=1;
         }
 
         /* vider l'écran */

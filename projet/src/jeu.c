@@ -8,30 +8,37 @@
 */
 int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau)
 {
-    #if SONS==1
-        FMOD_SYSTEM *system;
-        FMOD_System_Create(&system);
-        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+    /* déclaration variable pour le jeu */
+    int attente; /* temp d'attente de l'ordinateur */
+
+        int afficher;
+
+        int tourautomatique;
+        int animation;
+
+        int sonFinJeu;
+        /* variables pour contenir les coordonnées de la souris */
+        int sourisx;
+        int sourisy;
+
+        int done;
+
+        /* variable pourr savoir quel joueur doit jouer */
+        int qui_joue; /* le joueur 1 commence */
+
+        Case* caseCliquee; /* case sélectionnée */
+
+        Case* caseTemp; /* pointeur pour une case temporaire (dans les boucles) */
+        int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
+        int test; /* bouléen pour stocker le résultats d'un test */
 
 
-        FMOD_SOUND *rire = NULL;
-        FMOD_SOUND *boing = NULL;
-        FMOD_SOUND *clic = NULL;
-        FMOD_SOUND *jeuMus = NULL;
-        FMOD_SOUND *bravo = NULL;
-        FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
-        FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
-        FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
-        if(contreordinateur==1)
-        {
-            FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
-        }
-        else
-        {
-            FMOD_System_CreateSound(system, "../data/music/menu_suite.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
-        }
-        FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
-    #endif
+        SDL_Rect xyPionAnim;
+        SDL_Rect deplacement;
+        SDL_Rect xyArrivee;
+        SDL_Rect xySablier;
+
+    /* Fin déclaration */
 
     Plateau jeu;
     SDL_Surface* pion1;
@@ -48,38 +55,54 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     SDL_Surface* screen;
     SDL_Surface* sablier;
     SDL_Event event;
+    #if SONS==1
+        FMOD_SYSTEM *system;
+
+        FMOD_SOUND *rire;
+        FMOD_SOUND *boing;
+        FMOD_SOUND *clic;
+        FMOD_SOUND *jeuMus;
+        FMOD_SOUND *bravo;
+        bravo = NULL;
+        clic = NULL;
+        boing = NULL;
+        rire = NULL;
+        jeuMus = NULL;
+        FMOD_System_Create(&system);
+        FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
+
+
+        FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
+        FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
+        FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
+        if(contreordinateur==1)
+        {
+            FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+        }
+        else
+        {
+            FMOD_System_CreateSound(system, "../data/music/menu_suite.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+        }
+        FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
+    #endif
+
+
 
 
     /* VARIABLES POUR LE JEU */
 
+        animation = 0; /* savoir si une animation de pion est en cours */
 
-        int sonFinJeu = 1;
-        /* variables pour contenir les coordonnées de la souris */
-        int sourisx;
-        int sourisy;
+        caseCliquee = 0;
 
-        /* variable pourr savoir quel joueur doit jouer */
-        int qui_joue = 1; /* le joueur 1 commence */
-
-        Case* caseCliquee = 0; /* case sélectionnée */
-
-        Case* caseTemp; /* pointeur pour une case temporaire (dans les boucles) */
-        int xtemp, ytemp; /* coordonnées temporaires (pour ctemp) */
-        int test; /* bouléen pour stocker le résultats d'un test */
-
-        int animation = 0; /* savoir si une animation de pion est en cours */
-        SDL_Rect xyPionAnim;
-        SDL_Rect deplacement;
-        SDL_Rect xyArrivee;
-        SDL_Rect xySablier;
         /* Initialise la position du sablier */
         xySablier.x= 1000;
         xySablier.y= 50;
-
-
-        int tourautomatique = 0; /* si la fonction est activée, l'utilisateur
+        sonFinJeu = 1;
+        qui_joue = 1;
+        tourautomatique = 0; /* si la fonction est activée, l'utilisateur
                                     peut appuyer O pour faire jouer l'ordi */
-        int attente; /* temp d'attente de l'ordinateur */
+
         attente=10; /* initialiser */
 
         /* qu'afficher ?
@@ -88,7 +111,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             2 -> plateau de jeu
             3 -> fin du jeu
         */
-        int afficher = 2;
+
+        afficher = 2;
         plateauInit(&jeu,0);
         switch (plateau)
         {
@@ -102,7 +126,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         #endif
 
     /* boucle principale du programme */
-    int done = 0;
+    done = 0;
     /* IMAGES POUR LE PLATEAU DE JEU */
 
         /* on charge les images pour les pions des 2 joueurs */
