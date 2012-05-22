@@ -10,6 +10,7 @@ Case* caseInit()
         exit(1);
     }
     c->libre = 1;
+    c->joueur = 0;
 
     return c;
 }
