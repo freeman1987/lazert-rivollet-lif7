@@ -347,7 +347,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     SDL_FreeSurface(pieceAnimeeRubis);
     SDL_FreeSurface(pieceAnimeePerle);
     SDL_FreeSurface(texte_niveau);
-    for(ich=0;ich<9;ich++)
+    for(ich=0;ich<10;ich++)
         SDL_FreeSurface(chiffres[ich]);
     SDL_FreeSurface(screen);
 

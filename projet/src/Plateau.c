@@ -3,18 +3,31 @@
 
 void plateauInit(Plateau* p, int capa)
 {
+    #if COMMENTAIRES==1
+        printf("On initialise le plateau.\n");
+    #endif
     /* nombre de places au total sur la plateau */
     p->capacite = capa;
     p->places_libres = capa;
 
     p->score_j1 = 0;
     p->score_j2 = 0;
-
-    p->support = (Case **) malloc(sizeof(Case)*capa);
-    if(p->support==0)
+    p->support = 0;
+    if(capa>0)
     {
-        printf("Erreur d'allocation pour le tableau de %d Cases.",capa);
-        exit(-1);
+        /* on alloue un tableau de "capa" pointeurs sur les cases */
+        p->support = (Case **) malloc(sizeof(Case)*capa);
+        if(p->support==0)
+        {
+            printf("Erreur d'allocation pour le tableau de %d Cases.",capa);
+            exit(-1);
+        }
+        else
+        {
+            #if COMMENTAIRES==1
+                printf("MALLOC : %d o\t%d\t(plateau)\n",sizeof(Case)*capa,(int)p->support);
+            #endif
+        }
     }
 }
 
@@ -407,7 +420,12 @@ void plateauTestament(Plateau* p)
 
     /*printf("Libérer le tableau de cases à l'adresse %u \n", (int) p->support);*/
     if(p->support!=0)
+    {
         free(p->support);
+        #if COMMENTAIRES==1
+            printf("FREE   : %d o\t%d\t(plateau)\n",sizeof(Case)*p->capacite,(int)p->support);
+        #endif
+    }
     p->support = 0;
     p->capacite = 0;
     p->places_libres = 0;
