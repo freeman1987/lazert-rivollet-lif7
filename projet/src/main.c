@@ -19,7 +19,12 @@
 int regression(void)
 {
     printf("\n\n-----------------------\n| TESTS DE REGRESSION |\n-----------------------\n| \n");
+
     caseTestRegression();
+
+    printf("| \n| ---------------------\n| \n");
+
+    plateauTestRegression();
 
     printf("| \n-----------------------\n\n");
     return 0;

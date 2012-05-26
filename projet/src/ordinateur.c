@@ -44,7 +44,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
             for(j=0;j<plateauGetCapacite(p);j++)
             {
                 ctmp=plateauGetCaseI(p,j);
-                if(plateauTestCaseProche(caseGetX(destination)-caseGetX(ctmp),caseGetY(destination)-caseGetY(ctmp))==1 && caseGetJoueur(ctmp)==joueur);
+                if(plateauTestCaseProche(caseGetX(destination)-caseGetX(ctmp),caseGetY(destination)-caseGetY(ctmp))==1 && caseGetJoueur(ctmp)==joueur)
                 {
                     destination=ctmp2;
                     source=ctmp;
@@ -52,22 +52,21 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                 }
             }
         }else{
-        if(afficher_txt==1) printf("Case %d (%d)\n",i,(int) ctmp);
+
 
         /* la case appartient au joueur */
         if(caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)==joueur)
         {
-            if(afficher_txt==1) printf("\tCase qui appartient au joueur.\n");
+            if(afficher_txt==1) printf("Case %d (%d) appartient au joueur.\n",i,(int) ctmp);
             for(j=0;j<plateauGetCapacite(p);j++)
             {
                 ctmp2 = plateauGetCaseI(p,j);
-                if(afficher_txt==1) printf("\t- case %d (%d)\n",j,(int) ctmp2);
 
                 /* on peut jouer ici */
                 if(caseGetLibre(ctmp2)==1)
                 {
                     dist = plateauTestCaseProche(caseGetX(ctmp)-caseGetX(ctmp2),caseGetY(ctmp)-caseGetY(ctmp2));
-
+                    if(afficher_txt==1 && dist!=0) printf("\t- case %d (%d) libre, dst : %d\n",j,(int) ctmp2,dist);
                     /* par défaut, on suppose que le premier pion jouable est la meilleure solution */
                     if((action==0 || source==0 || destination==0) && dist==1)
                     {
@@ -81,7 +80,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                     {
                         nbAVolerTmp = plateauNbPionsAVoler(p,ctmp2,joueur) + 1; /* +1 car on duplique */
                         pionAdversePerduTmp = nbAVolerTmp - 1;
-                        if(afficher_txt==1) printf("\t\ton peut s'y dupliquer et voler %d pion(s)\n",nbAVolerTmp);
+                        if(afficher_txt==1) printf("\t\ton peut s'y dupliquer et voler %d pion(s) - adv perd : %d - f: \n",nbAVolerTmp,pionAdversePerduTmp);
 
                         /* il y a plus de pions à prendre en jouant ici */
                         if(nbAVolerTmp>nbAVoler && niveau>compteur)
@@ -101,7 +100,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                     {
                         nbAVolerTmp = plateauNbPionsAVoler(p,ctmp2,joueur);
                         pionAdversePerduTmp = nbAVolerTmp;
-                        if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s)\n",nbAVolerTmp);
+                        if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s) - adv perd : %d\n",nbAVolerTmp,pionAdversePerduTmp);
 
                         /* il y a plus de pions à prendre en jouant ici*/
                         if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)||

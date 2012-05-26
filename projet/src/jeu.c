@@ -72,18 +72,18 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
 
 
-        FMOD_System_CreateSound(system, "../data/music/no.wav", FMOD_CREATESAMPLE, 0, &rire);
-        FMOD_System_CreateSound(system, "../data/music/clic.wav", FMOD_CREATESAMPLE, 0, &clic);
-        FMOD_System_CreateSound(system, "../data/music/boing.wav", FMOD_CREATESAMPLE, 0, &boing);
+        FMOD_System_CreateSound(system, SON_NO, FMOD_CREATESAMPLE, 0, &rire);
+        FMOD_System_CreateSound(system, SON_CLIC, FMOD_CREATESAMPLE, 0, &clic);
+        FMOD_System_CreateSound(system, SON_BOING, FMOD_CREATESAMPLE, 0, &boing);
         if(contreordinateur==1)
         {
-            FMOD_System_CreateSound(system, "../data/music/entrainent.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+            FMOD_System_CreateSound(system, SON_ENTRAINENT, FMOD_LOOP_NORMAL, 0, &jeuMus);
         }
         else
         {
-            FMOD_System_CreateSound(system, "../data/music/menu_suite.wav", FMOD_LOOP_NORMAL, 0, &jeuMus);
+            FMOD_System_CreateSound(system, SON_MENUSUITE, FMOD_LOOP_NORMAL, 0, &jeuMus);
         }
-        FMOD_System_CreateSound(system, "../data/music/bravo.wav", FMOD_CREATESAMPLE, 0, &bravo);
+        FMOD_System_CreateSound(system, SON_BRAVO, FMOD_CREATESAMPLE, 0, &bravo);
     #endif
 
 
@@ -143,16 +143,16 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     /* IMAGES POUR LES SCORES */
 
         /* la tableau pour les images des chiffres */
-        chiffres[0] = IMG_Load("../data/chiffres/0.png"); afficheVerifChargement(chiffres[0]);
-        chiffres[1] = IMG_Load("../data/chiffres/1.png"); afficheVerifChargement(chiffres[1]);
-        chiffres[2] = IMG_Load("../data/chiffres/2.png"); afficheVerifChargement(chiffres[2]);
-        chiffres[3] = IMG_Load("../data/chiffres/3.png"); afficheVerifChargement(chiffres[3]);
-        chiffres[4] = IMG_Load("../data/chiffres/4.png"); afficheVerifChargement(chiffres[4]);
-        chiffres[5] = IMG_Load("../data/chiffres/5.png"); afficheVerifChargement(chiffres[5]);
-        chiffres[6] = IMG_Load("../data/chiffres/6.png"); afficheVerifChargement(chiffres[6]);
-        chiffres[7] = IMG_Load("../data/chiffres/7.png"); afficheVerifChargement(chiffres[7]);
-        chiffres[8] = IMG_Load("../data/chiffres/8.png"); afficheVerifChargement(chiffres[8]);
-        chiffres[9] = IMG_Load("../data/chiffres/9.png"); afficheVerifChargement(chiffres[9]);
+        chiffres[0] = IMG_Load(CHIFFRE0); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = IMG_Load(CHIFFRE1); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = IMG_Load(CHIFFRE2); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = IMG_Load(CHIFFRE3); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = IMG_Load(CHIFFRE4); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = IMG_Load(CHIFFRE5); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = IMG_Load(CHIFFRE6); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = IMG_Load(CHIFFRE7); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = IMG_Load(CHIFFRE8); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = IMG_Load(CHIFFRE9); afficheVerifChargement(chiffres[9]);
 
         texte_scores = IMG_Load(TEXTE_SCORES);
         texte_niveau = IMG_Load(TEXTE_NIVEAU);
@@ -415,15 +415,12 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         afficheImageRect(xyPionAnim,pion2,screen);
                     else
                         afficheImageRect(xyPionAnim,pion1,screen);
-                    #if COMMENTAIRES==1
-                    printf("--- On bouge !\n");
-                    #endif
                 }
                 else
                 {
                     animation = 2;
                     #if COMMENTAIRES==1
-                    printf("--- Fini de bouger !\n");
+                    printf("--- fin animation !\n");
                     #endif
                 }
             }

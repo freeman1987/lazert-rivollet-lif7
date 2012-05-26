@@ -3,9 +3,6 @@
 
 void plateauInit(Plateau* p, int capa)
 {
-    #if COMMENTAIRES==1
-        printf("On initialise le plateau.\n");
-    #endif
     /* nombre de places au total sur la plateau */
     p->capacite = capa;
     p->places_libres = capa;
@@ -25,13 +22,13 @@ void plateauInit(Plateau* p, int capa)
         else
         {
             #if COMMENTAIRES==1
-                printf("MALLOC : %d o\t%d\t(plateau)\n",sizeof(Case)*capa,(int)p->support);
+                printf("| MALLOC : %d o\t%d\t(plateau)\n",sizeof(Case)*capa,(int)p->support);
             #endif
         }
     }
 }
 
-int plateauGetPlacesLibres(Plateau* p)
+int plateauGetPlacesLibres(const Plateau* p)
 {
     return p->places_libres;
 }
@@ -189,7 +186,7 @@ int plateauNbPossibilites(const Plateau* p,Case* c)
     y = caseGetY(c);
     retour = 0;
     #if COMMENTAIRES==1
-        printf("\tOn compte le nombre de possibilités pour le case %d.\n",(int) c);
+        printf("\n\tOn compte le nombre de possibilités pour le case %d.\n\t\t0",(int) c);
     #endif
 
     for(i=0;i<plateauGetCapacite(p);i++)
@@ -204,7 +201,7 @@ int plateauNbPossibilites(const Plateau* p,Case* c)
             retour++;
 
             #if COMMENTAIRES==1
-                printf("\t\tcase trouvée => %d\n",retour);
+                printf(", %d",retour);
             #endif
         }
     }
@@ -367,7 +364,7 @@ int plateauPeutJouer(const Plateau* p, int j)
             if(plateauNbPossibilites(p,ctemp)>=1)
             {
                 #if COMMENTAIRES==1
-                    printf("\tIl peut jouer à la case %d.\n",(int) ctemp);
+                    printf(" : il peut jouer (%d).\n",(int) ctemp);
                 #endif
                 return 1;
             }
@@ -375,7 +372,7 @@ int plateauPeutJouer(const Plateau* p, int j)
     }
 
     #if COMMENTAIRES==1
-        printf("\tAucune case trouvée...\n");
+        printf(" : aucune case trouvée...\n");
     #endif
 
     return 0;
@@ -423,7 +420,7 @@ void plateauTestament(Plateau* p)
     {
         free(p->support);
         #if COMMENTAIRES==1
-            printf("FREE   : %d o\t%d\t(plateau)\n",sizeof(Case)*p->capacite,(int)p->support);
+            printf("| FREE   : %d o\t%d\t(plateau)\n",sizeof(Case)*p->capacite,(int)p->support);
         #endif
     }
     p->support = 0;
@@ -434,7 +431,7 @@ void plateauTestament(Plateau* p)
     p->score_j2 = 0;
 }
 
-int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur)
+int plateauNbPionEnnemi(const Plateau* p, const Case* c, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
@@ -462,4 +459,74 @@ int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur)
     }
 
     return retour;
+}
+
+void plateauAfficheTout(const Plateau* p)
+{
+    printf("| [+] Contenu du plateau\n");
+    printf("| | --> capacite  = %d\n",p->capacite);
+    printf("| | --> pl libres = %d\n",p->places_libres);
+    printf("| | --> @ support = %d\n",(int) p->support);
+    printf("| | --> score j.1 = %d\n",p->score_j1);
+    printf("| | --> score j.2 = %d\n",p->score_j2);
+}
+
+void plateauTestRegression(void)
+{
+    Plateau p;
+    printf("| TEST DU MODULE PLATEAU\n");
+    plateauInit(&p,0);
+    if(plateauGetCapacite(&p)!=0)
+    {
+        printf("| [!] Erreur d'initialisation avec la capacité.\n");
+    }
+    else
+    {
+        printf("| [+] Plateau inisialisé à 0.\n");
+        plateauAfficheTout(&p);
+
+        plateauLireFichier(&p,PLATEAUTEST);
+        if(plateauGetCapacite(&p)<=0)
+        {
+            printf("| [!] Erreur de lecture.\n");
+        }
+        else
+        {
+            printf("| [+] Lecture du fichier "PLATEAUTEST".\n");
+            plateauAfficheTout(&p);
+
+            printf("| [ ] On affecte 3 cases à J1...\n");
+            plateauChangeJoueur(&p,plateauGetCaseI(&p,0),1);
+            plateauChangeJoueur(&p,plateauGetCaseI(&p,1),1);
+            plateauChangeJoueur(&p,plateauGetCaseI(&p,2),1);
+            plateauChangeJoueur(&p,plateauGetCaseI(&p,7),2);
+
+            if(plateauGetScore(&p,1)<3) /* si le joueur n'a pas au moins 3 cases, il y a un problème */
+            {
+                printf("| [!] Erreur de changement de score (.\n");
+            }
+            else
+            {
+                if(plateauPeutJouer(&p,1)==0 || plateauPeutJouer(&p,2))
+                {
+                    printf("| [!] Erreur, aucun joueur ne peut jouer.\n");
+                }
+                else
+                {
+                    printf("| [+] Les 2 joueurs peuvent jouer.\n");
+
+                    printf("| [+] Changement de score (%d).\n",plateauGetScore(&p,1));
+                    plateauTestament(&p);
+                    if(plateauGetCapacite(&p)!=0)
+                    {
+                        printf("| [!] Erreur de suppression.\n");
+                    }
+                    else
+                    {
+                        printf("| [+] Suppression du plateau.\n");
+                    }
+                }
+            }
+        }
+    }
 }

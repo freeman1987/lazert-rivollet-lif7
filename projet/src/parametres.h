@@ -5,6 +5,7 @@
 	Paramètres pour les images à charger.
 
 	@param TEXTURE : nom du dossier pour le style des images
+	@param CHREL : chemin relatif
 
 	@param PION_JOUEUR_1 : chemin vers l'image du pion 1
 	@param PION_JOUEUR_2 : chemin vers l'image du pion 2
@@ -45,9 +46,21 @@
 	@param PLATEAU1 : chemin vers le fichier du plateau 1
 	@param PLATEAU2 : chemin vers le fichier du plateau 2
 	@param PLATEAU3 : chemin vers le fichier du plateau 3
+	@param PLATEAUTEST : chemin vers le fichier pour les test de regression
 
 	@param BOUTONPLUS : chemin vers le fichier du bouton "+"
 	@param BOUTONMOINS : chemin vers le fichier du bouton "-"
+
+	@param CHIFFREx : chemin vers le fichier du chiffre x
+
+    @param  SON_NO Son : Son "Oh no !" si perdu
+    @param  SON_CLIC : Son pour le clic
+    @param  SON_BOING : Son pour un déplacement
+    @param  SON_ENTRAINENT : Musique de fond
+    @param  SON_MENUSUITE : Musique de fond
+    @param  SON_BRAVO : Son "Bravo" pour la fin du jeu
+    @param  SON_HELLO : Son "Hello" au lancement du menu
+    @param  SON_MENU : Musique de fond du menu
 
 	@param UNITE_X : unités pour les coordonnées horizontales
 	@param UNITE_Y : unités pour les coordonnées verticales
@@ -61,50 +74,71 @@
     Leur valeur permet d'aligner correctement les hexagones.
 */
     #define TEXTURE "style1"
+    #define CHREL "../"
 
-	#define PION_JOUEUR_1 "../data/"TEXTURE"/pion1.png"
-	#define PION_JOUEUR_2 "../data/"TEXTURE"/pion2.png"
+	#define PION_JOUEUR_1 CHREL"data/"TEXTURE"/pion1.png"
+	#define PION_JOUEUR_2 CHREL"data/"TEXTURE"/pion2.png"
 
-	#define CASE_VIDE "../data/"TEXTURE"/Case.png"
-	#define CASE_JOUABLE "../data/"TEXTURE"/Case2.png"
-	#define CASE_JOUABLE_3 "../data/"TEXTURE"/Case3.png"
-	#define CASE_JOUABLE_4 "../data/"TEXTURE"/Case4.png"
+	#define CASE_VIDE CHREL"data/"TEXTURE"/Case.png"
+	#define CASE_JOUABLE CHREL"data/"TEXTURE"/Case2.png"
+	#define CASE_JOUABLE_3 CHREL"data/"TEXTURE"/Case3.png"
+	#define CASE_JOUABLE_4 CHREL"data/"TEXTURE"/Case4.png"
 
-	#define LOGO_JOUEUR_1 "../data/"TEXTURE"/joueur1.png"
-	#define LOGO_JOUEUR_2 "../data/"TEXTURE"/joueur2.png"
+	#define LOGO_JOUEUR_1 CHREL"data/"TEXTURE"/joueur1.png"
+	#define LOGO_JOUEUR_2 CHREL"data/"TEXTURE"/joueur2.png"
 
-	#define TEXTE_SCORES "../data/images/texte_scores.png"
-	#define SABLIER "../data/images/sablier3.png"
+	#define TEXTE_SCORES CHREL"data/images/texte_scores.png"
+	#define SABLIER CHREL"data/images/sablier3.png"
 
-	#define BRAVO_0 "../data/images/bravo0.png"
-	#define BRAVO_1 "../data/images/bravo1.png"
-	#define BRAVO_2 "../data/images/bravo2.png"
-	#define BRAVO_3 "../data/images/bravo3.png"
+	#define BRAVO_0 CHREL"data/images/bravo0.png"
+	#define BRAVO_1 CHREL"data/images/bravo1.png"
+	#define BRAVO_2 CHREL"data/images/bravo2.png"
+	#define BRAVO_3 CHREL"data/images/bravo3.png"
 
-	#define VSJOUEUR "../data/images/1vs2.png"
-	#define VSORDI "../data/images/1vsordi.png"
-	#define SELECTIONMODE "../data/images/selectionmode.png"
+	#define VSJOUEUR CHREL"data/images/1vs2.png"
+	#define VSORDI CHREL"data/images/1vsordi.png"
+	#define SELECTIONMODE CHREL"data/images/selectionmode.png"
 
-	#define BOUTONJOUER "../data/images/boutonjouer.png"
-	#define BOUTONJOUERSURVOL "../data/images/boutonjouersurvol.png"
+	#define BOUTONJOUER CHREL"data/images/boutonjouer.png"
+	#define BOUTONJOUERSURVOL CHREL"data/images/boutonjouersurvol.png"
 
-	#define ICONE "../data/images/icone.ico"
+	#define ICONE CHREL"data/images/icone.ico"
 
-	#define TEXTE_NIVEAU "../data/images/niveau.png"
+	#define TEXTE_NIVEAU CHREL"data/images/niveau.png"
 
-	#define MENU "../data/images/menu.png"
-	#define PLATEAU1_MENU "../data/images/plateau1.png"
-	#define PLATEAU2_MENU "../data/images/plateau2.png"
-	#define PLATEAU3_MENU "../data/images/plateau3.png"
-	#define PLATEAU_SELECTIONNE_MENU "../data/images/plateauselectionne.png"
+	#define MENU CHREL"data/images/menu.png"
+	#define PLATEAU1_MENU CHREL"data/images/plateau1.png"
+	#define PLATEAU2_MENU CHREL"data/images/plateau2.png"
+	#define PLATEAU3_MENU CHREL"data/images/plateau3.png"
+	#define PLATEAU_SELECTIONNE_MENU CHREL"data/images/plateauselectionne.png"
 
+	#define PLATEAU1 CHREL"data/Plateau1.txt"
+	#define PLATEAU2 CHREL"data/Plateau2.txt"
+	#define PLATEAU3 CHREL"data/Plateau3.txt"
+	#define PLATEAUTEST CHREL"data/PlateauTest.txt"
 
-	#define PLATEAU1 "../data/Plateau1.txt"
-	#define PLATEAU2 "../data/Plateau2.txt"
-	#define PLATEAU3 "../data/Plateau3.txt"
+	#define BOUTONPLUS CHREL"data/images/plus.png"
+    #define BOUTONMOINS CHREL"data/images/moins.png"
 
-	#define BOUTONPLUS "../data/images/plus.png"
-    #define BOUTONMOINS "../data/images/moins.png"
+    #define CHIFFRE0 CHREL"data/chiffres/0.png"
+    #define CHIFFRE1 CHREL"data/chiffres/1.png"
+    #define CHIFFRE2 CHREL"data/chiffres/2.png"
+    #define CHIFFRE3 CHREL"data/chiffres/3.png"
+    #define CHIFFRE4 CHREL"data/chiffres/4.png"
+    #define CHIFFRE5 CHREL"data/chiffres/5.png"
+    #define CHIFFRE6 CHREL"data/chiffres/6.png"
+    #define CHIFFRE7 CHREL"data/chiffres/7.png"
+    #define CHIFFRE8 CHREL"data/chiffres/8.png"
+    #define CHIFFRE9 CHREL"data/chiffres/9.png"
+
+    #define SON_NO CHREL"data/music/no.wav"
+    #define SON_CLIC CHREL"data/music/clic.wav"
+    #define SON_BOING CHREL"data/music/boing.wav"
+    #define SON_ENTRAINENT CHREL"data/music/entrainent.wav"
+    #define SON_MENUSUITE CHREL"data/music/menu_suite.wav"
+    #define SON_BRAVO CHREL"data/music/bravo.wav"
+    #define SON_HELLO CHREL"data/music/hello.wav"
+    #define SON_MENU CHREL"data/music/menu.wav"
 
 	#define UNITE_X 54.5
 	#define UNITE_Y 29.5
