@@ -3,10 +3,4 @@ Dans la fonction ordinateur :
 	- détecter cb de pieces il laisse prenables en comptant les pieces qu'il me volerait
 	- combler un trou >= 3
 	
-SDL_FreeSurface ? finalement les remettres le prof préfère et puis ça ne coute rien
-
-Animation sur la page du menu
-
-Tests de régression
-
-Fichiers des SONS dans les variables parametres
+Jouer ordi <-> ordi (niv 7,+) : bug de segmentation après qq coups

@@ -105,7 +105,8 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                         /* il y a plus de pions à prendre en jouant ici*/
                         if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)
                             ||
-                           ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)))
+                           ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4))
+                           || destination==0)
                         {
                             source = ctmp;
                             destination = ctmp2;
