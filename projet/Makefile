@@ -6,6 +6,7 @@ LIB = lib/
 CC = gcc
 FLAGS = -Wall -pedantic -ansi -ggdb 
 LDFLAGS = -lm -lSDL -lSDL_image $(FLAGS) $(LIB)libfmodex.so
+LDFLAGS2 = -lm `sdl-config --libs` -lSDL -lSDL_image $(FLAGS) $(LIB)libfmodex.so
 
 OUT = hexxagon
 
@@ -13,7 +14,7 @@ all: $(BIN)$(OUT)
 
 
 $(BIN)$(OUT): $(OBJ)main.o $(OBJ)Plateau.o $(OBJ)Case.o $(OBJ)affiche.o $(OBJ)ordinateur.o $(OBJ)jeu.o $(OBJ)menuprincipal.o
-	$(CC) $(LDFLAGS) $+ -o $@
+	$(CC) $(LDFLAGS2) $+ -o $@
 
 $(OBJ)ordinateur.o: $(SRC)ordinateur.c $(SRC)ordinateur.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)ordinateur.c -o $@

@@ -91,3 +91,66 @@ void caseTestament(Case* c)
     }
 
 }
+
+void caseAfficheTout(Case* c)
+{
+    printf("[+] Contenu de la case :\n");
+    printf("  -> libre  = %d\n",c->libre);
+    printf("  -> joueur = %d\n",c->joueur);
+    printf("  -> pos x  = %d\n",c->posX);
+    printf("  -> pos y  = %d\n",c->posY);
+}
+
+void caseTestRegression(void)
+{
+    Case *pc2;
+    printf("-- Module case - test de régression --\n");
+    pc2 = 0;
+    pc2 = caseInit();
+    if(pc2==0)
+    {
+        printf("[!] Erreur d'initialisation !\n");
+    }
+    else
+    {
+        printf("[+] Inisialisation : OK (adresse %u)\n",(int) pc2);
+        caseAfficheTout(pc2);
+
+        caseSetJoueur(pc2,1);
+        if(caseGetJoueur(pc2)!=1 || caseGetLibre(pc2)!=0)
+        {
+            printf("[!] Erreur d'affectation !\n");
+        }
+        else
+        {
+            printf("[+] Affectation du joueur !\n");
+            caseAfficheTout(pc2);
+
+            caseSetPos(pc2,15,20);
+            if(caseGetX(pc2)!=15 || caseGetY(pc2)!=20 || caseTestCoordonnees(pc2,15,20)==0)
+            {
+                printf("[!] Erreur de positionnement de la case !\n");
+            }
+            else
+            {
+                printf("[+] Positionnement de la case à 15,20 !\n");
+                caseAfficheTout(pc2);
+
+                caseSetLibre(pc2,0);
+                if(caseGetLibre(pc2)!=0 || caseGetJoueur(pc2)!=0)
+                {
+                    printf("[!] Erreur de libération de la case !\n");
+                }
+                else
+                {
+                    printf("[+] Case libre !\n");
+                    caseAfficheTout(pc2);
+
+                    caseTestament(pc2);
+                    /*pc2 = 0;*/
+                    printf("[+] Case supprimée !\n");
+                }
+            }
+        }
+    }
+}

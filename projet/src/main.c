@@ -14,8 +14,9 @@
 
     @return int
 */
-int main (int argc, char *argv[])
+int main0(int argc, char *argv[])
 {
+
 
     int rejouer;
     int contreordinateur, niveauordinateur, plateau;
@@ -30,5 +31,11 @@ int main (int argc, char *argv[])
     {
         Jouer( contreordinateur, niveauordinateur, plateau);
     }
+    return 0;
+}
+
+int main(void)
+{
+    caseTestRegression();
     return 0;
 }

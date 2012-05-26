@@ -6,23 +6,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+    @struct Structure Case
+    @brief Structure pour les cases du plateau de jeu
+*/
 typedef struct
 {
-    /* savoir si la case est libre ou occupée par un joueur */
-	int libre;
-	/* numéro du joueur qui possède le pion */
-	int joueur;
-	/* coordonnées du pion sur le support */
-	int posX;
-	int posY;
+
+	int libre; /*!< savoir si la case est libre ou occupée par un joueur */
+	int joueur; /*!< numéro du joueur qui possède le pion */
+	int posX; /*!< coordonnée x du pion sur le support */
+	int posY; /*!< coordonnée y du pion sur le support */
 }Case;
 
 /**
     @brief alloue de la memoire dans le tas et retourne l'adresse
 
+    @param void
+
     @return pointeur sur case
 */
-Case* caseInit();
+Case* caseInit(void);
 
 
 /**
@@ -61,7 +65,7 @@ void caseSetLibre(Case* c, int val);
 /**
     @brief Retourne le joueur qui a un pion sur la case
 
-    @param c : pointeur sur case
+    @param [IN] c : pointeur sur case
 
     @return numero du joueur
 */
@@ -82,7 +86,7 @@ void caseSetJoueur(Case* c, int j);
 /**
     @brief Retourne la coordonnee X
 
-    @param c : pointeur sur case
+    @param [IN] c : pointeur sur case
 
     @return coordonnee entiere
 */
@@ -92,7 +96,7 @@ int caseGetX(const Case* c);
 /**
     @brief Retourne la coordonnee Y
 
-    @param c : pointeur sur case
+    @param [IN] c : pointeur sur case
 
     @return coordonnee entiere
 */
@@ -119,5 +123,15 @@ int caseTestCoordonnees(Case* c,int sx,int sy);
     @return void
 */
 void caseTestament(Case* c);
+
+
+/**
+    @brief Test de régression pour vérifier le module Case
+
+    @param void
+
+    @return void
+*/
+void caseTestRegression(void);
 
 #endif
