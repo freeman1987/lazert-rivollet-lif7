@@ -14,7 +14,7 @@ all: $(BIN)$(OUT)
 
 
 $(BIN)$(OUT): $(OBJ)main.o $(OBJ)Plateau.o $(OBJ)Case.o $(OBJ)affiche.o $(OBJ)ordinateur.o $(OBJ)jeu.o $(OBJ)menuprincipal.o
-	$(CC) $(LDFLAGS2) $+ -o $@
+	$(CC) $(LDFLAGS) $+ -o $@
 
 $(OBJ)ordinateur.o: $(SRC)ordinateur.c $(SRC)ordinateur.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)ordinateur.c -o $@
