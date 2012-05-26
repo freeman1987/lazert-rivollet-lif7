@@ -92,7 +92,7 @@ void caseTestament(Case* c)
 
 }
 
-void caseAfficheTout(Case* c)
+void caseAfficheTout(const Case* c)
 {
     printf("| [+] Contenu de la case :\n");
     printf("| | -> libre  = %d\n",c->libre);

@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /**
-    @struct Structure Case
+    @struct Case
     @brief Structure pour les cases du plateau de jeu
 */
 typedef struct

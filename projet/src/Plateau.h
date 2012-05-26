@@ -9,17 +9,17 @@
 #include <math.h>
 
 
+/**
+    @struct Plateau
+    @brief Structure du plateau de jeu
+*/
 typedef struct
 {
-	/* nombre de places libres sur le support */
-	int places_libres;
-	/* nombre de places au total sur le plateau (pour les boucles) */
-	int capacite;
-	/* tableau de pointeurs de cases pour le jeu */
-	Case** support;
-	/* scores des 2 joueurs */
-	int score_j1;
-	int score_j2;
+	int places_libres; /*!< nombre de places libres sur le support */
+	int capacite; /*!< nombre de places au total sur le plateau (pour les boucles) */
+	Case** support; /*!< tableau de pointeurs de cases pour le jeu */
+	int score_j1; /*!< scores du joueur 1 */
+	int score_j2; /*!< scores du joueur 2 */
 } Plateau;
 
 
@@ -50,7 +50,7 @@ void plateauChangeJoueur(Plateau* p, Case* c, int joueur);
 /**
     @brief Décrémente le nombre de place libre quand un joueur duplique sa pièce
 
-    @param [IN] p : pointeur sur plateau
+    @param [IN,OUT] p : pointeur sur plateau
 
     @return void
 */
@@ -64,7 +64,7 @@ void plateauDecrementePlacesLibres(Plateau* p);
 
     @return nombre de places
 */
-int plateauGetPlacesLibres(Plateau* p);
+int plateauGetPlacesLibres(const Plateau* p);
 
 
 /**
@@ -249,13 +249,25 @@ void plateauRemplirPions(Plateau* p, int j);
 void plateauTestament(Plateau* p);
 
 
-/** \brief
- *
- * \param
- * \param
- * \return
- *
- */
-int plateauNbPionEnnemi(Plateau* p,Case* c, int joueur);
+/**
+    @brief Compter le nombre de pions ennemis autour d'une case
+
+    @param [IN] p : Pointeur sur Plateau
+    @param [IN] c : Pointeur sur Case
+    @param [IN] joueur : numéro du joueur à ne pas prendre en compte
+
+    @return int
+*/
+int plateauNbPionEnnemi(const Plateau* p, const Case* c, int joueur);
+
+
+/**
+    @brief Tests de régression du module Plateau
+
+    @param void
+
+    @return void
+*/
+void plateauTestRegression(void);
 
 #endif

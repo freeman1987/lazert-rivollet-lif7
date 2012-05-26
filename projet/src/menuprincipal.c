@@ -36,9 +36,9 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_SOUND *menuMus = NULL;
         FMOD_System_Create(&system);
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-        FMOD_System_CreateSound(system, "../data/music/hello.wav", FMOD_CREATESAMPLE, 0, &hello);
+        FMOD_System_CreateSound(system, SON_HELLO, FMOD_CREATESAMPLE, 0, &hello);
 
-        FMOD_System_CreateSound(system, "../data/music/menu.wav", FMOD_LOOP_NORMAL, 0, &menuMus);
+        FMOD_System_CreateSound(system, SON_MENU, FMOD_LOOP_NORMAL, 0, &menuMus);
 
 
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
@@ -133,16 +133,16 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionBoutonJouer.h = imageBoutonJouer->h;
         positionBoutonJouer.w = imageBoutonJouer->w;
 
-        chiffres[0] = IMG_Load("../data/chiffres/0.png"); afficheVerifChargement(chiffres[0]);
-        chiffres[1] = IMG_Load("../data/chiffres/1.png"); afficheVerifChargement(chiffres[1]);
-        chiffres[2] = IMG_Load("../data/chiffres/2.png"); afficheVerifChargement(chiffres[2]);
-        chiffres[3] = IMG_Load("../data/chiffres/3.png"); afficheVerifChargement(chiffres[3]);
-        chiffres[4] = IMG_Load("../data/chiffres/4.png"); afficheVerifChargement(chiffres[4]);
-        chiffres[5] = IMG_Load("../data/chiffres/5.png"); afficheVerifChargement(chiffres[5]);
-        chiffres[6] = IMG_Load("../data/chiffres/6.png"); afficheVerifChargement(chiffres[6]);
-        chiffres[7] = IMG_Load("../data/chiffres/7.png"); afficheVerifChargement(chiffres[7]);
-        chiffres[8] = IMG_Load("../data/chiffres/8.png"); afficheVerifChargement(chiffres[8]);
-        chiffres[9] = IMG_Load("../data/chiffres/9.png"); afficheVerifChargement(chiffres[9]);
+        chiffres[0] = IMG_Load(CHIFFRE0); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = IMG_Load(CHIFFRE1); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = IMG_Load(CHIFFRE2); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = IMG_Load(CHIFFRE3); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = IMG_Load(CHIFFRE4); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = IMG_Load(CHIFFRE5); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = IMG_Load(CHIFFRE6); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = IMG_Load(CHIFFRE7); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = IMG_Load(CHIFFRE8); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = IMG_Load(CHIFFRE9); afficheVerifChargement(chiffres[9]);
         positionNiveau.x = 370;
         positionNiveau.y = screen->h - 40;
 
