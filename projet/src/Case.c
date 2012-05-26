@@ -13,7 +13,7 @@ Case* caseInit()
     else
     {
         #if COMMENTAIRES==1
-            printf("MALLOC : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
+            printf("| MALLOC : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
         #endif
     }
     c->libre = 1;
@@ -85,7 +85,7 @@ void caseTestament(Case* c)
     {
         free(c);
         #if COMMENTAIRES==1
-            printf("FREE   : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
+            printf("| FREE   : %d o\t%d\t(case)\n",sizeof(Case),(int)c);
         #endif
         c = 0;
     }
@@ -94,61 +94,61 @@ void caseTestament(Case* c)
 
 void caseAfficheTout(Case* c)
 {
-    printf("[+] Contenu de la case :\n");
-    printf("  -> libre  = %d\n",c->libre);
-    printf("  -> joueur = %d\n",c->joueur);
-    printf("  -> pos x  = %d\n",c->posX);
-    printf("  -> pos y  = %d\n",c->posY);
+    printf("| [+] Contenu de la case :\n");
+    printf("| | -> libre  = %d\n",c->libre);
+    printf("| | -> joueur = %d\n",c->joueur);
+    printf("| | -> pos x  = %d\n",c->posX);
+    printf("| | -> pos y  = %d\n",c->posY);
 }
 
 void caseTestRegression(void)
 {
     Case *pc2;
-    printf("-- Module case - test de régression --\n");
+    printf("| TEST DU MODULE CASE\n");
     pc2 = 0;
     pc2 = caseInit();
     if(pc2==0)
     {
-        printf("[!] Erreur d'initialisation !\n");
+        printf("| [!] Erreur d'initialisation !\n");
     }
     else
     {
-        printf("[+] Inisialisation : OK (adresse %u)\n",(int) pc2);
+        printf("| [+] Inisialisation : OK (adresse %u)\n",(int) pc2);
         caseAfficheTout(pc2);
 
         caseSetJoueur(pc2,1);
         if(caseGetJoueur(pc2)!=1 || caseGetLibre(pc2)!=0)
         {
-            printf("[!] Erreur d'affectation !\n");
+            printf("| [!] Erreur d'affectation !\n");
         }
         else
         {
-            printf("[+] Affectation du joueur !\n");
+            printf("| [+] Affectation du joueur !\n");
             caseAfficheTout(pc2);
 
             caseSetPos(pc2,15,20);
             if(caseGetX(pc2)!=15 || caseGetY(pc2)!=20 || caseTestCoordonnees(pc2,15,20)==0)
             {
-                printf("[!] Erreur de positionnement de la case !\n");
+                printf("| [!] Erreur de positionnement de la case !\n");
             }
             else
             {
-                printf("[+] Positionnement de la case à 15,20 !\n");
+                printf("| [+] Positionnement de la case à 15,20 !\n");
                 caseAfficheTout(pc2);
 
                 caseSetLibre(pc2,0);
                 if(caseGetLibre(pc2)!=0 || caseGetJoueur(pc2)!=0)
                 {
-                    printf("[!] Erreur de libération de la case !\n");
+                    printf("| [!] Erreur de libération de la case !\n");
                 }
                 else
                 {
-                    printf("[+] Case libre !\n");
+                    printf("| [+] Case libre !\n");
                     caseAfficheTout(pc2);
 
                     caseTestament(pc2);
                     /*pc2 = 0;*/
-                    printf("[+] Case supprimée !\n");
+                    printf("| [+] Case supprimée !\n");
                 }
             }
         }
