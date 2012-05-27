@@ -19,7 +19,7 @@ $(BIN)$(OUT): $(OBJ)main.o $(OBJ)Plateau.o $(OBJ)Case.o $(OBJ)affiche.o $(OBJ)or
 $(OBJ)ordinateur.o: $(SRC)ordinateur.c $(SRC)ordinateur.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)ordinateur.c -o $@
 
-$(OBJ)main.o: $(SRC)main.c $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
+$(OBJ)main.o: $(SRC)main.c $(SRC)main.h $(SRC)Plateau.h $(SRC)Case.h $(SRC)affiche.h $(SRC)parametres.h
 	$(CC) -c $(FLAGS) $(SRC)main.c -o $@
 
 $(OBJ)Plateau.o: $(SRC)Plateau.h $(SRC)Case.h $(SRC)parametres.h
