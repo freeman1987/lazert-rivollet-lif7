@@ -11,7 +11,7 @@
 
 /**
     @struct Plateau
-    @brief Structure du plateau de jeu
+    @brief <b>Structure du plateau de jeu</b>
 */
 typedef struct
 {

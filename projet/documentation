@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Appel avec : $ sh documentation
+# ou pour regénérer : $ sh documentation actualiser
+
+echo "Recherche de l'index de la documentation dans doc/html/ ...\n"
+
+if [ ! -e "doc/html/index.html" ]; then
+    echo "Documentation introuvable.\n"
+	echo " -> Génération de la documentation\n"
+	doxygen doc/doxyfile
+	clear
+else
+    if [ $# = 1 ]; then
+        if [ $1 = "actualiser" ]; then
+            echo "Documentation trouvée.\n"
+            echo " -> Actualisation de la documentation.\n"
+	        doxygen doc/doxyfile
+	        clear
+	    fi;
+    fi;
+fi;
+
+echo "Ouverture de la documentation avec Firefox...\n"
+firefox doc/html/index.html
+
