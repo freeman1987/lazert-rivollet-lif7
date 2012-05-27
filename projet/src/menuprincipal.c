@@ -243,6 +243,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         (*niveauordinateur)--;
                     }
+
+                    if(event.key.keysym.sym == SDLK_KP_ENTER || event.key.keysym.sym == SDLK_RETURN)
+                    {
+                        done = 1;
+                    }
                 }
                 break;
 
