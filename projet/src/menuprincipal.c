@@ -1,35 +1,35 @@
 #include "menuprincipal.h"
-#include "api/inc/fmod.h"
-
 
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
-
+    /* ecran de jeu */
     SDL_Surface* screen;
+    /* images du menu */
     SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
     SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
+    /* images animees */
     SDL_Surface *pieceAnimeeRubis, *pieceAnimeePerle;
+
+    /* positions des images */
+    SDL_Rect positionPlateau[3];
+    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
+    SDL_Surface *chiffres[10], *texte_niveau; int ich;
     SDL_Rect positionRubis, positionPerle, VecteurPerle, VecteurRubis;
 
-    SDL_Rect positionPlateau[3];
-    SDL_Surface *chiffres[10], *texte_niveau; int ich;
-    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
+    /* evenements SDL */
     SDL_Event event;
 
     /* variables pour contenir les coordonnées de la souris */
     int sourisx;
     int sourisy;
 
-    int retour; /* par défaut, on joue */
-
-
+    int retour;
 
     /* boucle principale du programme */
     int done;
 
     #if SONS==1
         FMOD_SYSTEM *system;
-
 
         FMOD_BOOL *isplaying;
         FMOD_SOUND *hello = NULL;
@@ -39,7 +39,6 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_System_CreateSound(system, SON_HELLO, FMOD_CREATESAMPLE, 0, &hello);
 
         FMOD_System_CreateSound(system, SON_MENU, FMOD_LOOP_NORMAL, 0, &menuMus);
-
 
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
@@ -367,4 +366,13 @@ int sourisDansRectangle(int x, int y, SDL_Rect rectangle)
         return 1;
     else
         return 0;
+}
+
+void afficheVerifChargementSon(FMOD_SOUND* son)
+{
+    if(son==0)
+    {
+        printf("[!] Erreur de chargement du son.\n");
+        exit(-1);
+    }
 }
