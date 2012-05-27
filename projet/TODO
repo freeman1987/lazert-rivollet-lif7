@@ -1,6 +1,3 @@
 Dans la fonction ordinateur :
 	- détecter si on est à deux cases de l'adversaire : dupliquer au mieux au lieu d'y aller (et de mourir)
 	- détecter cb de pieces il laisse prenables en comptant les pieces qu'il me volerait
-	- combler un trou >= 3
-	
-Jouer ordi <-> ordi (niv 7,+) : bug de segmentation après qq coups
