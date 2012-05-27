@@ -14,3 +14,7 @@ $	sh jouer
 
 Pour nettoyer les fichiers
 $	make clean
+
+Pour afficher la documentation
+$   sh documentation
+(ajouter le paramètre "actualiser" pour regénérer toute la documentation)
