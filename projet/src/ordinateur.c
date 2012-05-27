@@ -40,9 +40,13 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
 
         if(afficher_txt==1 && 0) printf("Case %d : @ %d \n",i,(int) ctmp);
 
-        /* s'il on peut voler plus de 4 pions */
-        if(plateauNbPionsAVoler(p,ctmp,joueur)>=4 && caseGetLibre(ctmp)==1)
-        {
+
+        if(
+            (plateauNbPionsAVoler(p,ctmp,joueur)>=4 /* on peut voler plus de 4 pions adverses */
+                ||
+            plateauNbPionsAVoler(p,ctmp,(joueur%2)+1)>=4) /* on risque de s'en faire voler plus de 4 */
+           && caseGetLibre(ctmp)==1) /* la case est libre */
+        { /* alors on cherche un pion qui peut venir jouer ici */
 
             if(afficher_txt==1) printf("Il y a %d pions à voler en jouant ici (i=%d : @ %d).\n",plateauNbPionsAVoler(p,ctmp,joueur),i,(int) ctmp);
 
