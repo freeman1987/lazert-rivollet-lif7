@@ -10,9 +10,11 @@
 #include "affiche.h"
 #include "ordinateur.h"
 
-#include "api/inc/fmod.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+
+#include "api/inc/fmod.h"
+#include "api/inc/fmod_errors.h"
 
 /**
     @brief Cette fonction lance le jeu

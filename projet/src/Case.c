@@ -7,7 +7,7 @@ Case* caseInit()
     c = (Case *) malloc(sizeof(Case));
     if(c==0)
     {
-        printf("Erreur d'allocation pour une case.");
+        printf("[!] Erreur d'allocation pour une case.");
         exit(1);
     }
     else
@@ -32,7 +32,7 @@ void caseSetPos(Case* c, int x, int y)
 {
     if(x<0 || y<0)
     {
-        printf("Erreur pour fixer les coordonnes de la case :\n\tles valeurs ne sont pas positives.\n");
+        printf("[!] Erreur pour fixer les coordonnes de la case :\n\tles valeurs ne sont pas positives.\n");
         exit(1);
     }
 

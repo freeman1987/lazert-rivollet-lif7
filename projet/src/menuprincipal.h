@@ -11,6 +11,9 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
+#include "api/inc/fmod.h"
+#include "api/inc/fmod_errors.h"
+
 /**
     @brief Affiche le menu principal. Les paramètres doivent être initialisés
     @param [IN,OUT] contreordinateur : jouer contre l'ordinateur (1) ou un joueur (0)
@@ -30,5 +33,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau);
     @return int (booléen)
 */
 int sourisDansRectangle(int x, int y, SDL_Rect rectangle);
+
+
+void afficheVerifChargementSon(FMOD_SOUND* son);
 
 #endif

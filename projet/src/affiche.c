@@ -151,7 +151,7 @@ void afficheVerifChargement(SDL_Surface* img)
 {
     if(img==0)
     {
-        printf("Erreur de chargement de l'image : %s",SDL_GetError());
+        printf("[!] Erreur de chargement de l'image : %s\n",SDL_GetError());
         exit(-1);
     }
 }
