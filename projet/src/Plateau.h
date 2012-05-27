@@ -15,11 +15,11 @@
 */
 typedef struct
 {
-	int places_libres; /*!< nombre de places libres sur le support */
-	int capacite; /*!< nombre de places au total sur le plateau (pour les boucles) */
-	Case** support; /*!< tableau de pointeurs de cases pour le jeu */
-	int score_j1; /*!< scores du joueur 1 */
-	int score_j2; /*!< scores du joueur 2 */
+	int places_libres; /*!< <b>Nombre de places libres sur le support */
+	int capacite; /*!< <b>Nombre de places au total sur le plateau</b> (pour les boucles) */
+	Case** support; /*!< <b>Tableau de pointeurs de cases pour le jeu</b> */
+	int score_j1; /*!< <b>Score du joueur 1</b> */
+	int score_j2; /*!< <b>Score du joueur 2</b> */
 } Plateau;
 
 
