@@ -94,7 +94,7 @@
     #define CHIFFRE4 CHREL"data/chiffres/4.png"
 /** <b>Chemin vers l'image du chiffre 5</b> */
     #define CHIFFRE5 CHREL"data/chiffres/5.png"
-/** <b>Chemin vers l'image du chiffre 6*/
+/** <b>Chemin vers l'image du chiffre 6</b> */
     #define CHIFFRE6 CHREL"data/chiffres/6.png"
 /** <b>Chemin vers l'image du chiffre 7</b> */
     #define CHIFFRE7 CHREL"data/chiffres/7.png"

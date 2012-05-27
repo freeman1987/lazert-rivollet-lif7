@@ -10,6 +10,9 @@
 
 /**
     @mainpage Jeu Hexxagon - LIF7
+
+    <img src="http://code.google.com/p/lazert-rivollet-lif7/logo?cct=1334641814" alt="" border="0" style="float: right;" />
+
     @section Informations
 
     @author Mickaël Rivollet (mickael.rivollet@atu.univ-lyon1.fr - P1005202)
@@ -33,28 +36,28 @@
 
     @section Organisation
 
-    <b>Fichiers</b><br /><br />
+    <b>Fichiers</b><br />
 
     Les fichiers source se trouvent dans le répertoire src/<br />
     Les images, plateaux et sons dans le répertoire data/<br />
     Les librairies dans lib/ et bin/lib/ (pour la compilation et le jeu)
 
-   <br /><br /><b>Nommage des sources</b><br /><br />
+   <br /><br /><b>Nommage des sources</b><br />
 
     Les fichiers des modules avec structure ont le même nom que la structure (avec majuscule)<br />
     Les autres commencent par une lettre minuscule.<br />
     Les fichiers *.h contient la liste des déclarations des fonctions publiques avec leur documentation.<br />
     Les fonctions sont implémentées dans les fichiers *.c.
 
-    <br /><br /><b>Nommage des fonctions de modules</b><br /><br />
+    <br /><br /><b>Nommage des fonctions de modules</b><br />
 
     Les fonctions du modules commencent toutes par le nom du module avec une lettre miniscule au début.<br />
 
-    <br /><br /><b>Nommage des fonctions et des variables</b><br /><br />
+    <br /><br /><b>Nommage des fonctions et des variables</b><br />
 
     Les variables commencent généralement par une minuscule et chaque nouveau mot commence par une majuscule.
 
-    <br /><br /><b>Variables de pré-processeur</b><br /><br />
+    <br /><br /><b>Variables de pré-processeur</b><br />
 
     Elles sont écrites en lettres majuscules et les mots sont séparées par _<br />
     Les variables d'inclusion des fichiers commencent par le symbole _

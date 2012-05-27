@@ -13,9 +13,9 @@
     Cette fonction analyse tout le plateau.<br />
     Le paramètre niveau permet de restreindre les améliorations au fur et à mesure de la boucle.
 
-    @param [IN,OUT] p : Pointeur sur Plateau
-    @param [IN] joueur : Numéro du joueur
-    @param [IN] niv : (1-9) nombre de changements d'avis (plus c'est bas, moins l'analyse est bonne)
+    @param [in,out] p : Pointeur sur Plateau
+    @param [in] joueur : Numéro du joueur
+    @param [in] niv : (1-9) nombre de changements d'avis (plus c'est bas, moins l'analyse est bonne)
 
     @return rien
 */

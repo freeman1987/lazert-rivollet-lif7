@@ -15,7 +15,7 @@
 */
 typedef struct
 {
-	int places_libres; /*!< <b>Nombre de places libres sur le support */
+	int places_libres; /*!< <b>Nombre de places libres sur le support</b> */
 	int capacite; /*!< <b>Nombre de places au total sur le plateau</b> (pour les boucles) */
 	Case** support; /*!< <b>Tableau de pointeurs de cases pour le jeu</b> */
 	int score_j1; /*!< <b>Score du joueur 1</b> */
@@ -28,8 +28,8 @@ typedef struct
     Initialise les valeurs du plateau à 0 sauf la capacité (en paramètre).<br />
     Alloue dans le tas suffisemment d'espace pour les cases du plateau.
 
-    @param [IN,OUT] p : pointeur sur le plateau
-    @param [IN] capacite : nombre max de cases sur le plateau
+    @param [in,out] p : pointeur sur le plateau
+    @param [in] capacite : nombre max de cases sur le plateau
 
     @return rien
 */
@@ -40,9 +40,9 @@ void plateauInit(Plateau* p, int capacite);
     @brief <b>Definit quel joueur a une piece sur la case.</b><br />
     On modifie aussi les scores des joueurs.
 
-    @param [IN] p : pointeur sur le plateau
-    @param [IN,OUT] c : pointeur sur la case à modifier
-    @param [IN] joueur : numero 1 ou 2 du joueur. Mettre 0 rendre la case libre
+    @param [in] p : pointeur sur le plateau
+    @param [in,out] c : pointeur sur la case à modifier
+    @param [in] joueur : numero 1 ou 2 du joueur. Mettre 0 rendre la case libre
 
     @return rien
 */
@@ -53,7 +53,7 @@ void plateauChangeJoueur(Plateau* p, Case* c, int joueur);
     @brief <b>Décrémente le nombre de place libre</b><br />
     quand un joueur duplique sa pièce.
 
-    @param [IN,OUT] p : pointeur sur plateau
+    @param [in,out] p : pointeur sur plateau
 
     @return void
 */
@@ -64,7 +64,7 @@ void plateauDecrementePlacesLibres(Plateau* p);
     @brief <b>Retourne le nombre de places libres sur le plateau.</b><br />
     Afin de savoir s'il y a encore de la place pour jouer.
 
-    @param [IN] p : pointeur sur plateau
+    @param [in] p : pointeur sur plateau
 
     @return nombre de places
 */
@@ -75,7 +75,7 @@ int plateauGetPlacesLibres(const Plateau* p);
     @brief <b>Retourner le nombre de cases.</b><br />
     Utile principalement pour les boucles de parcours du plateau.
 
-    @param [IN] p : Pointeur sur Plateau
+    @param [in] p : Pointeur sur Plateau
 
     @return entier
 */
@@ -86,8 +86,8 @@ int plateauGetCapacite(const Plateau* p);
     @brief <b>Retourner la case i du plateau.</b><br />
     Utile pour les boucles de parcours du plateau.
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] i : 0 <= entier < capacité
+    @param [in] p : Pointeur sur Plateau
+    @param [in] i : 0 <= entier < capacité
 
     @return Pointeur sur Case (ou nul si i est incorrect)
 */
@@ -99,10 +99,10 @@ Case* plateauGetCaseI(const Plateau* p, int i);
     Pour savoir si l'utilisateur à cliqué dans une case.<br />
     <em>Méthode assez précise.</em>
 
-    @param [IN] sx : position x de la souris
-    @param [IN] sy : position y de la souris
-    @param [IN] c : Case à tester
-    @param [IN] dim : taille d'une case (hauteur ou largeur)
+    @param [in] sx : position x de la souris
+    @param [in] sy : position y de la souris
+    @param [in] c : Case à tester
+    @param [in] dim : taille d'une case (hauteur ou largeur)
 
     @return booléen (0 ou 1)
 */
@@ -113,10 +113,10 @@ int plateauSourisDansCase(int sx, int sy, const Case* c, int dim);
     @brief <b>Détermine quelle case est survollée.</b><br />
     Pointeur sur la case survollée si une case est survollée.
 
-    @param [IN] sx : Position x de la souris
-    @param [IN] sy : Position y de la souris
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] dim : taille d'une case (hauteur ou largeur)
+    @param [in] sx : Position x de la souris
+    @param [in] sy : Position y de la souris
+    @param [in] p : Pointeur sur Plateau
+    @param [in] dim : taille d'une case (hauteur ou largeur)
 
     @return pointeur sur Case, ou 0 si aucune survollée
 */
@@ -133,8 +133,8 @@ Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim);
     - y : coordonnée y de la case<br />
     - j : joueur sur la case (0 pour aucun, 1 ou 2 sinon)
 
-    @param [IN,OUT] p : pointeur sur le plateau a remplir
-    @param [IN] filename : nom du fichier texte à charger
+    @param [in,out] p : pointeur sur le plateau a remplir
+    @param [in] filename : nom du fichier texte à charger
 
     @return rien
 */
@@ -145,8 +145,8 @@ void plateauLireFichier(Plateau* p, const char filename[]);
     @brief <b>Nombre de possibilités de déplacement pour un pion.</b><br />
     Possibilités de déplacement ou de duplication dans les cases aux alentours.
 
-    @param [IN] p : pointeur sur Plateau
-    @param [IN] c : pointeur sur case
+    @param [in] p : pointeur sur Plateau
+    @param [in] c : pointeur sur case
 
     @return rien
 */
@@ -163,8 +163,8 @@ int plateauNbPossibilites(const Plateau* p,Case* c);
     Les valeurs x et y correspondent aux différences<br />
     entre les coordonnées des cases x = x1 - x0 et y = y1 - y0
 
-    @param [IN] x : position x de la case
-    @param [IN] y : position y de la case
+    @param [in] x : position x de la case
+    @param [in] y : position y de la case
 
     @return entier : 1 si elle est à distance = 1, 2 si elle est à distance = 2, 0 sinon
  */
@@ -175,8 +175,8 @@ int plateauTestCaseProche(int x,int y);
     @brief <b>Transforme les pièces situées autour de la case où le joueur joue.</b><br />
     Change les pions du joueur adverse en ceux de celui qui vient de jouer
 
-    @param [IN] p : pointeur sur Plateau
-    @param [IN] c : pointeur sur une Case
+    @param [in] p : pointeur sur Plateau
+    @param [in] c : pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return rien
@@ -188,8 +188,8 @@ void plateauVolerPions(Plateau* p, Case* c, int joueur);
     @brief <b>Compte le nombre de pions adverses à voler autour d'une case.</b><br />
     Pour savoir combien de pions adverses on peut voler en joueant dans la Case.
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] c : Pointeur sur une Case
+    @param [in] p : Pointeur sur Plateau
+    @param [in] c : Pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return entier
@@ -201,8 +201,8 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur);
     Pour savoir combien de pions adverses on peut voler en joueant dans la Case.
 
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] c : Pointeur sur une Case
+    @param [in] p : Pointeur sur Plateau
+    @param [in] c : Pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return entier
@@ -214,8 +214,8 @@ int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur);
     @brief <b>Compte le nombre de pions que l'on peut perdre en partant.</b><br />
     Détermine le nombre de pions à perdre s'il on enlèce son pion de la Case.
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] c : Pointeur sur une Case
+    @param [in] p : Pointeur sur Plateau
+    @param [in] c : Pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return entier
@@ -226,9 +226,9 @@ int plateauNbPionsPerdu(Plateau* p, Case* c, int joueur);
 /**
     @brief <b>Changer le score d'un joueur.</b>
 
-    @param [IN,OUT] p : pointeur sur un plateau
-    @param [IN] joueur : numéro du joueur
-    @param [IN] dec : valeur à ajouter au score (négative pour diminuer le score)
+    @param [in,out] p : pointeur sur un plateau
+    @param [in] joueur : numéro du joueur
+    @param [in] dec : valeur à ajouter au score (négative pour diminuer le score)
 
     @return rien
 */
@@ -239,8 +239,8 @@ void changeScoreJoueur(Plateau* p, int joueur, int dec);
     @brief <b>Retourner le score d'un joueur.</b><br />
     Pour connaitre le score de l'un des joueurs
 
-    @param [IN] p : pointeur sur Plateau
-    @param [IN] j : numéro du joueur
+    @param [in] p : pointeur sur Plateau
+    @param [in] j : numéro du joueur
 
     @return entier positif
 */
@@ -251,8 +251,8 @@ int plateauGetScore(const Plateau* p, int j);
     @brief <b>Déterminer si un joueur peut déplacer un de ses pions.</b><br />
     Permet de savoir si un joueur est bloqué, auquel cas la partie doit s'arrêter.
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] j : numéro du joueur
+    @param [in] p : Pointeur sur Plateau
+    @param [in] j : numéro du joueur
 
     @return booléen (0 ou 1)
 */
@@ -263,8 +263,8 @@ int plateauPeutJouer(const Plateau* p, int j);
     @brief <b>Remplir toutes les cases libres avec un pion.</b><br />
     Si un joueur est bloqué, on remplit les cases libres du plateau avec les pions adverses.
 
-    @param [IN,OUT] p : Pointeur sur Plateau
-    @param [IN] j : numéro du joueur
+    @param [in,out] p : Pointeur sur Plateau
+    @param [in] j : numéro du joueur
 
     @return rien
 */
@@ -276,7 +276,7 @@ void plateauRemplirPions(Plateau* p, int j);
     Libérer la mémoire proprement, détruitre toutes les cases.<br />
     Fixer la capacité à 0.
 
-    @param [IN,OUT] p : Pointeur sur Plateau
+    @param [in,out] p : Pointeur sur Plateau
 
     @return rien
 */
@@ -287,9 +287,9 @@ void plateauTestament(Plateau* p);
     @brief <b>Compter le nombre de pions ennemis autour d'une case</b><br />
     Compter combien d'ennemis se trouvent autour de la Case.
 
-    @param [IN] p : Pointeur sur Plateau
-    @param [IN] c : Pointeur sur Case
-    @param [IN] joueur : numéro du joueur à ne pas prendre en compte
+    @param [in] p : Pointeur sur Plateau
+    @param [in] c : Pointeur sur Case
+    @param [in] joueur : numéro du joueur à ne pas prendre en compte
 
     @return entier
 */

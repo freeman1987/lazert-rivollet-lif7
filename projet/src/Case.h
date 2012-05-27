@@ -32,9 +32,9 @@ Case* caseInit(void);
     @brief <b>Déterminer une position x,y a une case.</b><br />
     Fixer les coordonnées d'une case.
 
-    @param [IN,OUT] c : pointeur sur la case à modifier
-    @param [IN] x : position horizontale
-    @param [IN] y : position verticale
+    @param [in,out] c : pointeur sur la case à modifier
+    @param [in] x : position horizontale
+    @param [in] y : position verticale
 
     @return rien
 */
@@ -45,7 +45,7 @@ void caseSetPos(Case* c, int x, int y);
     @brief <b>Savoir si une case est libre.</b><br />
     Savoir si une case est libre ou occupée par un joueur.
 
-    @param [IN] case : pointeur sur case
+    @param [in] c : pointeur sur case
 
     @return 1 si la case est libre et 0 sinon
 */
@@ -57,8 +57,8 @@ int caseGetLibre(const Case* c);
     Si val vaut 0, la case devient libre.<br />
     Dans tous les cas, le pion du joueur est effacé.
 
-    @param [IN,OUT] c : pointeur sur la case a modifier
-    @param [IN] val : booléen : libre ou non
+    @param [in,out] c : pointeur sur la case a modifier
+    @param [in] val : booléen : libre ou non
 
     @return rien
 */
@@ -68,7 +68,7 @@ void caseSetLibre(Case* c, int val);
 /**
     @brief <b>Retourne le joueur qui a un pion sur la case.</b>
 
-    @param [IN] c : pointeur sur case
+    @param [in] c : pointeur sur case
 
     @return numero du joueur
 */
@@ -79,8 +79,8 @@ int caseGetJoueur(const Case* c);
     @brief <b>Modifier le joueur qui a un pion sur la case</b><br />
     Changer la valeur du joueur qui est sur la case.
 
-    @param [IN,OUT] c : pointeur sur case
-    @param [IN] j : numéro du joueur
+    @param [in,out] c : pointeur sur case
+    @param [in] j : numéro du joueur
 
     @return void
 */
@@ -91,7 +91,7 @@ void caseSetJoueur(Case* c, int j);
     @brief <b>Retourne la coordonnée x.</b><br />
     Abscisse la case sur la plateau.
 
-    @param [IN] c : pointeur sur case
+    @param [in] c : pointeur sur case
 
     @return coordonnée entiere
 */
@@ -102,7 +102,7 @@ int caseGetX(const Case* c);
     @brief <b>Retourne la coordonnée y.</b><br />
     Ordonnée de la case.
 
-    @param [IN] c : pointeur sur case
+    @param [in] c : pointeur sur case
 
     @return coordonnee entiere
 */
@@ -113,9 +113,9 @@ int caseGetY(const Case* c);
     @brief <b>Tester les coordonnées</b><br />
     Comparer les coordonnées en paramètres avec celles de la case.
 
-    @param [IN] c : Pointeur sur Case
-    @param [IN] sx : coordonnée horizontale
-    @param [IN] sy : coordonnée verticale
+    @param [in] c : Pointeur sur Case
+    @param [in] sx : coordonnée horizontale
+    @param [in] sy : coordonnée verticale
 
     @return booléen (0 ou 1)
 */
@@ -126,7 +126,7 @@ int caseTestCoordonnees(Case* c,int sx,int sy);
     @brief <b>Détruire la case</b><br />
     Libérer la mémoire.
 
-    @param [IN] c : Pointeur sur la case à détruire
+    @param [in] c : Pointeur sur la case à détruire
 
     @return rien
 */
