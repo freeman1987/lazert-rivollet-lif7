@@ -20,11 +20,11 @@ int regression(void)
 {
     printf("\n\n-----------------------\n| TESTS DE REGRESSION |\n-----------------------\n| \n");
 
-    caseTestRegression();
+    caseTestRegression(); /* tests de non-régression du module case */
 
     printf("| \n| ---------------------\n| \n");
 
-    plateauTestRegression();
+    plateauTestRegression(); /* tests de non-régression du module plateau */
 
     printf("| \n-----------------------\n\n");
     return 0;
@@ -33,13 +33,13 @@ int regression(void)
 /**
     @brief Fonction du jeu
 
-    @param appel avec "r" pour les tests de regression
+    @param appel avec la prarmètre "-r" pour les tests de regression
 
     @return int
 */
 int main(int argc, char *argv[])
 {
-    if(argc>1 && argv[1][0]=='r') /* appel du test de régression */
+    if(argc>1 && argv[1][0]=='-' && argv[1][1]=='r') /* appel du test de régression */
     {
         regression();
         return 0;

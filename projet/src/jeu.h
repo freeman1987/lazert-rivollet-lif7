@@ -14,11 +14,15 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-/** \brief Cette fonction lance le jeu.
- *
- *  \return void
- *
- */
+/**
+    @brief Cette fonction lance le jeu
+
+    @param [IN] contreordinateur : jouer contre l'ordinateur (1) ou un joueur (0)
+    @param [IN] niveauordinateur : niveau de l'ordinateur
+    @param [IN] plateau : plateau sur lequel on souhaite jouer
+
+    @return int
+*/
 int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau);
 
 #endif

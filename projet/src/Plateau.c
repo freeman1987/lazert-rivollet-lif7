@@ -485,6 +485,38 @@ void plateauTestRegression(void)
         printf("| [+] Plateau inisialisé à 0.\n");
         plateauAfficheTout(&p);
 
+        /*
+        CONTENU DU FICHIER DE TEST à lire
+        28
+        4,2,0
+        3,3,0
+        5,3,0
+        2,4,1
+        4,4,0
+        6,4,1
+        3,5,0
+        5,5,0
+        7,5,0
+        2,6,0
+        4,6,0
+        6,6,0
+        3,7,0
+        7,7,0
+        2,8,0
+        6,8,0
+        3,9,0
+        5,9,0
+        7,9,2
+        2,10,0
+        4,10,0
+        6,10,0
+        3,11,2
+        5,11,0
+        7,11,0
+        4,12,0
+        6,12,0
+        5,13,0
+        */
         plateauLireFichier(&p,PLATEAUTEST);
         if(plateauGetCapacite(&p)<=0)
         {
@@ -495,27 +527,30 @@ void plateauTestRegression(void)
             printf("| [+] Lecture du fichier "PLATEAUTEST".\n");
             plateauAfficheTout(&p);
 
-            printf("| [ ] On affecte 3 cases à J1...\n");
+            printf("| [ ] On affecte 4 cases à J1 et 2 à J2...\n");
             plateauChangeJoueur(&p,plateauGetCaseI(&p,0),1);
             plateauChangeJoueur(&p,plateauGetCaseI(&p,1),1);
             plateauChangeJoueur(&p,plateauGetCaseI(&p,2),1);
             plateauChangeJoueur(&p,plateauGetCaseI(&p,7),2);
+            plateauChangeJoueur(&p,plateauGetCaseI(&p,8),2);
 
-            if(plateauGetScore(&p,1)<3) /* si le joueur n'a pas au moins 3 cases, il y a un problème */
+            if(plateauGetScore(&p,1)<3 || plateauGetScore(&p,1)<2) /* si j1 n'a pas au moins 3 pions ou j2 au moins 2, il y a un problème */
             {
-                printf("| [!] Erreur de changement de score (.\n");
+                printf("| [!] Erreur de changement de score\n");
             }
             else
             {
-                if(plateauPeutJouer(&p,1)==0 || plateauPeutJouer(&p,2))
+                printf("| [+] Scores changés\n");
+                plateauAfficheTout(&p);
+
+                if(plateauPeutJouer(&p,1)==0 || plateauPeutJouer(&p,2)==0)
                 {
-                    printf("| [!] Erreur, aucun joueur ne peut jouer.\n");
+                    printf("| [!] Erreur, au moins un joueur ne peut jouer.\n");
                 }
                 else
                 {
                     printf("| [+] Les 2 joueurs peuvent jouer.\n");
 
-                    printf("| [+] Changement de score (%d).\n",plateauGetScore(&p,1));
                     plateauTestament(&p);
                     if(plateauGetCapacite(&p)!=0)
                     {
