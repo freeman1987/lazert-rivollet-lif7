@@ -152,7 +152,7 @@ void afficheCaseJeu(const Case* c, SDL_Surface* image, SDL_Surface* ecran);
 
 
 /**
-    @param <b>Afficher les cases joueables autour de c</b><br />
+    @brief <b>Afficher les cases joueables autour de c</b><br />
     Affiche des cases en couleurs là où le joueur peut poser son pion.
 
     @param [IN] p : Pointeur sur Plateau

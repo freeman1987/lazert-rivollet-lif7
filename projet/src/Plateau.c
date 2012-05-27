@@ -282,6 +282,7 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur)
 
     return retour;
 }
+
 int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur)
 {
     Case* ctmp;
