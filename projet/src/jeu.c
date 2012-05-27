@@ -265,6 +265,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         {
                             #if COMMENTAIRES==1
                                 printf("Case à l'adresse %d cliquée par le joueur %d.\n",(int) caseTemp, qui_joue);
+                                printf("Pions à voler en se placant ici : %d\n",plateauNbPionsAVoler(&jeu,caseTemp,qui_joue));
                             #endif
 
                             /* si on clique sur un pion du joueur qui doit jouer */
