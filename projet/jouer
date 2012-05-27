@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Script pour lancer le jeu depuis la racine
+# le script compile le programme s'il ne l'est pas
+
 if [ ! -e "bin/hexxagon" ]; then
 	echo "---- COMPILATION ----\n"
 	make

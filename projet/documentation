@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Script qui ouvre la documentation
 # Appel avec : $ sh documentation
 # ou pour regénérer : $ sh documentation actualiser
+# Remarque : nécéssite XDot pour générer les graphiques
 
 echo "Recherche de l'index de la documentation dans doc/html/ ...\n"
 
@@ -14,7 +16,11 @@ else
     if [ $# = 1 ]; then
         if [ $1 = "actualiser" ]; then
             echo "Documentation trouvée.\n"
-            echo " -> Actualisation de la documentation.\n"
+            echo "Suppression des fichiers existants.\n"
+            cd doc/
+            rm -f -r html/
+            cd ../
+            echo " -> Génération de la documentation.\n"
 	        doxygen doc/doxyfile
 	        clear
 	    fi;
