@@ -368,7 +368,7 @@ int sourisDansRectangle(int x, int y, SDL_Rect rectangle)
         return 0;
 }
 
-void afficheVerifChargementSon(FMOD_SOUND* son)
+void afficheVerifChargementSon(const FMOD_SOUND* son)
 {
     if(son==0)
     {

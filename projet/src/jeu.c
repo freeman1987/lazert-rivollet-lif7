@@ -1,11 +1,5 @@
 #include "jeu.h"
 
-
-/**
-    @brief Fonction du jeu
-
-    @return int
-*/
 int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau)
 {
     /* déclaration variable pour le jeu */

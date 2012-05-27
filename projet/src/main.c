@@ -8,6 +8,30 @@
 #include "menuprincipal.h"
 #include "jeu.h"
 
+/**
+    @mainpage Jeu Hexxagon
+    @section Informations
+
+    @author Mickaël Rivollet (mickael.rivollet@atu.univ-lyon1.fr - P1005202)
+    @author Thibault Lazert (thibault.lazert@etu.univ-lyon1.fr - P1003011)
+
+    @date Printemps 2012
+
+    @section Cadre
+
+    Application réalisée dans le cadre de l'UE LIF7.<br />
+    Université Lyon 1<br />
+
+    @section Jouer
+
+    Pour jouer, depuis la racine du jeu :<br />
+    <span style="font-family: monospace, consolas; color: blue;">$    sh jouer</span><br />
+    <br />
+    <em>Remarque :<br />
+    &nbsp;&nbsp;Si le programme n'est pas compilé, il le sera automatiquement.<br />
+    &nbsp;&nbsp;La compilation nécéssite que la librairie SDL soit installée sur la machine.</em>
+*/
+
 
 /**
     @brief Fonction d'appel des tests de regression

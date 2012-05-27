@@ -13,10 +13,10 @@
 typedef struct
 {
 
-	int libre; /*!< savoir si la case est libre ou occupée par un joueur */
-	int joueur; /*!< numéro du joueur qui possède le pion */
-	int posX; /*!< coordonnée x du pion sur le support */
-	int posY; /*!< coordonnée y du pion sur le support */
+	int libre; /*!< <b>Savoir si la case est libre ou occupée par un joueur</b> */
+	int joueur; /*!< <b>Numéro du joueur qui possede le pion</b> */
+	int posX; /*!< <b>Coordonnée x du pion sur le support</b> */
+	int posY; /*!< <b>Coordonnée y du pion sur le support</b> */
 }Case;
 
 /**

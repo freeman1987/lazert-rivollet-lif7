@@ -8,13 +8,16 @@
 #include <stdio.h>
 
 /**
-    @brief Faire jouer automatiquement un joueur
+    @brief <b>Fonction de jeu automatique.</b><br />
+    Fonction qui tente de déterminer la meilleure action et qui l'execute.<br />
+    Cette fonction analyse tout le plateau.<br />
+    Le paramètre niveau permet de restreindre les améliorations au fur et à mesure de la boucle.
 
     @param [IN,OUT] p : Pointeur sur Plateau
     @param [IN] joueur : Numéro du joueur
-    @param [IN] niv : >0 et <10, nombre de changements d'avis (plus c'est bas, moins l'analyse est bonne)
+    @param [IN] niv : (1-9) nombre de changements d'avis (plus c'est bas, moins l'analyse est bonne)
 
-    @return void
+    @return rien
 */
 void ordinateurJouer(Plateau* p, int joueur, int niv);
 
