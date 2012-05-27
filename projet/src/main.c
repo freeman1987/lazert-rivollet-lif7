@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include "main.h"
+/*#include <stdio.h>
 #include <stdlib.h>
 
 #include "parametres.h"
@@ -6,40 +7,8 @@
 #include "affiche.h"
 #include "ordinateur.h"
 #include "menuprincipal.h"
-#include "jeu.h"
+#include "jeu.h"*/
 
-/**
-    @mainpage Jeu Hexxagon
-    @section Informations
-
-    @author Mickaël Rivollet (mickael.rivollet@atu.univ-lyon1.fr - P1005202)
-    @author Thibault Lazert (thibault.lazert@etu.univ-lyon1.fr - P1003011)
-
-    @date Printemps 2012
-
-    @section Cadre
-
-    Application réalisée dans le cadre de l'UE LIF7.<br />
-    Université Lyon 1<br />
-
-    @section Jouer
-
-    Pour jouer, depuis la racine du jeu :<br />
-    <span style="font-family: monospace, consolas; color: blue;">$    sh jouer</span><br />
-    <br />
-    <em>Remarque :<br />
-    &nbsp;&nbsp;Si le programme n'est pas compilé, il le sera automatiquement.<br />
-    &nbsp;&nbsp;La compilation nécéssite que la librairie SDL soit installée sur la machine.</em>
-*/
-
-
-/**
-    @brief Fonction d'appel des tests de regression
-
-    @param void
-
-    @return int 0
-*/
 int regression(void)
 {
     printf("\n\n-----------------------\n| TESTS DE REGRESSION |\n-----------------------\n| \n");
@@ -54,13 +23,6 @@ int regression(void)
     return 0;
 }
 
-/**
-    @brief Fonction du jeu
-
-    @param appel avec la prarmètre "-r" pour les tests de regression
-
-    @return int
-*/
 int main(int argc, char *argv[])
 {
     if(argc>1 && argv[1][0]=='-' && argv[1][1]=='r') /* appel du test de régression */
