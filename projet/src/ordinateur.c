@@ -47,31 +47,31 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
             if(afficher_txt==1) printf("Il y a %d pions à voler en jouant ici (i=%d : @ %d).\n",plateauNbPionsAVoler(p,ctmp,joueur),i,(int) ctmp);
 
             ctmp2 = ctmp; /* on suppose que ce sera la case de destination */
-            action = 1; /* on suppose que l'on se dupliquera */
-            for(j=0;j<plateauGetCapacite(p);j++) /* on cherche un pion qui pourrait se dupliquer */
+            for(j=0;j<plateauGetCapacite(p);j++) /* on cherche un pion qui pourrait s'y dupliquer */
             {
                 ctmp = plateauGetCaseI(p,j);
                 if(plateauTestCaseProche(caseGetX(ctmp2)-caseGetX(ctmp),caseGetY(ctmp2)-caseGetY(ctmp))==1 && caseGetJoueur(ctmp)==joueur)
                 {
-                    /* on a trouvé un tel pion */
-                    destination = ctmp2;
-                    source = ctmp;
-                    /* on sort de la boucle */
+                    /* on a trouvé un tel pion qui peut se dupliquer */
+                    destination = ctmp2; source = ctmp; action = 1;
+                    /* on sort des des boucles */
                     i = plateauGetCapacite(p) + 1;
                     j = plateauGetCapacite(p) + 1;
                 }
             }
         }
+        /* sinon */
         else
         {
-            /* la case appartient au joueur */
+            /* la case ctmp appartient au joueur */
             if(caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)==joueur)
             {
                 if(afficher_txt==1) printf("Case %d (%d) appartient au joueur.\n",i,(int) ctmp);
+
                 /* on parcourt les autres cases pour voir ce que l'on peut faire */
                 for(j=0;j<plateauGetCapacite(p);j++)
                 {
-                    ctmp2 = plateauGetCaseI(p,j); /* case temporaire de destination */
+                    ctmp2 = plateauGetCaseI(p,j); /* case temporaire de destination (supposition) */
 
                     /* il est possible de jouer ici */
                     if(caseGetLibre(ctmp2)==1)
@@ -82,7 +82,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                         if(afficher_txt==1 && dist!=0) printf("\t- case %d (%d) libre, dst : %d\n",j,(int) ctmp2,dist);
 
                         /* par défaut, on suppose que le premier pion jouable est la meilleure solution */
-                        if((action==0 || source==0 || destination==0) && dist==1)
+                        if((action==0 || source==0 || destination==0) && dist>0)
                         {
                             source = ctmp; destination = ctmp2; action = dist;
                             if(afficher_txt==1) printf("\tPar défaut\n");
@@ -99,9 +99,9 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                             /* il y a plus de pions à prendre en jouant ici */
                             if(nbAVolerTmp>nbAVoler && niveau>compteur)
                             {
-                                source = ctmp;
-                                destination = ctmp2;
-                                action = 1; /* dupliquer */
+                                /* on peut se dupliquer : on garde en mémoire */
+                                source = ctmp; destination = ctmp2; action = 1;
+                                /* on retient les valeurs pour savoir s'il est possible de trouver mieux */
                                 nbAVoler = nbAVolerTmp;
                                 pionAdversePerdu = pionAdversePerduTmp;
                                 if(afficher_txt==1) printf("\t\t\tC'est mieux ici !\n");
@@ -138,7 +138,7 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
         }
     } /* fin de la boucle sur i */
 
-    if(afficher_txt==1)
+    if(afficher_txt==1) /* on affiche eventuellement le bilan de la fonction ordi */
     {
         printf("Bilan : ");
         if(action==1)
@@ -149,13 +149,13 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
             printf("Rien !\n");
     }
 
-    if(action==1) /* on duplique */
+    if(action==1) /* on passe à l'action : on duplique */
     {
         plateauDecrementePlacesLibres(p);
         plateauChangeJoueur(p,destination,joueur);
         plateauVolerPions(p,destination,joueur);
     }
-   else if(action==2) /* on deplacer */
+   else if(action==2) /* on passe à l'action : on deplacer */
     {
         plateauChangeJoueur(p, source,0);
         plateauChangeJoueur(p,destination,joueur);
