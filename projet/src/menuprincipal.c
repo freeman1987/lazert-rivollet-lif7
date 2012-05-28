@@ -3,21 +3,21 @@
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 {
     /* ecran de jeu */
-    SDL_Surface* screen;
+    Image* screen;
     /* images du menu */
-    SDL_Surface *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
-    SDL_Surface *imagePlateau[3], *imagePlateauSelectionne;
+    Image *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
+    Image *imagePlateau[3], *imagePlateauSelectionne;
     /* images animees */
-    SDL_Surface *pieceAnimeeRubis, *pieceAnimeePerle;
+    Image *imageAnimeeRubis, *imageAnimeePerle;
 
     /* positions des images */
-    SDL_Rect positionPlateau[3];
-    SDL_Rect positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
-    SDL_Surface *chiffres[10], *texte_niveau; int ich;
-    SDL_Rect positionRubis, positionPerle, VecteurPerle, VecteurRubis;
+    Rectangle positionPlateau[3];
+    Rectangle positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
+    Image *chiffres[10], *texte_niveau; int ich;
+    Rectangle positionRubis, positionPerle, vecteurPerle, vecteurRubis;
 
-    /* evenements SDL */
-    SDL_Event event;
+    /* evenements */
+    Evenements event;
 
     /* variables pour contenir les coordonnées de la souris */
     int sourisx;
@@ -31,181 +31,176 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     #if SONS==1
         FMOD_SYSTEM *system;
 
-        FMOD_BOOL *isplaying;
         FMOD_SOUND *hello = NULL;
         FMOD_SOUND *menuMus = NULL;
         FMOD_System_Create(&system);
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
-        FMOD_System_CreateSound(system, SON_HELLO, FMOD_CREATESAMPLE, 0, &hello);
 
-        FMOD_System_CreateSound(system, SON_MENU, FMOD_LOOP_NORMAL, 0, &menuMus);
+        FMOD_System_CreateSound(system, SON_HELLO, FMOD_CREATESAMPLE, 0, &hello); afficheVerifChargementSon(hello);
+        FMOD_System_CreateSound(system, SON_MENU, FMOD_LOOP_NORMAL, 0, &menuMus); afficheVerifChargementSon(menuMus);
 
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
         FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-
-
     #endif
 
     retour = 1; /* par défaut on accède au jeu après le menu */
     done = 0; /* sortie de boucle */
-    isplaying = (FMOD_BOOL*) 0;
 
-    /* INITIALISATIONS POUR L'AFFICHAGE SDL */
+    /* INITIALISATIONS POUR L'AFFICHAGE */
 
         /* on charge l'écran d'affichage */
 
-        screen = SDL_SetVideoMode(1100, 720, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = afficheSetEcran();
         if (!screen)
         {
-            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
+            printf("[!] Erreur de définition de l'écran video.\n");
+            afficheErreur();
             return 1;
         }
-        /* on initialise SDL video */
-        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        /* on initialise l'affichage video */
+        if ( afficheInit() < 0 )
         {
-            printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
+            printf("[!] Erreur d'initialisation de l'affichage.\n");
+            afficheErreur();
             return 1;
         }
-        /* make sure SDL cleans up before exit */
-        atexit(SDL_Quit);
+        /* être sûr que l'écran soit fermé à la fin */
+        atexit(afficheQuit);
 
-        SDL_WM_SetCaption("Hexxagon : Menu du jeu","Hexxagon");
+        afficheSetTitre("Hexxagon : Menu du jeu","Hexxagon");
 
         /* MENU PRINCIPAL */
 
-        menu = IMG_Load(MENU); afficheVerifChargement(menu);
+        menu = afficheChargeImage(MENU); afficheVerifChargement(menu);
         positionMenu.x = 0;
         positionMenu.y = 0;
 
-        imageContreJoueur = IMG_Load(VSJOUEUR); afficheVerifChargement(imageContreJoueur);
+        imageContreJoueur = afficheChargeImage(VSJOUEUR); afficheVerifChargement(imageContreJoueur);
         positionContreJoueur.x = 100;
         positionContreJoueur.y = screen->h - 120;
         positionContreJoueur.h = imageContreJoueur->h;
         positionContreJoueur.w = imageContreJoueur->w;
 
-        imageContreOrdi = IMG_Load(VSORDI); afficheVerifChargement(imageContreOrdi);
+        imageContreOrdi = afficheChargeImage(VSORDI); afficheVerifChargement(imageContreOrdi);
         positionContreOrdi.x = 300;
         positionContreOrdi.y = screen->h - 120;
         positionContreOrdi.h = imageContreOrdi->h;
         positionContreOrdi.w = imageContreOrdi->w;
 
-        imagePlateau[0] = IMG_Load(PLATEAU1_MENU); afficheVerifChargement(imagePlateau[0]);
+        imagePlateau[0] = afficheChargeImage(PLATEAU1_MENU); afficheVerifChargement(imagePlateau[0]);
         positionPlateau[0].x = 800;
         positionPlateau[0].y = 20;
         positionPlateau[0].h = imagePlateau[0]->h;
         positionPlateau[0].w = imagePlateau[0]->w;
 
-        imagePlateau[1] = IMG_Load(PLATEAU2_MENU); afficheVerifChargement(imagePlateau[1]);
+        imagePlateau[1] = afficheChargeImage(PLATEAU2_MENU); afficheVerifChargement(imagePlateau[1]);
         positionPlateau[1].x = 800;
         positionPlateau[1].y = 250;
         positionPlateau[1].h = imagePlateau[1]->h;
         positionPlateau[1].w = imagePlateau[1]->w;
 
-        imagePlateau[2] = IMG_Load(PLATEAU3_MENU); afficheVerifChargement(imagePlateau[2]);
+        imagePlateau[2] = afficheChargeImage(PLATEAU3_MENU); afficheVerifChargement(imagePlateau[2]);
         positionPlateau[2].x = 800;
         positionPlateau[2].y = 450;
         positionPlateau[2].h = imagePlateau[2]->h;
         positionPlateau[2].w = imagePlateau[2]->w;
 
-        pieceAnimeePerle=IMG_Load(PION_JOUEUR_1); afficheVerifChargement(pieceAnimeePerle);
-        pieceAnimeeRubis=IMG_Load(PION_JOUEUR_2); afficheVerifChargement(pieceAnimeeRubis);
+        /* pions qui se déplacent sur l'écran */
+        imageAnimeePerle = afficheChargeImage(PION_JOUEUR_2); afficheVerifChargement(imageAnimeePerle);
+        imageAnimeeRubis = afficheChargeImage(PION_JOUEUR_1); afficheVerifChargement(imageAnimeeRubis);
 
-        positionPerle.x=0;
-        positionPerle.y=0;
-        positionRubis.x=800;
-        positionRubis.y=500;
-        VecteurPerle.x=5;
-        VecteurPerle.y=5;
-        VecteurRubis.x=-5;
-        VecteurRubis.y=5;
+        positionPerle.x = 5;
+        positionPerle.y = 5;
+        positionRubis.x = 600;
+        positionRubis.y = 400;
+        vecteurPerle.x = 5;
+        vecteurPerle.y = 5;
+        vecteurRubis.x = -5;
+        vecteurRubis.y = 5;
 
+        imagePlateauSelectionne = afficheChargeImage(PLATEAU_SELECTIONNE_MENU); afficheVerifChargement(imagePlateau[0]);
 
+        imageSelection = afficheChargeImage(SELECTIONMODE); afficheVerifChargement(imageSelection);
 
-        imagePlateauSelectionne = IMG_Load(PLATEAU_SELECTIONNE_MENU); afficheVerifChargement(imagePlateau[0]);
-
-        imageSelection = IMG_Load(SELECTIONMODE); afficheVerifChargement(imageSelection);
-
-        imageBoutonJouer = IMG_Load(BOUTONJOUER); afficheVerifChargement(imageBoutonJouer);
-        imageBoutonJouerSurvol = IMG_Load(BOUTONJOUERSURVOL); afficheVerifChargement(imageBoutonJouerSurvol);
+        imageBoutonJouer = afficheChargeImage(BOUTONJOUER); afficheVerifChargement(imageBoutonJouer);
+        imageBoutonJouerSurvol = afficheChargeImage(BOUTONJOUERSURVOL); afficheVerifChargement(imageBoutonJouerSurvol);
         positionBoutonJouer.x = 600;
         positionBoutonJouer.y = screen->h - 120;
         positionBoutonJouer.h = imageBoutonJouer->h;
         positionBoutonJouer.w = imageBoutonJouer->w;
 
-        chiffres[0] = IMG_Load(CHIFFRE0); afficheVerifChargement(chiffres[0]);
-        chiffres[1] = IMG_Load(CHIFFRE1); afficheVerifChargement(chiffres[1]);
-        chiffres[2] = IMG_Load(CHIFFRE2); afficheVerifChargement(chiffres[2]);
-        chiffres[3] = IMG_Load(CHIFFRE3); afficheVerifChargement(chiffres[3]);
-        chiffres[4] = IMG_Load(CHIFFRE4); afficheVerifChargement(chiffres[4]);
-        chiffres[5] = IMG_Load(CHIFFRE5); afficheVerifChargement(chiffres[5]);
-        chiffres[6] = IMG_Load(CHIFFRE6); afficheVerifChargement(chiffres[6]);
-        chiffres[7] = IMG_Load(CHIFFRE7); afficheVerifChargement(chiffres[7]);
-        chiffres[8] = IMG_Load(CHIFFRE8); afficheVerifChargement(chiffres[8]);
-        chiffres[9] = IMG_Load(CHIFFRE9); afficheVerifChargement(chiffres[9]);
+        chiffres[0] = afficheChargeImage(CHIFFRE0); afficheVerifChargement(chiffres[0]);
+        chiffres[1] = afficheChargeImage(CHIFFRE1); afficheVerifChargement(chiffres[1]);
+        chiffres[2] = afficheChargeImage(CHIFFRE2); afficheVerifChargement(chiffres[2]);
+        chiffres[3] = afficheChargeImage(CHIFFRE3); afficheVerifChargement(chiffres[3]);
+        chiffres[4] = afficheChargeImage(CHIFFRE4); afficheVerifChargement(chiffres[4]);
+        chiffres[5] = afficheChargeImage(CHIFFRE5); afficheVerifChargement(chiffres[5]);
+        chiffres[6] = afficheChargeImage(CHIFFRE6); afficheVerifChargement(chiffres[6]);
+        chiffres[7] = afficheChargeImage(CHIFFRE7); afficheVerifChargement(chiffres[7]);
+        chiffres[8] = afficheChargeImage(CHIFFRE8); afficheVerifChargement(chiffres[8]);
+        chiffres[9] = afficheChargeImage(CHIFFRE9); afficheVerifChargement(chiffres[9]);
         positionNiveau.x = 370;
         positionNiveau.y = screen->h - 40;
 
-        texte_niveau = IMG_Load(TEXTE_NIVEAU);
+        texte_niveau = afficheChargeImage(TEXTE_NIVEAU);
         positionTexteNiveau.x = 300;
         positionTexteNiveau.y = screen->h - 40;
 
-        imageBoutonPlus = IMG_Load(BOUTONPLUS); afficheVerifChargement(imageBoutonPlus);
-        imageBoutonMoins = IMG_Load(BOUTONMOINS); afficheVerifChargement(imageBoutonMoins);
+        imageBoutonPlus = afficheChargeImage(BOUTONPLUS); afficheVerifChargement(imageBoutonPlus);
+        imageBoutonMoins = afficheChargeImage(BOUTONMOINS); afficheVerifChargement(imageBoutonMoins);
         positionBoutonPlus.x = 425;
         positionBoutonPlus.y = screen->h - 40;
+        positionBoutonPlus.w = imageBoutonPlus->w;
+        positionBoutonPlus.h = imageBoutonPlus->h;
         positionBoutonMoins.x = 400;
         positionBoutonMoins.y = screen->h - 40;
-
+        positionBoutonMoins.w = imageBoutonPlus->w;
+        positionBoutonMoins.h = imageBoutonPlus->h;
 
         sourisx = 0;
         sourisy = 0;
 
     while (done==0)
     {
-        if(isplaying==0)
-        {
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
-        isplaying = (FMOD_BOOL*) 1;
-        }
-
         /* vider l'écran */
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
+        afficheVideEcran(screen);
 
-        if(positionPerle.x>(screen->w-(pieceAnimeePerle->w)*3/4) || positionPerle.x<=0)
+        /* animer les pions qui se déplacent à l'écran */
+        if(positionPerle.x>(screen->w-(imageAnimeePerle->w)*3/4) || positionPerle.x<=0)
         {
-            VecteurPerle.x*=-1;
+            vecteurPerle.x*=-1;
         }
-        if(positionPerle.y<=0 || positionPerle.y>(screen->h-(pieceAnimeePerle->h)*3/4))
+        if(positionPerle.y<=0 || positionPerle.y>(screen->h-(imageAnimeePerle->h)*3/4))
         {
-            VecteurPerle.y*=-1;
+            vecteurPerle.y*=-1;
         }
-        if(positionRubis.x>(screen->w-(pieceAnimeeRubis->w)*3/4) || positionRubis.x<=0)
+        if(positionRubis.x>(screen->w-(imageAnimeeRubis->w)*3/4) || positionRubis.x<=0)
         {
-            VecteurRubis.x*=-1;
+            vecteurRubis.x*=-1;
         }
-        if(positionRubis.y<=0 || positionRubis.y>(screen->h-(pieceAnimeeRubis->h)*3/4))
+        if(positionRubis.y<=0 || positionRubis.y>(screen->h-(imageAnimeeRubis->h)*3/4))
         {
-            VecteurRubis.y*=-1;
+            vecteurRubis.y*=-1;
         }
-        positionPerle.x+=VecteurPerle.x;
-        positionPerle.y+=VecteurPerle.y;
-        positionRubis.x+=VecteurRubis.x;
-        positionRubis.y+=VecteurRubis.y;
+        positionPerle.x += vecteurPerle.x;
+        positionPerle.y += vecteurPerle.y;
+        positionRubis.x += vecteurRubis.x;
+        positionRubis.y += vecteurRubis.y;
 
-        while(SDL_PollEvent(&event))
+        while(afficheEvenements(&event))
         {
-            switch(event.type)
+            switch(afficheTypeEvenement(&event))
             {
                 /* récupérer la position de la souris sur l'écran */
-                case SDL_MOUSEMOTION:
+                case EVENT_SOURISBOUGE:
                 {
-                    sourisx = event.motion.x;
-                    sourisy = event.motion.y;
+                    sourisx = afficheCoordonneeSouris(&event,'x');
+                    sourisy = afficheCoordonneeSouris(&event,'y');
                 }
                 break;
 
                 /* fermer */
-                case SDL_QUIT:
+                case AFFICHE_FIN:
                 {
                     done = 1;
                     retour = 0;
@@ -213,44 +208,44 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                 break;
 
                 /* touche enfoncée */
-                case SDL_KEYDOWN:
+                case EVENT_TOUCHEENFONCEE:
                 {
                     /* fermer */
-                    if(event.key.keysym.sym == SDLK_ESCAPE)
+                    if(afficheToucheAppuyee(&event) == T_ECHAP)
                     {
                         done = 1;
                         retour = 0;
                     }
 
-                    if(event.key.keysym.sym == SDLK_SPACE)
+                    if(afficheToucheAppuyee(&event) == T_ESPACE)
                     {
                         done = 1;
                         retour = 1;
                     }
 
-                    if((event.key.keysym.sym == SDLK_LEFT && *contreordinateur==1) || (event.key.keysym.sym == SDLK_RIGHT && *contreordinateur==0))
+                    if((afficheToucheAppuyee(&event) == T_GAUCHE && *contreordinateur==1) || (afficheToucheAppuyee(&event) == T_DROITE && *contreordinateur==0))
                     {
                         *contreordinateur = ((*contreordinateur + 1) % 2);
                     }
 
-                    if((event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_KP_PLUS) && *niveauordinateur<9 && *contreordinateur==1)
+                    if((afficheToucheAppuyee(&event) == T_HAUT || afficheToucheAppuyee(&event) == T_PN_PLUS) && *niveauordinateur<9 && *contreordinateur==1)
                     {
                         (*niveauordinateur)++;
                     }
 
-                    if((event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_KP_MINUS) && *niveauordinateur>1 && *contreordinateur==1)
+                    if((afficheToucheAppuyee(&event) == T_BAS || afficheToucheAppuyee(&event) == T_PN_MOINS) && *niveauordinateur>1 && *contreordinateur==1)
                     {
                         (*niveauordinateur)--;
                     }
 
-                    if(event.key.keysym.sym == SDLK_KP_ENTER || event.key.keysym.sym == SDLK_RETURN)
+                    if(afficheToucheAppuyee(&event) == T_PN_ENTREE || afficheToucheAppuyee(&event) == T_ENTREE)
                     {
                         done = 1;
                     }
                 }
                 break;
 
-                case SDL_MOUSEBUTTONDOWN:
+                case EVENT_SOURISCLIC:
                 {
                     if(sourisDansRectangle(sourisx,sourisy,positionContreJoueur)) /* clic sur contre joueur */
                     {
@@ -276,57 +271,57 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         *plateau=3;
                     }
+
                     /* changer de niveau ordi */
-                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<9 && *contreordinateur==1)
+                    if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<9 && *contreordinateur==1)
                     {
                         (*niveauordinateur)++;
                     }
-
-                    if(sourisDansRectangle(sourisx,sourisy,positionBoutonMoins) && *niveauordinateur>0 && *contreordinateur==1)
+                    else if(sourisDansRectangle(sourisx,sourisy,positionBoutonMoins) && *niveauordinateur>1 && *contreordinateur==1)
                     {
                         (*niveauordinateur)--;
                     }
-
                 }
                 break;
             }
         }
 
-        SDL_BlitSurface(menu,0,screen,&positionMenu);
+        afficheImageRect(positionMenu,menu,screen);
 
         if(*contreordinateur==1)
         {
-            SDL_BlitSurface(imageSelection,0,screen,&positionContreOrdi);
-            SDL_BlitSurface(texte_niveau,0,screen,&positionTexteNiveau);
-            SDL_BlitSurface(chiffres[*niveauordinateur],0,screen,&positionNiveau);
+            afficheImageRect(positionContreOrdi,imageSelection,screen);
+            afficheImageRect(positionTexteNiveau,texte_niveau,screen);
+            afficheImageRect(positionNiveau,chiffres[*niveauordinateur],screen);
         }
         else
         {
-            SDL_BlitSurface(imageSelection,0,screen,&positionContreJoueur);
+            afficheImageRect(positionContreJoueur,imageSelection,screen);
         }
 
-        SDL_BlitSurface(imageContreJoueur,0,screen,&positionContreJoueur);
-        SDL_BlitSurface(imageContreOrdi,0,screen,&positionContreOrdi);
+        afficheImageRect(positionContreJoueur,imageContreJoueur,screen);
+        afficheImageRect(positionContreOrdi,imageContreOrdi,screen);
 
-        SDL_BlitSurface(imagePlateauSelectionne,0,screen,&positionPlateau[*plateau-1]);
-        SDL_BlitSurface(imagePlateau[0],0,screen,&positionPlateau[0]);
-        SDL_BlitSurface(imagePlateau[1],0,screen,&positionPlateau[1]);
-        SDL_BlitSurface(imagePlateau[2],0,screen,&positionPlateau[2]);
+        afficheImageRect(positionPlateau[*plateau-1],imagePlateauSelectionne,screen);
+        afficheImageRect(positionPlateau[0],imagePlateau[0],screen);
+        afficheImageRect(positionPlateau[1],imagePlateau[1],screen);
+        afficheImageRect(positionPlateau[2],imagePlateau[2],screen);
 
         if(*niveauordinateur<9 && *contreordinateur==1)
-            SDL_BlitSurface(imageBoutonPlus,0,screen,&positionBoutonPlus);
-        if(*niveauordinateur>0 && *contreordinateur==1)
-            SDL_BlitSurface(imageBoutonMoins,0,screen,&positionBoutonMoins);
+            afficheImageRect(positionBoutonPlus,imageBoutonPlus,screen);
+        if(*niveauordinateur>1 && *contreordinateur==1)
+            afficheImageRect(positionBoutonMoins,imageBoutonMoins,screen);
 
 
         if(sourisDansRectangle(sourisx,sourisy,positionBoutonJouer))
-            SDL_BlitSurface(imageBoutonJouerSurvol,0,screen,&positionBoutonJouer);
+            afficheImageRect(positionBoutonJouer,imageBoutonJouerSurvol,screen);
         else
-            SDL_BlitSurface(imageBoutonJouer,0,screen,&positionBoutonJouer);
+            afficheImageRect(positionBoutonJouer,imageBoutonJouer,screen);
 
-        SDL_BlitSurface(pieceAnimeePerle, 0, screen, &positionPerle);
-        SDL_BlitSurface(pieceAnimeeRubis, 0, screen, &positionRubis);
-        SDL_Flip(screen);
+        afficheImageRect(positionPerle,imageAnimeePerle,screen);
+        afficheImageRect(positionRubis,imageAnimeeRubis,screen);
+
+        afficheMiseAJour(screen);
     }
 
     #if SONS==1
@@ -336,31 +331,31 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         FMOD_System_Release(system);
     #endif
 
-    SDL_FreeSurface(menu);
-    SDL_FreeSurface(imageContreJoueur);
-    SDL_FreeSurface(imageContreOrdi);
-    SDL_FreeSurface(imageSelection);
-    SDL_FreeSurface(imageBoutonJouer);
-    SDL_FreeSurface(imageBoutonJouerSurvol);
-    SDL_FreeSurface(imageBoutonPlus);
-    SDL_FreeSurface(imageBoutonMoins);
-    SDL_FreeSurface(imagePlateau[0]);
-    SDL_FreeSurface(imagePlateau[1]);
-    SDL_FreeSurface(imagePlateau[2]);
-    SDL_FreeSurface(imagePlateauSelectionne);
-    SDL_FreeSurface(pieceAnimeeRubis);
-    SDL_FreeSurface(pieceAnimeePerle);
-    SDL_FreeSurface(texte_niveau);
+    afficheFree(menu);
+    afficheFree(imageContreJoueur);
+    afficheFree(imageContreOrdi);
+    afficheFree(imageSelection);
+    afficheFree(imageBoutonJouer);
+    afficheFree(imageBoutonJouerSurvol);
+    afficheFree(imageBoutonPlus);
+    afficheFree(imageBoutonMoins);
+    afficheFree(imagePlateau[0]);
+    afficheFree(imagePlateau[1]);
+    afficheFree(imagePlateau[2]);
+    afficheFree(imagePlateauSelectionne);
+    afficheFree(imageAnimeeRubis);
+    afficheFree(imageAnimeePerle);
+    afficheFree(texte_niveau);
     for(ich=0;ich<10;ich++)
-        SDL_FreeSurface(chiffres[ich]);
-    SDL_FreeSurface(screen);
+        afficheFree(chiffres[ich]);
+    afficheFree(screen);
 
-    SDL_Quit();
+    afficheQuit();
 
     return retour;
 }
 
-int sourisDansRectangle(int x, int y, SDL_Rect rectangle)
+int sourisDansRectangle(int x, int y, Rectangle rectangle)
 {
     if(x>=rectangle.x && x<=(rectangle.w+rectangle.x) && y>=rectangle.y && y<=(rectangle.h+rectangle.y))
         return 1;
@@ -373,6 +368,6 @@ void afficheVerifChargementSon(const FMOD_SOUND* son)
     if(son==0)
     {
         printf("[!] Erreur de chargement du son.\n");
-        exit(-1);
+        exit(1);
     }
 }

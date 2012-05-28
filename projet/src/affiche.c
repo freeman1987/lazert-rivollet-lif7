@@ -1,8 +1,8 @@
 #include "affiche.h"
 
-SDL_Rect xy2rect(int x, int y)
+Rectangle xy2rect(int x, int y)
 {
-    SDL_Rect retour;
+    Rectangle retour;
 
     retour.x = UNITE_X * (x + DECAL_X);
     retour.y = UNITE_Y * (y + DECAL_Y);
@@ -10,10 +10,15 @@ SDL_Rect xy2rect(int x, int y)
     return retour;
 }
 
-void afficheQuiJoue(int j, SDL_Surface* ecran)
+int afficheInit()
 {
-    SDL_Rect place_qui_joue;
-    SDL_Surface* logo_joueur;
+    return (int) SDL_Init(SDL_INIT_VIDEO);
+}
+
+void afficheQuiJoue(int j, Image* ecran)
+{
+    Rectangle place_qui_joue;
+    Image* logo_joueur;
 
     place_qui_joue.x = 50;
     place_qui_joue.y = 50;
@@ -27,14 +32,14 @@ void afficheQuiJoue(int j, SDL_Surface* ecran)
     SDL_FreeSurface(logo_joueur);
 }
 
-void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, SDL_Surface* pion_j1, SDL_Surface* pion_j2, SDL_Surface* ecran)
+void afficheScores(int s1, int s2, Image* chiffres[], Image* haut, Image* pion_j1, Image* pion_j2, Image* ecran)
 {
     /* pour monter ou descendre les scores */
     int decalage_y;
 
 
     /* position d'affichage */
-    SDL_Rect pos;
+    Rectangle pos;
 
     decalage_y = 50;
     pos.x = 50;
@@ -77,7 +82,7 @@ void afficheScores(int s1, int s2, SDL_Surface* chiffres[], SDL_Surface* haut, S
     afficheImage(140,215 + decalage_y,pion_j2,ecran);
 }
 
-void afficheNiveauOrdinateur(int x, int y, int niv, SDL_Surface* chiffre[], SDL_Surface* ecran)
+void afficheNiveauOrdinateur(int x, int y, int niv, Image* chiffre[], Image* ecran)
 {
     int niveau;
     if(niv<1)
@@ -90,10 +95,10 @@ void afficheNiveauOrdinateur(int x, int y, int niv, SDL_Surface* chiffre[], SDL_
     afficheImage(x,y,chiffre[niveau],ecran);
 }
 
-void afficheFinJeu(int s1, int s2, int ordi, SDL_Surface* ecran)
+void afficheFinJeu(int s1, int s2, int ordi, Image* ecran)
 {
-    SDL_Rect pos;
-    SDL_Surface* bravo;
+    Rectangle pos;
+    Image* bravo;
 
     if(s1==s2)
         bravo = IMG_Load(BRAVO_0);
@@ -111,24 +116,24 @@ void afficheFinJeu(int s1, int s2, int ordi, SDL_Surface* ecran)
     SDL_FreeSurface(bravo);
 }
 
-void afficheImage(int x, int y, SDL_Surface* image, SDL_Surface* ecran)
+void afficheImage(int x, int y, Image* image, Image* ecran)
 {
-    SDL_Rect dstrect;
+    Rectangle dstrect;
     dstrect.x = x;
     dstrect.y = y;
 
     SDL_BlitSurface(image, 0, ecran, &dstrect);
 }
 
-void afficheImageRect(SDL_Rect rect, SDL_Surface* image, SDL_Surface* ecran)
+void afficheImageRect(Rectangle rect, Image* image, Image* ecran)
 {
     SDL_BlitSurface(image, 0, ecran, &rect);
 }
 
-void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion_j1, SDL_Surface* pion_j2, SDL_Surface* ecran)
+void afficheJeu(const Plateau* p, Image* image_case, Image* pion_j1, Image* pion_j2, Image* ecran)
 {
     int i;
-    SDL_Rect position;
+    Rectangle position;
     Case* c;
     for(i=0;i<plateauGetCapacite(p);i++)
     {
@@ -147,7 +152,7 @@ void afficheJeu(const Plateau* p, SDL_Surface* image_case, SDL_Surface* pion_j1,
     }
 }
 
-void afficheVerifChargement(SDL_Surface* img)
+void afficheVerifChargement(Image* img)
 {
     if(img==0)
     {
@@ -156,14 +161,14 @@ void afficheVerifChargement(SDL_Surface* img)
     }
 }
 
-void afficheCaseJeu(const Case* c, SDL_Surface* image, SDL_Surface* ecran)
+void afficheCaseJeu(const Case* c, Image* image, Image* ecran)
 {
-    SDL_Rect position;
+    Rectangle position;
     position = xy2rect(caseGetX(c),caseGetY(c));
     afficheImageRect(position, image,ecran);
 }
 
-void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliquer, SDL_Surface* img_deplacer, SDL_Surface* ecran)
+void afficheCasesAutour(const Plateau* p, const Case* c, Image* img_dupliquer, Image* img_deplacer, Image* ecran)
 {
 
     Case* ctmp;
@@ -186,4 +191,67 @@ void afficheCasesAutour(const Plateau* p, const Case* c, SDL_Surface* img_dupliq
         else if(dist==2 && caseGetLibre(ctmp)==1)
             afficheCaseJeu(ctmp,img_deplacer,ecran);
     }
+}
+
+void afficheFree(Image* img)
+{
+    SDL_FreeSurface(img);
+}
+
+void afficheQuit()
+{
+    SDL_Quit();
+}
+
+void afficheVideEcran(Image* ecran)
+{
+    SDL_FillRect(ecran, 0, SDL_MapRGB(ecran->format, 2, 15, 30));
+}
+
+Image* afficheChargeImage(char fichier[])
+{
+    return (Image*) IMG_Load(fichier);
+}
+
+int afficheEvenements(Evenements* ev)
+{
+    return (int) SDL_PollEvent(ev);
+}
+
+Touche afficheToucheAppuyee(Evenements* ev)
+{
+    return (Touche) ev->key.keysym.sym;
+}
+
+int afficheCoordonneeSouris(Evenements* ev, char coord)
+{
+    if(coord=='x' || coord=='X')
+        return ev->motion.x;
+    else
+        return ev->motion.y;
+}
+
+void afficheMiseAJour(Image* ecran)
+{
+    SDL_Flip(ecran);
+}
+
+Image* afficheSetEcran()
+{
+    return (Image*) SDL_SetVideoMode(1100, 720, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+}
+
+void afficheErreur()
+{
+    printf("Détails de l'erreur :\n%s\n",SDL_GetError());
+}
+
+void afficheSetTitre(char titre1[], char titre2[])
+{
+    SDL_WM_SetCaption(titre1, titre2);
+}
+
+EvenementsType afficheTypeEvenement(Evenements* ev)
+{
+    return (EvenementsType) ev->type;
 }
