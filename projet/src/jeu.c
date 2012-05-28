@@ -3,14 +3,17 @@
 int Jouer(const int contreordinateur, const int niveauordinateur, const int plateau)
 {
     /* déclaration variable pour le jeu */
-    int attente; /* temp d'attente de l'ordinateur */
+    int attente; /* temps d'attente de l'ordinateur */
 
         int afficher;
 
         int tourautomatique;
         int animation;
 
-        int sonFinJeu;
+        #if SONS==1
+            int sonFinJeu;
+        #endif
+
         /* variables pour contenir les coordonnées de la souris */
         int sourisx;
         int sourisy;
@@ -18,7 +21,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         int done;
 
         /* variable pourr savoir quel joueur doit jouer */
-        int qui_joue; /* le joueur 1 commence */
+        int qui_joue;
 
         Case* caseCliquee; /* case sélectionnée */
 
@@ -27,28 +30,28 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         int test; /* bouléen pour stocker le résultats d'un test */
 
 
-        SDL_Rect xyPionAnim;
-        SDL_Rect deplacement;
-        SDL_Rect xyArrivee;
-        SDL_Rect xySablier;
+        Rectangle xyPionAnim;
+        Rectangle deplacement;
+        Rectangle xyArrivee;
+        Rectangle xySablier;
 
     /* Fin déclaration */
 
     Plateau jeu;
-    SDL_Surface* pion1;
-    SDL_Surface* pion2;
-    SDL_Surface* case_vide;
-    SDL_Surface* case_jouable;
-    SDL_Surface* case_jouable_3;
-    SDL_Surface* case_jouable_4;
-    SDL_Surface* chiffres[10]; int i; /* pour la boucle de free */
-    SDL_Surface* texte_scores;
-    SDL_Surface* vsjoueur;
-    SDL_Surface* vsordi;
-    SDL_Surface* texte_niveau;
-    SDL_Surface* screen;
-    SDL_Surface* sablier;
-    SDL_Event event;
+    Image* pion1;
+    Image* pion2;
+    Image* case_vide;
+    Image* case_jouable;
+    Image* case_jouable_3;
+    Image* case_jouable_4;
+    Image* chiffres[10]; int i; /* pour la boucle de free */
+    Image* texte_scores;
+    Image* vsjoueur;
+    Image* vsordi;
+    Image* texte_niveau;
+    Image* screen;
+    Image* sablier;
+    Evenements event;
     #if SONS==1
         FMOD_SYSTEM *system;
 
@@ -90,12 +93,15 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         caseCliquee = 0;
 
         /* Initialise la position du sablier */
-        xySablier.x= 1000;
-        xySablier.y= 50;
-        sonFinJeu = 1;
-        qui_joue = 1;
+        xySablier.x = 1000;
+        xySablier.y = 50;
+
+        qui_joue = 1; /* le joueur 1 commence */
         tourautomatique = 0; /* si la fonction est activée, l'utilisateur
-                                    peut appuyer O pour faire jouer l'ordi */
+                                peut appuyer O pour faire jouer l'ordi */
+        #if SONS==1
+        sonFinJeu = 1;
+        #endif
 
         attente=10; /* initialiser */
 
@@ -155,40 +161,38 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         vsjoueur = IMG_Load(VSJOUEUR);
         vsordi = IMG_Load(VSORDI);
 
-    /* INITIALISATIONS POUR L'AFFICHAGE SDL */
+    /* INITIALISATIONS POUR L'AFFICHAGE */
 
         /* on charge l'écran d'affichage */
 
-        screen = SDL_SetVideoMode(1100, 720, 16, SDL_HWSURFACE|SDL_DOUBLEBUF);
+        screen = afficheSetEcran();
         if (!screen)
         {
-            printf("Erreur de définition de l'écran video : %s\n", SDL_GetError());
+            printf("Erreur de définition de l'écran video\n");
+            afficheErreur();
             afficher = 3;
         }
         /* on vide l'écran */
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
-        /* on initialise SDL video */
-        if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        afficheVideEcran(screen);
+        /* on initialise l'affichage video */
+        if ( afficheInit() < 0 )
         {
-            printf( "Erreur d'initialisation SDL: %s\n", SDL_GetError() );
+            printf( "Erreur d'initialisation de l'affichage\n");
+            afficheErreur();
             afficher = 3;
         }
-        /* make sure SDL cleans up before exit */
-        atexit(SDL_Quit);
+        /* être sûr que l'écran soit fermé à la fin */
+        atexit(afficheQuit);
 
-        SDL_WM_SetCaption("Hexxagon : copie originale du jeu d'origine qui existait avant","Hexxagon");
+        afficheSetTitre("Hexxagon : copie originale du jeu d'origine qui existait avant","Hexxagon");
 
 
 
     while (done==0 && afficher!=0)
     {
-        SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 2, 15, 30));
+        afficheVideEcran(screen);
 
-        /* récupérer la position de la souris sur l'écran */
-        sourisx = event.motion.x;
-        sourisy = event.motion.y;
-
-        while (SDL_PollEvent(&event))
+        while (afficheEvenements(&event))
         {
 
 /*
@@ -196,19 +200,27 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
  * EVENEMENTS
  ************************
  */
-            switch (event.type)
+            switch (afficheTypeEvenement(&event))
             {
                 /* fermer */
-                case SDL_QUIT:
+                case AFFICHE_FIN:
                     done = 1;
                 break;
 
+                /* récupérer la position de la souris sur l'écran */
+                case EVENT_SOURISBOUGE:
+                {
+                    sourisx = afficheCoordonneeSouris(&event,'x');
+                    sourisy = afficheCoordonneeSouris(&event,'y');
+                }
+                break;
+
                 /* touche enfoncée */
-                case SDL_KEYDOWN:
+                case EVENT_TOUCHEENFONCEE:
                 {
     /* touche ECHAP => quitter ou retour menu */
 
-                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                    if (afficheToucheAppuyee(&event) == T_ECHAP)
                     {
                         if(afficher==3)
                         {
@@ -235,7 +247,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                     else if(afficher==2)
                     {
                         /* option pour faire jouer l'ordinateur en appuyant sur la touche o */
-                        if(event.key.keysym.sym == SDLK_o)
+                        if(afficheToucheAppuyee(&event) == T_o)
                             tourautomatique = 1;
                     }
 
@@ -243,7 +255,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                 }
 
                 /* clic de souris */
-                case SDL_MOUSEBUTTONDOWN:
+                case EVENT_SOURISCLIC:
                 {
     /* EVENEMENTS (CLICS) POUR LE JEU */
 
@@ -325,7 +337,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                     } /* fin de détection du clic pour le jeu */
                     else if(afficher==3)
                     {
-                        if(SDL_MOUSEBUTTONDOWN)
+                        if(EVENT_SOURISCLIC)
                         {
 
                             afficher=0;
@@ -362,7 +374,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         if(sonFinJeu!=0)
                             FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
                     #endif
-                    SDL_BlitSurface(sablier, 0, screen, &xySablier);
+                    afficheImageRect(xySablier,sablier,screen);
                     attente-=1;
                 }else{
 
@@ -515,32 +527,32 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         }
 
     /* mettre à jour l'écran */
-        SDL_Flip(screen);
+        afficheMiseAJour(screen);
 
     } /* fin de la boucle principale */
 
 /*
  **************************
- * LIBERER LES SDL_Surfaces
+ * LIBERER LES Images
  **************************
  */
 
-    SDL_FreeSurface(pion1);
-    SDL_FreeSurface(pion2);
-    SDL_FreeSurface(case_vide);
-    SDL_FreeSurface(case_jouable);
-    SDL_FreeSurface(case_jouable_3);
-    SDL_FreeSurface(case_jouable_4);
-    SDL_FreeSurface(texte_scores);
-    SDL_FreeSurface(texte_niveau);
-    SDL_FreeSurface(vsjoueur);
-    SDL_FreeSurface(vsordi);
-    SDL_FreeSurface(sablier);
+    afficheFree(pion1);
+    afficheFree(pion2);
+    afficheFree(case_vide);
+    afficheFree(case_jouable);
+    afficheFree(case_jouable_3);
+    afficheFree(case_jouable_4);
+    afficheFree(texte_scores);
+    afficheFree(texte_niveau);
+    afficheFree(vsjoueur);
+    afficheFree(vsordi);
+    afficheFree(sablier);
     for(i=0;i<10;i++)
-        SDL_FreeSurface(chiffres[i]);
-    SDL_FreeSurface(screen);
+        afficheFree(chiffres[i]);
+    afficheFree(screen);
 
-    SDL_Quit();
+    afficheQuit();
 
     #if SONS==1
         FMOD_Sound_Release(rire);

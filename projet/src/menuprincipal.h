@@ -6,7 +6,6 @@
 
 #include "parametres.h"
 #include "affiche.h"
-#include "affiche.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -35,7 +34,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau);
 
     @return booléen (1 ou 0)
 */
-int sourisDansRectangle(int x, int y, SDL_Rect rectangle);
+int sourisDansRectangle(int x, int y, Rectangle rectangle);
 
 /**
     @brief <b>Vérifier qu'un son est bien chargé</b><br />
