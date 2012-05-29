@@ -34,6 +34,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         Rectangle deplacement;
         Rectangle xyArrivee;
         Rectangle xySablier;
+        Rectangle xySauver;
 
     /* Fin déclaration */
 
@@ -51,6 +52,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     Image* texte_niveau;
     Image* screen;
     Image* sablier;
+    Image* sauver;
+    Image* sauversurvol;
     Evenements event;
     #if SONS==1
         FMOD_SYSTEM *system;
@@ -155,12 +158,12 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         chiffres[8] = IMG_Load(CHIFFRE8); afficheVerifChargement(chiffres[8]);
         chiffres[9] = IMG_Load(CHIFFRE9); afficheVerifChargement(chiffres[9]);
 
-        texte_scores = IMG_Load(TEXTE_SCORES);
-        texte_niveau = IMG_Load(TEXTE_NIVEAU);
-        sablier = IMG_Load(SABLIER);
+        texte_scores = IMG_Load(TEXTE_SCORES); afficheVerifChargement(texte_scores);
+        texte_niveau = IMG_Load(TEXTE_NIVEAU); afficheVerifChargement(texte_niveau);
+        sablier = IMG_Load(SABLIER); afficheVerifChargement(sablier);
 
-        vsjoueur = IMG_Load(VSJOUEUR);
-        vsordi = IMG_Load(VSORDI);
+        vsjoueur = IMG_Load(VSJOUEUR); afficheVerifChargement(vsjoueur);
+        vsordi = IMG_Load(VSORDI); afficheVerifChargement(vsordi);
 
     /* INITIALISATIONS POUR L'AFFICHAGE */
 
@@ -186,6 +189,13 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         atexit(afficheQuit);
 
         afficheSetTitre("Hexxagon : copie originale du jeu d'origine qui existait avant","Hexxagon");
+
+        sauver = IMG_Load(SAUVER); afficheVerifChargement(sauver);
+        sauversurvol = IMG_Load(SAUVERSURVOL); afficheVerifChargement(sauversurvol);
+        xySauver.x = screen->w - sauver->w - 10;
+        xySauver.y = screen->h - sauver->h - 10;
+        xySauver.w = sauver->w;
+        xySauver.h = sauver->h;
 
 
 
@@ -333,6 +343,12 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                              #if COMMENTAIRES==1
                                 printf("Il n'y a plus de place, ou un joueur a perdu => fin de la partie.\n");
                             #endif
+                        }
+
+                        /* si on clique sur la disquette */
+                        if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
+                        {
+
                         }
 
                     } /* fin de détection du clic pour le jeu */
@@ -508,6 +524,15 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             /* on affiche le score de chaque joueur */
             afficheScores(plateauGetScore(&jeu,1),plateauGetScore(&jeu,2),chiffres,texte_scores,pion1,pion2,screen);
 
+            /* afficher le bouton pour enregistrer juste sur le jeu */
+            if(afficher==2)
+            {
+                if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
+                    afficheImageRect(xySauver,sauversurvol,screen);
+                else
+                    afficheImageRect(xySauver,sauver,screen);
+            }
+
             /* si la fin du jeu est détectée, on affiche le message */
             if(afficher==3)
             {
@@ -549,6 +574,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     afficheFree(vsjoueur);
     afficheFree(vsordi);
     afficheFree(sablier);
+    afficheFree(sauver);
+    afficheFree(sauversurvol);
     for(i=0;i<10;i++)
         afficheFree(chiffres[i]);
     afficheFree(screen);

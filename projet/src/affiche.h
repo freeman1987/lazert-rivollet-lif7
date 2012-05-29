@@ -324,4 +324,16 @@ void afficheSetTitre(char titre1[], char titre2[]);
 EvenementsType afficheTypeEvenement(Evenements* ev);
 
 
+/**
+    @brief <b>Determine si la position de la souris est dans un rectangle</b>
+
+    @param [in] x : position x de la souris
+    @param [in] y : position y de la souris
+    @param [in] rectangle : rectangle pour tester
+
+    @return booléen (1 ou 0)
+*/
+int sourisDansRectangle(int x, int y, Rectangle rectangle);
+
+
 #endif
