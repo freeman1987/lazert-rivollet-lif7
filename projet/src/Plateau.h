@@ -197,17 +197,18 @@ void plateauVolerPions(Plateau* p, Case* c, int joueur);
 int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur);
 
 /**
-    @brief <b>Compte le nombre de pions adverses à voler autour de la case.</b><br />
-    Pour savoir combien de pions adverses on peut voler en joueant dans la Case.
+    @brief <b>Compte le nombre de pions adverses adjacents à deux cases.</b><br />
+    Cela permet de savoir combien de pion on peut se faire voler en supposant l'action effectuée.
 
 
     @param [in] p : Pointeur sur Plateau
-    @param [in] c : Pointeur sur une Case
+    @param [in] c1 : Pointeur sur une Case
+    @param [in] c2 : Pointeur sur une Case
     @param joueur : le joueur en cours
 
     @return entier
 */
-int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, Case* c2, int joueur);
+int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c1, Case* c2, int joueur);
 
 
 /**
