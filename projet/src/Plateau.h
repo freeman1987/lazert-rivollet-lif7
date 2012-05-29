@@ -148,7 +148,7 @@ void plateauLireFichier(Plateau* p, const char filename[]);
  * \return rien
  *
  */
-void plateauEcrireFichier(Plateau* p);
+void plateauEcrireFichier(Plateau* p,int qui_joue);
 
 /**
     @brief <b>Nombre de possibilités de déplacement pour un pion.</b><br />
