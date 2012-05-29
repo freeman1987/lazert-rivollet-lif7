@@ -168,6 +168,20 @@ void plateauLireFichier(Plateau* p, const char filename[])
     fclose(f);
 }
 
+void plateauEcrireFichier(Plateau* p)
+{
+    FILE* file;
+	int ecriture,i;
+	  file = fopen("Partie_enregistre.txt", "w");
+	  fwrite(&(p->capacite),sizeof(int),1,file);
+	  for(i=0;i<p->capacite;i++)
+      {
+        fwrite(&(p->support[i]->posX),sizeof(int),1,file);
+        fwrite(&(p->support[i]->posY),sizeof(int),1,file);
+        fwrite(&(p->support[i]->joueur),sizeof(int),1,file);
+      }
+      fclose(file);
+}
 int plateauNbPossibilites(const Plateau* p,Case* c)
 {
     Case* ctmp;
