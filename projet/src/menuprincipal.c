@@ -366,14 +366,6 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     return retour;
 }
 
-int sourisDansRectangle(int x, int y, Rectangle rectangle)
-{
-    if(x>=rectangle.x && x<=(rectangle.w+rectangle.x) && y>=rectangle.y && y<=(rectangle.h+rectangle.y))
-        return 1;
-    else
-        return 0;
-}
-
 void afficheVerifChargementSon(const FMOD_SOUND* son)
 {
     if(son==0)

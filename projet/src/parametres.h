@@ -51,6 +51,11 @@
 /** <b>Chemin vers l'image du menu : bouton pour lancer la partie au survol</b> */
 	#define BOUTONJOUERSURVOL CHREL"data/images/boutonjouersurvol.png"
 
+/** <b>Chemin vers l'image du bouton d'enregistrement</b> */
+	#define SAUVER CHREL"data/images/sauver.png"
+/** <b>Chemin vers l'image du bouton d'enregistrement survollé</b> */
+	#define SAUVERSURVOL CHREL"data/images/sauversurvol.png"
+
 /** <b>Chemin vers une icone pour le jeu</b> */
 	#define ICONE CHREL"data/images/icone.ico"
 

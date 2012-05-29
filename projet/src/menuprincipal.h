@@ -25,16 +25,6 @@
 */
 int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau);
 
-/**
-    @brief <b>Determine si la position de la souris est dans un rectangle</b>
-
-    @param [in] x : position x de la souris
-    @param [in] y : position y de la souris
-    @param [in] rectangle : rectangle pour tester
-
-    @return booléen (1 ou 0)
-*/
-int sourisDansRectangle(int x, int y, Rectangle rectangle);
 
 /**
     @brief <b>Vérifier qu'un son est bien chargé</b><br />

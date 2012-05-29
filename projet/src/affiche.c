@@ -255,3 +255,12 @@ EvenementsType afficheTypeEvenement(Evenements* ev)
 {
     return (EvenementsType) ev->type;
 }
+
+
+int sourisDansRectangle(int x, int y, Rectangle rectangle)
+{
+    if(x>=rectangle.x && x<=(rectangle.w+rectangle.x) && y>=rectangle.y && y<=(rectangle.h+rectangle.y))
+        return 1;
+    else
+        return 0;
+}
