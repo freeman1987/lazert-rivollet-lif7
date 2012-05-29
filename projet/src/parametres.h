@@ -65,6 +65,8 @@
 	#define PLATEAU2_MENU CHREL"data/images/plateau2.png"
 /** <b>Chemin vers l'image du menu : apercu du plateau 3</b> */
 	#define PLATEAU3_MENU CHREL"data/images/plateau3.png"
+/** <b>Chemin vers l'image du menu : apercu du plateau 4</b> */
+	#define PLATEAU4_MENU CHREL"data/images/plateau4.png"
 /** <b>Chemin vers l'image du menu qui montre quel plateau est selectionne</b> */
 	#define PLATEAU_SELECTIONNE_MENU CHREL"data/images/plateauselectionne.png"
 
