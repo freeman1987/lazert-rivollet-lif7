@@ -127,7 +127,7 @@ Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim);
     @brief <b>Lire un fichier pour charger un plateau.</b><br />
     Lire le contenu d'un fichier normalisé pour charger un plateau en mémoire.<br />
     Contenu du fichier :<br />
-    première ligne : nombre de lignes à lire<br />
+    première ligne : nombre de lignes à lire,qui commence (1 ou 2)<br />
     lignes suivantes : 3 valeurs séparées par des virgules : x,y,j<br />
     - x : coordonnée x de la case<br />
     - y : coordonnée y de la case<br />
@@ -138,7 +138,7 @@ Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim);
 
     @return rien
 */
-void plateauLireFichier(Plateau* p, const char filename[]);
+void plateauLireFichier(Plateau* p, const char filename[], int* joueur);
 
 
 /** \brief Sauvegarde la partie en cour dans un fichier texte

@@ -119,10 +119,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         plateauInit(&jeu,0);
         switch (plateau)
         {
-            case 1: plateauLireFichier(&jeu,PLATEAU1); break;
-            case 2: plateauLireFichier(&jeu,PLATEAU2); break;
-            case 3: plateauLireFichier(&jeu,PLATEAU3); break;
-            case 4: plateauLireFichier(&jeu,PLATEAU4); break;
+            case 1: plateauLireFichier(&jeu,PLATEAU1,&qui_joue); break;
+            case 2: plateauLireFichier(&jeu,PLATEAU2,&qui_joue); break;
+            case 3: plateauLireFichier(&jeu,PLATEAU3,&qui_joue); break;
+            case 4: plateauLireFichier(&jeu,PLATEAU4,&qui_joue); break;
         }
 
         #if SONS==1
@@ -348,7 +348,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         /* si on clique sur la disquette */
                         if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
                         {
-
+                            /* on sauvegarde le plateau */
+                            plateauEcrireFichier(&jeu);
                         }
 
                     } /* fin de détection du clic pour le jeu */
