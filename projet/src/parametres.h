@@ -85,6 +85,8 @@
 	#define PLATEAU4 CHREL"data/Plateau4.txt"
 /** <b>Chemin vers le fichier source du plateau pour le test de non-regression</b> */
 	#define PLATEAUTEST CHREL"data/PlateauTest.txt"
+/** <b>Chemin vers le fichier pour enregistrer</b> */
+	#define PLATEAUSAUVE CHREL"data/Plateau_enregistre.txt"
 
 /** <b>Chemin vers l'image du menu : bouton [+] (pour augmenter la difficulte de l'ordinateur)</b> */
 	#define BOUTONPLUS CHREL"data/images/plus.png"

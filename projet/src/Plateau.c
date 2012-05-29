@@ -172,19 +172,17 @@ void plateauLireFichier(Plateau* p, const char filename[], int* joueur)
 void plateauEcrireFichier(Plateau* p,int qui_joue)
 {
     FILE* file;
+    Case* ctmp;
 	int ecriture,i;
-	  file = fopen("Partie_enregistre.txt", "w");
-	  fwrite(&(p->capacite),sizeof(int),1,file);
-	  fprintf(file,",");
-	  fwrite(&(qui_joue),sizeof(int),1,file);
-	  for(i=0;i<p->capacite;i++)
-      {
-        fwrite(&(p->support[i]->posX),sizeof(int),1,file);
-        fwrite(&(p->support[i]->posY),sizeof(int),1,file);
-        fwrite(&(p->support[i]->joueur),sizeof(int),1,file);
-      }
+    file = fopen(PLATEAUSAUVE, "w");
+    fprintf(file,"%d,%d",p->capacite,qui_joue);
+    for(i=0;i<p->capacite;i++)
+    {
+        ctmp = plateauGetCaseI(p,i);
+        fprintf(file,"\n%d,%d,%d",caseGetX(ctmp),caseGetY(ctmp),caseGetJoueur(ctmp));
+    }
 
-      fclose(file);
+    fclose(file);
 }
 int plateauNbPossibilites(const Plateau* p,Case* c)
 {
