@@ -71,7 +71,7 @@
 	#define PLATEAU_SELECTIONNE_MENU CHREL"data/images/plateauselectionne.png"
 
 /** <b>Chemin vers le fichier source du plateau 1</b> */
-	#define PLATEAU1 CHREL"data/Plateau1.txt"
+	#define PLATEAU1 CHREL"data/Plateau4.txt"
 /** <b>Chemin vers le fichier source du plateau 2</b> */
 	#define PLATEAU2 CHREL"data/Plateau2.txt"
 /** <b>Chemin vers le fichier source du plateau 3</b> */
