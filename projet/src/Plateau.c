@@ -108,27 +108,28 @@ Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim)
     return 0;
 }
 
-void plateauLireFichier(Plateau* p, const char filename[])
+void plateauLireFichier(Plateau* p, const char filename[], int* joueur)
 {
     FILE* f;
 	int lecture;
-	int i, capacite, x, y, j, scor_j1, scor_j2;
+	int i, capacite,qui_joue, x, y, j, scor_j1, scor_j2;
 	scor_j1 = 0;
 	scor_j2 = 0;
 
     f = fopen(filename, "r");
     if (f==NULL)
     {
-        printf("Erreur lors de l'ouverture de %s", filename);
+        printf("[!] Erreur lors de l'ouverture de %s\n", filename);
         exit(-1);
     }
 
-    lecture = fscanf( f , "%d", &capacite);
-    if(lecture!=1)
+    lecture = fscanf( f , "%d,%d", &capacite,&qui_joue);
+    if(lecture!=2)
     {
-        printf("Erreur de lecture de la taille du plateau.");
+        printf("[!] Erreur de lecture de la taille du plateau.\n");
         exit(-1);
     }
+    *joueur = qui_joue;
 
     /* on initialise la plateau en allouant le bon nombre de cases */
     plateauInit(p, capacite);
@@ -141,7 +142,7 @@ void plateauLireFichier(Plateau* p, const char filename[])
         lecture = fscanf(f, "\n%d,%d,%d", &x, &y, &j);
         if(lecture != 3)
         {
-            printf("Erreur de lecture de la case.\n");
+            printf("[!] Erreur de lecture de la case.\n");
         }
         else
         {
@@ -495,6 +496,7 @@ void plateauAfficheTout(const Plateau* p)
 void plateauTestRegression(void)
 {
     Plateau p;
+    int qui_joue;
     printf("| TEST DU MODULE PLATEAU\n");
     plateauInit(&p,0);
     if(plateauGetCapacite(&p)!=0)
@@ -508,7 +510,7 @@ void plateauTestRegression(void)
 
         /*
         CONTENU DU FICHIER DE TEST à lire
-        28
+        28,1
         4,2,0
         3,3,0
         5,3,0
@@ -538,7 +540,7 @@ void plateauTestRegression(void)
         6,12,0
         5,13,0
         */
-        plateauLireFichier(&p,PLATEAUTEST);
+        plateauLireFichier(&p,PLATEAUTEST,&qui_joue);
         if(plateauGetCapacite(&p)<=0)
         {
             printf("| [!] Erreur de lecture.\n");
