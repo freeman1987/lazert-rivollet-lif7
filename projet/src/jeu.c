@@ -119,6 +119,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             case 1: plateauLireFichier(&jeu,PLATEAU1); break;
             case 2: plateauLireFichier(&jeu,PLATEAU2); break;
             case 3: plateauLireFichier(&jeu,PLATEAU3); break;
+            case 4: plateauLireFichier(&jeu,PLATEAU4); break;
         }
 
         #if SONS==1
