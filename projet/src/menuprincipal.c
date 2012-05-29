@@ -6,12 +6,12 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     Image* screen;
     /* images du menu */
     Image *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
-    Image *imagePlateau[3], *imagePlateauSelectionne;
+    Image *imagePlateau[4], *imagePlateauSelectionne;
     /* images animees */
     Image *imageAnimeeRubis, *imageAnimeePerle;
 
     /* positions des images */
-    Rectangle positionPlateau[3];
+    Rectangle positionPlateau[4];
     Rectangle positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
     Image *chiffres[10], *texte_niveau; int ich;
     Rectangle positionRubis, positionPerle, vecteurPerle, vecteurRubis;
@@ -88,22 +88,28 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         positionContreOrdi.w = imageContreOrdi->w;
 
         imagePlateau[0] = afficheChargeImage(PLATEAU1_MENU); afficheVerifChargement(imagePlateau[0]);
-        positionPlateau[0].x = 800;
+        positionPlateau[0].x = 650;
         positionPlateau[0].y = 20;
         positionPlateau[0].h = imagePlateau[0]->h;
         positionPlateau[0].w = imagePlateau[0]->w;
 
         imagePlateau[1] = afficheChargeImage(PLATEAU2_MENU); afficheVerifChargement(imagePlateau[1]);
         positionPlateau[1].x = 800;
-        positionPlateau[1].y = 250;
+        positionPlateau[1].y = 180;
         positionPlateau[1].h = imagePlateau[1]->h;
         positionPlateau[1].w = imagePlateau[1]->w;
 
         imagePlateau[2] = afficheChargeImage(PLATEAU3_MENU); afficheVerifChargement(imagePlateau[2]);
-        positionPlateau[2].x = 800;
-        positionPlateau[2].y = 450;
+        positionPlateau[2].x = 680;
+        positionPlateau[2].y = 330;
         positionPlateau[2].h = imagePlateau[2]->h;
         positionPlateau[2].w = imagePlateau[2]->w;
+
+        imagePlateau[3] = afficheChargeImage(PLATEAU4_MENU); afficheVerifChargement(imagePlateau[3]);
+        positionPlateau[3].x = 800;
+        positionPlateau[3].y = 480;
+        positionPlateau[3].h = imagePlateau[3]->h;
+        positionPlateau[3].w = imagePlateau[3]->w;
 
         /* pions qui se déplacent sur l'écran */
         imageAnimeePerle = afficheChargeImage(PION_JOUEUR_2); afficheVerifChargement(imageAnimeePerle);
@@ -271,6 +277,10 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         *plateau=3;
                     }
+                    else if(sourisDansRectangle(sourisx,sourisy,positionPlateau[3]))
+                    {
+                        *plateau=4;
+                    }
 
                     /* changer de niveau ordi */
                     if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<9 && *contreordinateur==1)
@@ -306,6 +316,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         afficheImageRect(positionPlateau[0],imagePlateau[0],screen);
         afficheImageRect(positionPlateau[1],imagePlateau[1],screen);
         afficheImageRect(positionPlateau[2],imagePlateau[2],screen);
+        afficheImageRect(positionPlateau[3],imagePlateau[3],screen);
 
         if(*niveauordinateur<9 && *contreordinateur==1)
             afficheImageRect(positionBoutonPlus,imageBoutonPlus,screen);
