@@ -283,18 +283,20 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur)
     return retour;
 }
 
-int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur)
+int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, Case* c2, int joueur)
 {
     Case* ctmp;
     int xtmp, ytmp;
-    int x,y;
-    int dist;
+    int x,y,x2,y2;
+    int dist2, dist;
     int i;
     int retour;
 
     retour = 0;
     x = caseGetX(c);
     y = caseGetY(c);
+    x = caseGetX(c2);
+    y = caseGetY(c2);
 
     for(i=0;i<plateauGetCapacite(p);i++)
     {
@@ -302,8 +304,9 @@ int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur)
         xtmp = caseGetX(ctmp);
         ytmp = caseGetY(ctmp);
         dist = plateauTestCaseProche(xtmp-x,ytmp-y);
+        dist2 = plateauTestCaseProche(xtmp-x2,ytmp-y2);
 
-        if(dist==1 && caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)!=joueur)
+        if(dist==1 && dist2==1 && caseGetLibre(ctmp)==0 && caseGetJoueur(ctmp)!=joueur)
             retour++;
     }
 
