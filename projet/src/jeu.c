@@ -349,7 +349,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
                         {
                             /* on sauvegarde le plateau */
-                            plateauEcrireFichier(&jeu);
+                            plateauEcrireFichier(&jeu,qui_joue);
                         }
 
                     } /* fin de détection du clic pour le jeu */
