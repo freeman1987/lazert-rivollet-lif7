@@ -207,7 +207,7 @@ int plateauNbPionsAVoler(Plateau* p, Case* c, int joueur);
 
     @return entier
 */
-int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, int joueur);
+int plateauNbPionsAVolerAdjacent(Plateau* p, Case* c, Case* c2, int joueur);
 
 
 /**

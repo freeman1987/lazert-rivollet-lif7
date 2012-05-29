@@ -121,9 +121,9 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                             if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s) - adv perd : %d\n",nbAVolerTmp,pionAdversePerduTmp);
 
                             /* il y a plus de pions à prendre en jouant ici*/
-                            if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4)
+                            if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur))<=4)
                                 ||
-                               ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,joueur))<=4))
+                               ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur))<=4))
                                || destination==0)
                             {
                                 source = ctmp;
