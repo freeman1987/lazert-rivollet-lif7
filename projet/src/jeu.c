@@ -119,6 +119,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         plateauInit(&jeu,0);
         switch (plateau)
         {
+            case 0: plateauLireFichier(&jeu,PLATEAUSAUVE,&qui_joue); break;
             case 1: plateauLireFichier(&jeu,PLATEAU1,&qui_joue); break;
             case 2: plateauLireFichier(&jeu,PLATEAU2,&qui_joue); break;
             case 3: plateauLireFichier(&jeu,PLATEAU3,&qui_joue); break;
@@ -349,7 +350,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
                         {
                             /* on sauvegarde le plateau */
-                            plateauEcrireFichier(&jeu,qui_joue);
+                            plateauEcrireFichier(&jeu,qui_joue,contreordinateur,niveauordinateur);
                         }
 
                     } /* fin de détection du clic pour le jeu */
