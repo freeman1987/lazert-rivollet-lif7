@@ -23,10 +23,10 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
         printf("--ENTREE DANS LA FONCTION ordinateurJouer--\n");
     #endif
 
-    if(niv>=9) /* 9 étant le niveau max, on fixe une limite inatteignable */
-        niveau = 1000;
+    if(niv>=5) /* pas de limite, on regarde toutes les cases pour trouver la meilleure */
+        niveau = plateauGetCapacite(p) + 1;
     else /* pas de problème pour un niveau <1 : seule la première case jouable sera jouée */
-        niveau = niv + 1;
+        niveau = niv + 2;
 
     nbAVoler = 0;
     action = 0;
@@ -120,12 +120,29 @@ void ordinateurJouer(Plateau* p, int joueur, int niv)
                             pionAdversePerduTmp = nbAVolerTmp;
                             if(afficher_txt==1) printf("\t\ton peut s'y deplacer et voler %d pion(s) - adv perd : %d\n",nbAVolerTmp,pionAdversePerduTmp);
 
-                            /* il y a plus de pions à prendre en jouant ici*/
-                            if(((nbAVolerTmp>nbAVoler && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur))<=4)
+                            if(
+                                /* soit aucune case n'est encore trouvée */
+                                destination==0
                                 ||
-                               ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur && (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur))<=4))
-                               || destination==0)
+                                (
+                                    /* soit l'on ne peut s'en faire voler que moins de 4 en déplaçant ce pion
+                                    (plateauNbPionsAVolerAdjacent prend en compte les pions que l'on aura après avoir joué) */
+                                    (plateauNbPionsPerdu(p,ctmp,joueur)+plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur))<4
+                                    &&
+                                    (
+                                        /* ce que l'on trouve est mieux que ce que l'on avait trouvé précédemment */
+                                        (nbAVolerTmp>nbAVoler && niveau>compteur)
+                                        ||
+                                        ((plateauNbPionEnnemi(p,ctmp2,joueur)-nbAVolerTmp)==0 && pionAdversePerduTmp>pionAdversePerdu && niveau>compteur)
+                                    )
+
+                                )
+                            )
                             {
+                                if(afficher_txt==1)
+                                {
+                                    printf("\tSi l'on se déplace ici : on perd %d + %dn",plateauNbPionsPerdu(p,ctmp,joueur),plateauNbPionsAVolerAdjacent(p,ctmp,ctmp2,joueur));
+                                }
                                 source = ctmp;
                                 destination = ctmp2;
                                 action = 2; /* dupliquer */

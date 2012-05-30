@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     /* paramètres de jeu par défaut */
     contreordinateur = 1;
-    niveauordinateur = 5;
+    niveauordinateur = 3;
     plateau = 1;
 
     while(menuPrincipal(&contreordinateur, &niveauordinateur, &plateau)==1)

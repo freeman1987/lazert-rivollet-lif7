@@ -56,6 +56,11 @@
 /** <b>Chemin vers l'image du bouton d'enregistrement survollé</b> */
 	#define SAUVERSURVOL CHREL"data/images/sauversurvol.png"
 
+/** <b>Chemin vers l'image du bouton de reprise de partie</b> */
+	#define OUVRIR CHREL"data/images/ouvrir.png"
+/** <b>Chemin vers l'image du bouton survollé de reprise de partie</b> */
+	#define OUVRIRSURVOL CHREL"data/images/ouvrirsurvol.png"
+
 /** <b>Chemin vers une icone pour le jeu</b> */
 	#define ICONE CHREL"data/images/icone.ico"
 
@@ -87,6 +92,8 @@
 	#define PLATEAUTEST CHREL"data/PlateauTest.txt"
 /** <b>Chemin vers le fichier pour enregistrer</b> */
 	#define PLATEAUSAUVE CHREL"data/Plateau_enregistre.txt"
+/** <b>Chemin vers le fichier pour enregistrer la configuration de la partie</b> */
+	#define CONFIGSAUVE CHREL"data/Configuration_enregistree.txt"
 
 /** <b>Chemin vers l'image du menu : bouton [+] (pour augmenter la difficulte de l'ordinateur)</b> */
 	#define BOUTONPLUS CHREL"data/images/plus.png"

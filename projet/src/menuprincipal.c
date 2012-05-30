@@ -5,14 +5,14 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     /* ecran de jeu */
     Image* screen;
     /* images du menu */
-    Image *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins;
+    Image *menu, *imageContreJoueur, *imageContreOrdi, *imageSelection, *imageBoutonJouer, *imageBoutonJouerSurvol, *imageBoutonPlus, *imageBoutonMoins, *imageOuvrir, *imageOuvrirSurvol;
     Image *imagePlateau[4], *imagePlateauSelectionne;
     /* images animees */
     Image *imageAnimeeRubis, *imageAnimeePerle;
 
     /* positions des images */
     Rectangle positionPlateau[4];
-    Rectangle positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins;
+    Rectangle positionMenu, positionContreJoueur, positionContreOrdi, positionBoutonJouer, positionNiveau, positionTexteNiveau, positionBoutonPlus, positionBoutonMoins, positionOuvrir;
     Image *chiffres[10], *texte_niveau; int ich;
     Rectangle positionRubis, positionPerle, vecteurPerle, vecteurRubis;
 
@@ -24,6 +24,10 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     int sourisy;
 
     int retour;
+
+    /* pour savoir si une partie est enregistrée */
+    int partieEnregistree;
+    FILE* fichier;
 
     /* boucle principale du programme */
     int done;
@@ -45,6 +49,22 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
 
     retour = 1; /* par défaut on accède au jeu après le menu */
     done = 0; /* sortie de boucle */
+
+    partieEnregistree = 0; /* par défaut : aucune partie */
+    fichier = 0;
+    fichier = fopen(CONFIGSAUVE,"r");
+    if(fichier!=0)
+    {
+        fclose(fichier);
+        fichier = 0;
+        fichier = fopen(PLATEAUSAUVE,"r");
+        if(fichier!=0)
+        {
+            partieEnregistree = 1;
+            fclose(fichier);
+            fichier = 0;
+        }
+    }
 
     /* INITIALISATIONS POUR L'AFFICHAGE */
 
@@ -123,6 +143,16 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         vecteurPerle.y = 5;
         vecteurRubis.x = -5;
         vecteurRubis.y = 5;
+
+        if(partieEnregistree) /* on ne charge que si une partie est enregistrée */
+        {
+            imageOuvrir = IMG_Load(OUVRIR); afficheVerifChargement(imageOuvrir);
+            imageOuvrirSurvol = IMG_Load(OUVRIRSURVOL); afficheVerifChargement(imageOuvrirSurvol);
+            positionOuvrir.x = screen->w - imageOuvrir->w - 10;
+            positionOuvrir.y = screen->h - imageOuvrir->h - 10;
+            positionOuvrir.w = imageOuvrir->w;
+            positionOuvrir.h = imageOuvrir->h;
+        }
 
         imagePlateauSelectionne = afficheChargeImage(PLATEAU_SELECTIONNE_MENU); afficheVerifChargement(imagePlateau[0]);
 
@@ -234,7 +264,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                         *contreordinateur = ((*contreordinateur + 1) % 2);
                     }
 
-                    if((afficheToucheAppuyee(&event) == T_HAUT || afficheToucheAppuyee(&event) == T_PN_PLUS) && *niveauordinateur<9 && *contreordinateur==1)
+                    if((afficheToucheAppuyee(&event) == T_HAUT || afficheToucheAppuyee(&event) == T_PN_PLUS) && *niveauordinateur<5 && *contreordinateur==1)
                     {
                         (*niveauordinateur)++;
                     }
@@ -283,7 +313,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     }
 
                     /* changer de niveau ordi */
-                    if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<9 && *contreordinateur==1)
+                    if(sourisDansRectangle(sourisx,sourisy,positionBoutonPlus) && *niveauordinateur<5 && *contreordinateur==1)
                     {
                         (*niveauordinateur)++;
                     }
@@ -291,6 +321,22 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
                     {
                         (*niveauordinateur)--;
                     }
+
+                    /* on souhaite reprendre la partie enregistrée (double if pour être sur de na pas tester le 2eme condition si la permiere est 0 */
+                    if(partieEnregistree)
+                        if(sourisDansRectangle(sourisx,sourisy,positionOuvrir))
+                        {
+                            fichier = fopen(CONFIGSAUVE,"r");
+                            if(fscanf(fichier,"%d,%d",contreordinateur,niveauordinateur)==2)
+                            {
+                                *plateau = 0;
+                                done = 1;
+                            }
+                            else
+                            {
+                                printf("[!] Erreur de lecture du fichier de configuration.\n");
+                            }
+                        }
                 }
                 break;
             }
@@ -318,7 +364,7 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         afficheImageRect(positionPlateau[2],imagePlateau[2],screen);
         afficheImageRect(positionPlateau[3],imagePlateau[3],screen);
 
-        if(*niveauordinateur<9 && *contreordinateur==1)
+        if(*niveauordinateur<5 && *contreordinateur==1)
             afficheImageRect(positionBoutonPlus,imageBoutonPlus,screen);
         if(*niveauordinateur>1 && *contreordinateur==1)
             afficheImageRect(positionBoutonMoins,imageBoutonMoins,screen);
@@ -328,6 +374,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
             afficheImageRect(positionBoutonJouer,imageBoutonJouerSurvol,screen);
         else
             afficheImageRect(positionBoutonJouer,imageBoutonJouer,screen);
+
+         if(sourisDansRectangle(sourisx,sourisy,positionOuvrir)==1)
+            afficheImageRect(positionOuvrir,imageOuvrirSurvol,screen);
+        else
+            afficheImageRect(positionOuvrir,imageOuvrir,screen);
 
         afficheImageRect(positionPerle,imageAnimeePerle,screen);
         afficheImageRect(positionRubis,imageAnimeeRubis,screen);
@@ -357,6 +408,11 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     afficheFree(imageAnimeeRubis);
     afficheFree(imageAnimeePerle);
     afficheFree(texte_niveau);
+    if(partieEnregistree)
+    {
+        afficheFree(imageOuvrir);
+        afficheFree(imageOuvrirSurvol);
+    }
     for(ich=0;ich<10;ich++)
         afficheFree(chiffres[ich]);
     afficheFree(screen);

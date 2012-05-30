@@ -23,6 +23,8 @@ $    make
 $	sh jouer
 (la commande précédente compile le jeu s'il ne l'est pas)
 
+Remarque : pendant le jeu, il est possible d'enregistrer la partie et de la reprendre ensuite.
+
 -- Pour nettoyer les fichiers
 $	make clean
 

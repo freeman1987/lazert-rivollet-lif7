@@ -135,20 +135,25 @@ Case* plateauCaseSurvollee(int sx, int sy, const Plateau* p, int dim);
 
     @param [in,out] p : pointeur sur le plateau à remplir
     @param [in] filename : nom du fichier texte à charger
+    @param [out] joueur : le joueur qui commence
 
     @return rien
 */
 void plateauLireFichier(Plateau* p, const char filename[], int* joueur);
 
 
-/** \brief Sauvegarde la partie en cour dans un fichier texte
- *
- * \param [in,out] p : pointeur sur le plateau à remplir
+/**
+    @brief <b>Sauvegarde la partie en cours dans un fichier texte</b>.<br />
+    Pour enregistrer une partie et la reprendre plus tard.
 
- * \return rien
- *
+    @param [in] p : pointeur sur le Plateau à enregistrer
+    @param [in] qui_joue : quel joueur à la main
+    @param [in] contreordi : savoir si la partie est contre l'ordi (1) ou un joueur (0)
+    @param [in] niveauordi : savoir quel est le niveau de l'ordinateur
+
+    @return rien
  */
-void plateauEcrireFichier(Plateau* p,int qui_joue);
+void plateauEcrireFichier(Plateau* p, int qui_joue, int contreordi, int niveauordi);
 
 /**
     @brief <b>Nombre de possibilités de déplacement pour un pion.</b><br />

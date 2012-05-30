@@ -169,21 +169,28 @@ void plateauLireFichier(Plateau* p, const char filename[], int* joueur)
     fclose(f);
 }
 
-void plateauEcrireFichier(Plateau* p,int qui_joue)
+void plateauEcrireFichier(Plateau* p, int qui_joue, int contreordi, int niveauordi)
 {
     FILE* file;
     Case* ctmp;
-	int ecriture,i;
-    file = fopen(PLATEAUSAUVE, "w");
+	int i;
+
+	/* ouvrir le fichier pour enregistrer le plateau */
+    file = fopen(PLATEAUSAUVE, "w+");
     fprintf(file,"%d,%d",p->capacite,qui_joue);
     for(i=0;i<p->capacite;i++)
     {
         ctmp = plateauGetCaseI(p,i);
         fprintf(file,"\n%d,%d,%d",caseGetX(ctmp),caseGetY(ctmp),caseGetJoueur(ctmp));
     }
+    fclose(file);
 
+    /* ouvrir le fichier pour enregistrer le configuration de la partie */
+    file = fopen(CONFIGSAUVE,"w+");
+    fprintf(file,"%d,%d",contreordi,niveauordi);
     fclose(file);
 }
+
 int plateauNbPossibilites(const Plateau* p,Case* c)
 {
     Case* ctmp;
