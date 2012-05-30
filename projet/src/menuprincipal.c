@@ -66,6 +66,10 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
         }
     }
 
+    /* plateau 0 correspond à la partie enregistrée mais n'est pas séléctionnable comme plateau */
+    if(*plateau==0)
+        *plateau = 1;
+
     /* INITIALISATIONS POUR L'AFFICHAGE */
 
         /* on charge l'écran d'affichage */
