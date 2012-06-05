@@ -38,7 +38,7 @@ typedef Uint8 EvenementsType;
 #define T_ENTREE SDLK_RETURN
 #define T_PN_PLUS SDLK_KP_PLUS
 #define T_PN_MOINS SDLK_KP_MINUS
-#define T_o SDLK_o
+#define T_h SDLK_h
 
 /**
     @brief <b>Convertir x,y en Rectangle.</b><br />

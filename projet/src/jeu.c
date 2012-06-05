@@ -258,8 +258,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
                     else if(afficher==2)
                     {
-                        /* option pour faire jouer l'ordinateur en appuyant sur la touche o */
-                        if(afficheToucheAppuyee(&event) == T_o)
+                        /* option pour faire jouer l'ordinateur en appuyant sur la touche h */
+                        if(afficheToucheAppuyee(&event) == T_h)
                             tourautomatique = 1;
                     }
 
