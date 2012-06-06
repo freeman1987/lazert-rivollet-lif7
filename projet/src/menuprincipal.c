@@ -35,16 +35,18 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     #if SONS==1
         FMOD_SYSTEM *system;
 
-        FMOD_SOUND *hello = NULL;
-        FMOD_SOUND *menuMus = NULL;
+        FMOD_SOUND *hello;
+        FMOD_SOUND *menuMus;
+        hello = 0;
+        menuMus = 0;
         FMOD_System_Create(&system);
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
 
         FMOD_System_CreateSound(system, SON_HELLO, FMOD_CREATESAMPLE, 0, &hello); afficheVerifChargementSon(hello);
         FMOD_System_CreateSound(system, SON_MENU, FMOD_LOOP_NORMAL, 0, &menuMus); afficheVerifChargementSon(menuMus);
 
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
-        FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
+        if(hello!=0)    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, hello, 0, NULL);
+        if(menuMus!=0)  FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, menuMus, 0, NULL);
     #endif
 
     retour = 1; /* par défaut on accède au jeu après le menu */
@@ -391,8 +393,8 @@ int menuPrincipal(int* contreordinateur, int* niveauordinateur, int* plateau)
     }
 
     #if SONS==1
-        FMOD_Sound_Release(hello);
-        FMOD_Sound_Release(menuMus);
+        if(hello!=0)    FMOD_Sound_Release(hello);
+        if(menuMus!=0)  FMOD_Sound_Release(menuMus);
         FMOD_System_Close(system);
         FMOD_System_Release(system);
     #endif
@@ -431,6 +433,5 @@ void afficheVerifChargementSon(const FMOD_SOUND* son)
     if(son==0)
     {
         printf("[!] Erreur de chargement du son.\n");
-        exit(1);
     }
 }
