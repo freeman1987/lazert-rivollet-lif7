@@ -249,6 +249,7 @@ void afficheErreur()
 void afficheSetTitre(char titre1[], char titre2[])
 {
     SDL_WM_SetCaption(titre1, titre2);
+    SDL_WM_SetIcon(IMG_Load(ICONE),NULL);
 }
 
 EvenementsType afficheTypeEvenement(Evenements* ev)

@@ -63,11 +63,11 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         FMOD_SOUND *clic;
         FMOD_SOUND *jeuMus;
         FMOD_SOUND *bravo;
-        bravo = NULL;
-        clic = NULL;
-        boing = NULL;
-        rire = NULL;
-        jeuMus = NULL;
+        bravo = 0;
+        clic = 0;
+        boing = 0;
+        rire = 0;
+        jeuMus = 0;
         FMOD_System_Create(&system);
         FMOD_System_Init(system, 2, FMOD_INIT_NORMAL, NULL);
 
@@ -127,7 +127,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         }
 
         #if SONS==1
-            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, jeuMus, 0, NULL);
+            if(jeuMus!=0) FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, jeuMus, 0, NULL);
         #endif
 
     /* boucle principale du programme */
@@ -292,7 +292,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                                 /* on sélectionne un pion pour proposer ensuite les possibilités */
                                 caseCliquee = caseTemp;
                                 #if SONS==1
-                                    FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, clic, 0, NULL);
+                                    if(clic!=0) FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, clic, 0, NULL);
                                 #endif
 
                                 #if COMMENTAIRES==1
@@ -320,7 +320,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                                     if(test!=0 && animation==0)
                                     {
                                         #if SONS==1
-                                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
+                                            if(boing!=0) FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
                                         #endif
                                         /* pour l'animation */
                                         xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
@@ -390,7 +390,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                 if(attente>=0)
                 {
                     #if SONS==1
-                        if(sonFinJeu!=0)
+                        if(sonFinJeu!=0 && boing!=0)
                             FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
                     #endif
                     afficheImageRect(xySablier,sablier,screen);
@@ -542,10 +542,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                     if(sonFinJeu==1){
                         if(plateauGetScore(&jeu,1)<plateauGetScore(&jeu,2))
                         {
-                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, rire, 0, NULL);
+                            if(rire!=0)  FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, rire, 0, NULL);
 
                         }else{
-                            FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, bravo, 0, NULL);
+                            if(bravo!=0) FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, bravo, 0, NULL);
                             }
                         sonFinJeu=0;
                     }
@@ -585,11 +585,11 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
     afficheQuit();
 
     #if SONS==1
-        FMOD_Sound_Release(rire);
-        FMOD_Sound_Release(clic);
-        FMOD_Sound_Release(boing);
-        FMOD_Sound_Release(bravo);
-        FMOD_Sound_Release(jeuMus);
+        if(rire!=0)     FMOD_Sound_Release(rire);
+        if(clic!=0)     FMOD_Sound_Release(clic);
+        if(boing!=0)    FMOD_Sound_Release(boing);
+        if(bravo!=0)    FMOD_Sound_Release(bravo);
+        if(jeuMus!=0)   FMOD_Sound_Release(jeuMus);
         FMOD_System_Close(system);
         FMOD_System_Release(system);
     #endif
