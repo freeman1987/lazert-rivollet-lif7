@@ -4,7 +4,7 @@
 /** <b>Style du jeu pour la compilation (dossier)</b> */
     #define TEXTURE "style1"
 /** <b>Chemin relatif vers le dossier data</b> */
-    #define CHREL ""
+    #define CHREL "../"
 
 /** <b>Chemin vers l'image du pion du joueur 1</b> */
 	#define PION_JOUEUR_1 CHREL"data/"TEXTURE"/pion1.png"

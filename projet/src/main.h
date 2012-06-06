@@ -30,6 +30,21 @@
     Pour jouer, depuis la racine du jeu :<br />
     <span style="font-family: monospace, consolas; color: blue;">$    sh jouer</span><br />
     <br />
+    <br />
+    Il faut jouer a l'aide de la souris.<br />
+    Pour commencer, choisir dans le menu principal un plateau et un mode de jeu.<br />
+    Cliquer sur le bouton jouer.<br />
+    Le joueur qui a la main doit selectionner un de ses pions en cliquant dessus.<br />
+    Les differentes possibilites qui s'offrent à lui s'affichent alors :<br />
+    soit dupliquer son pion dans une case adjacente, soit le deplacer vers une case de distance 1.<br />
+    Les pions advserses qui se trouvent autour du pion duplique/deplace lui reviennent.<br />
+    Pour qu'un joueur gagne la partie, il faut qu'il ait plus de pions que l'autre sur le plateau.<br />
+    La partie s'arrete lorsqu'un joueur est bloque. Les cases vides sont automatiquement <br />
+    remplies avec le pion du joueur qui n'est plas bloque.<br />
+    <br />
+    Remarque :<br />
+    Pendant le jeu, il est possible d'enregistrer la partie et de la reprendre ensuite depuis le menu.<br />
+
     <em>Remarque :<br />
     &nbsp;&nbsp;Si le programme n'est pas compilé, il le sera automatiquement.<br />
     &nbsp;&nbsp;La compilation nécéssite que la librairie SDL soit installée sur la machine.</em>
