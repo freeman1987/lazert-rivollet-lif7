@@ -30,11 +30,11 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         int test; /* bouléen pour stocker le résultats d'un test */
 
 
-        Rectangle xyPionAnim;
+        Rectangle positionPionAnim;
         Rectangle deplacement;
-        Rectangle xyArrivee;
-        Rectangle xySablier;
-        Rectangle xySauver;
+        Rectangle positionArrivee;
+        Rectangle positionSablier;
+        Rectangle positionSauver;
 
     /* Fin déclaration */
 
@@ -96,8 +96,8 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
         caseCliquee = 0;
 
         /* Initialise la position du sablier */
-        xySablier.x = 1000;
-        xySablier.y = 50;
+        positionSablier.x = 1000;
+        positionSablier.y = 50;
 
         qui_joue = 1; /* le joueur 1 commence */
         tourautomatique = 0; /* si la fonction est activée, l'utilisateur
@@ -193,10 +193,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
 
         sauver = IMG_Load(SAUVER); afficheVerifChargement(sauver);
         sauversurvol = IMG_Load(SAUVERSURVOL); afficheVerifChargement(sauversurvol);
-        xySauver.x = screen->w - sauver->w - 10;
-        xySauver.y = screen->h - sauver->h - 10;
-        xySauver.w = sauver->w;
-        xySauver.h = sauver->h;
+        positionSauver.x = screen->w - sauver->w - 10;
+        positionSauver.y = screen->h - sauver->h - 10;
+        positionSauver.w = sauver->w;
+        positionSauver.h = sauver->h;
 
 
 
@@ -300,10 +300,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                                 #endif
 
                                 /* on stocke les coordonnée de la case cliquée si elle est amenée à bouger */
-                                xyPionAnim = xy2rect(caseGetX(caseCliquee),caseGetY(caseCliquee));
+                                positionPionAnim = xy2rect(caseGetX(caseCliquee),caseGetY(caseCliquee));
 
                                 #if COMMENTAIRES==1
-                                    printf("Ses coordonnées : %d,%d\n",xyPionAnim.x,xyPionAnim.y);
+                                    printf("Ses coordonnées : %d,%d\n",positionPionAnim.x,positionPionAnim.y);
                                 #endif
                             }
 
@@ -323,11 +323,11 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                                             if(boing!=0) FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
                                         #endif
                                         /* pour l'animation */
-                                        xyArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
-                                        deplacement.x = xyArrivee.x - xyPionAnim.x;
-                                        deplacement.y = xyArrivee.y - xyPionAnim.y;
-                                        xyArrivee.x -= (int) deplacement.x / 10;
-                                        xyArrivee.y -= (int) deplacement.y / 10;
+                                        positionArrivee = xy2rect(caseGetX(caseTemp),caseGetY((caseTemp)));
+                                        deplacement.x = positionArrivee.x - positionPionAnim.x;
+                                        deplacement.y = positionArrivee.y - positionPionAnim.y;
+                                        positionArrivee.x -= (int) deplacement.x / 10;
+                                        positionArrivee.y -= (int) deplacement.y / 10;
                                         animation = 1;
                                     }
                                 }
@@ -347,7 +347,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         }
 
                         /* si on clique sur la disquette */
-                        if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
+                        if(sourisDansRectangle(sourisx,sourisy,positionSauver)==1)
                         {
                             /* on sauvegarde le plateau */
                             plateauEcrireFichier(&jeu,qui_joue,contreordinateur,niveauordinateur);
@@ -393,7 +393,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                         if(sonFinJeu!=0 && boing!=0)
                             FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, boing, 0, NULL);
                     #endif
-                    afficheImageRect(xySablier,sablier,screen);
+                    afficheImageRect(positionSablier,sablier,screen);
                     attente-=1;
                 }else{
 
@@ -427,20 +427,20 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             if(animation==1)
             {
                 if(
-                   ((deplacement.x>0 && xyPionAnim.x<xyArrivee.x) /* on peut deplacer vers la droite */
+                   ((deplacement.x>0 && positionPionAnim.x<positionArrivee.x) /* on peut deplacer vers la droite */
                     ||
-                    (deplacement.x<0 && xyPionAnim.x>xyArrivee.x)) /* ... ou on peut se déplacer vers la gauche */
+                    (deplacement.x<0 && positionPionAnim.x>positionArrivee.x)) /* ... ou on peut se déplacer vers la gauche */
                    ||
-                   ((deplacement.y>0 && xyPionAnim.y<xyArrivee.y) /* ... et se déplacer en bas */
+                   ((deplacement.y>0 && positionPionAnim.y<positionArrivee.y) /* ... et se déplacer en bas */
                     ||
-                    (deplacement.y<0 && xyPionAnim.y>xyArrivee.y)))
+                    (deplacement.y<0 && positionPionAnim.y>positionArrivee.y)))
                 {
-                    xyPionAnim.x += (int) deplacement.x / 10;
-                    xyPionAnim.y += (int) deplacement.y / 10;
+                    positionPionAnim.x += (int) deplacement.x / 10;
+                    positionPionAnim.y += (int) deplacement.y / 10;
                     if(qui_joue==2) /* c'est encore le J2 qui bouge */
-                        afficheImageRect(xyPionAnim,pion2,screen);
+                        afficheImageRect(positionPionAnim,pion2,screen);
                     else
-                        afficheImageRect(xyPionAnim,pion1,screen);
+                        afficheImageRect(positionPionAnim,pion1,screen);
                 }
                 else
                 {
@@ -487,7 +487,7 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
                     qui_joue = (qui_joue%2)+1;
 
                      #if COMMENTAIRES==1
-                        printf("Coordonnées d'arrivée %d,%d.\n",xyArrivee.x,xyArrivee.y);
+                        printf("Coordonnées d'arrivée %d,%d.\n",positionArrivee.x,positionArrivee.y);
                     #endif
 
                     #if COMMENTAIRES==1
@@ -529,10 +529,10 @@ int Jouer(const int contreordinateur, const int niveauordinateur, const int plat
             /* afficher le bouton pour enregistrer juste sur le jeu */
             if(afficher==2)
             {
-                if(sourisDansRectangle(sourisx,sourisy,xySauver)==1)
-                    afficheImageRect(xySauver,sauversurvol,screen);
+                if(sourisDansRectangle(sourisx,sourisy,positionSauver)==1)
+                    afficheImageRect(positionSauver,sauversurvol,screen);
                 else
-                    afficheImageRect(xySauver,sauver,screen);
+                    afficheImageRect(positionSauver,sauver,screen);
             }
 
             /* si la fin du jeu est détectée, on affiche le message */
